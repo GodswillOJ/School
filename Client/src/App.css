@@ -1,0 +1,13 @@
+html{
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  
+}
+body{
+  padding-left: 0 !important;
+  /* overflow: auto !important; */
+}
+
+/* Inside your global CSS or specific CSS file */
+

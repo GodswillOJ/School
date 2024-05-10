@@ -1,0 +1,209 @@
+/* Styling of Home */
+/* slide is causing width issue */
+
+body{
+    padding: 0;
+    margin: 0;
+}
+
+.swiper{
+    width: 800px;
+    margin-left: 0;
+    margin-top: 1rem;
+}
+
+.swiper-wrapper {
+    width: 100px;
+}
+
+
+h4.css-l795ef-MuiTypography-root{
+    margin-left: 2rem;
+}
+
+.MuiBox-root.css-1ud3ku6 {
+    padding-top: 2rem;
+}
+
+/* home Cart-item */
+
+.cart_link{
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10rem 0 10rem;
+}
+
+/* Inside your global CSS or specific CSS file */
+.Hero_section{
+    margin-right: 2rem;
+    width: 100%;
+}
+
+.User_home {
+    position: relative;
+    margin: 0 auto;
+    padding: 20px;
+    z-index: 0;
+  }
+
+  #home_a{
+    position: relative;
+    margin-top: 10%;
+  }
+  
+.hero_sec{
+    display: grid;
+    width: 100%;
+    gap: 0.5rem;
+    grid-template-columns: 1fr 3fr;
+}
+
+/* category_dropdown */
+.cat_dropdown{
+    margin: 0 0 0 1rem;
+    /* transition: opacity 0.3s ease-in-out;
+    opacity: 0; */
+}
+.cat_dropdown a{
+    display: block;
+    padding-left: 10%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    text-decoration: none;
+}
+
+.lightModeOutlined {
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+}
+.lightModeOutlined a{
+    color: black;
+}
+
+.lightModeOutlined a:hover{
+    opacity: 0.8;
+    background: #d3cece;
+    font-weight: bold;
+}
+
+.darkModeOutlined {
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+}
+
+.darkModeOutlined a{
+    color: white;
+}
+
+.darkModeOutlined a:hover{
+    opacity: 0.8;
+    background: #d3cece;
+    color: black;
+    font-weight: bold;
+}
+
+/* Login and registration */
+.Register{
+    /* Your existing styles */
+    overflow: hidden;
+  }
+.CounterCont{
+    /* Your existing styles */
+    overflow: hidden;
+  }
+ form{
+    /* Your existing styles */
+    display: block;
+    margin: 0 10%;
+    padding-top: 10px;
+  }
+  
+
+form h2{
+    text-align: center;
+}
+form div{
+    display: grid;
+    grid-template-columns: 1fr;;
+    margin-bottom: 20px;
+}
+
+#verify_btn{
+    padding-top: 10px;
+}
+
+.CounterCont #Footer_Dash div{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: 13rem 10% 0 10%;
+}
+.CounterCont #Footer_Dash div a{
+    list-style-type: none;
+    padding: 10px;
+}
+
+
+form div input{
+    border: 1px solid #cac7c7;
+    padding: 5px;
+    border-radius: 2px;
+}
+#verify_btn button{
+    border: 1px solid #cac7c7;
+    padding: 5px;
+    color: #fff;
+    background: blue;
+    border-radius: 2px;
+}
+
+@media screen and (max-width: 1200px) {
+
+    /* .swiper-wrapper{
+        width: 600px;
+    } */
+    .cat_dropdown{
+        margin: 0 0 0 1rem;
+    }
+
+    .User_home {
+        margin: 0 auto;
+        padding: 0;
+      }
+}
+
+@media screen and (max-width: 760px) {
+    .cat_dropdown{
+        margin:  10% 0 10% 0;
+    }
+    .User_home {
+        
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+    .cart_link{
+        text-align: center;
+        display: block;
+        }
+
+    .cart_link{
+        text-align: center;
+        display: block;
+        padding: 0;
+        }
+
+    .hero_sec {
+    display: block;
+    }
+
+    .swiper {
+        padding-top: 1rem;
+    }
+
+    /* Login Form */
+            
+}
