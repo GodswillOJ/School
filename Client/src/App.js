@@ -30,7 +30,7 @@ function App() {
             <Route element={<HomeLayout/>}>
               <Route path="/" element={<Navigate to="/home" replace />}/>
               <Route path="/home" element={<Home/>}/>
-              <Route path="/register" element={<Register/>}/>
+              <Route path="/registerUser" element={<Register/>}/>
               <Route path="/login" element={<Login/>}/>
             </Route>
           </Routes>
