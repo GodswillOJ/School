@@ -69,7 +69,7 @@ export const Login = ({ onLogin }) => {
             <Link to='/forget-password'>Forget Password</Link>
           </p>
           <div id="redirect_log">
-            <Link to="/register">Register</Link>
+            <Link to="/registerUser">Register</Link>
           </div>
         </div>
 
