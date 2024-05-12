@@ -600,7 +600,6 @@ export const fetchMessages = async (req, res) => {
   }
 };
 
-
 // Admin messages
 
 export const adminMail = async (req, res) => {

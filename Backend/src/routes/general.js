@@ -9,7 +9,7 @@ router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
 // Route to create a new user
-router.post('/users', insertUser);
+router.post('/registerUser', insertUser);
 
 // Export the router
 export default router;
