@@ -62,7 +62,7 @@ const HomeNavbar = () => {
                 <ShoppingCart />
               </MenuItem>
               <MenuItem onClick={handleMenuClose}><Link href="/login" sx={{ textDecoration: 'none', color: 'inherit' }}>Login</Link></MenuItem>
-              <MenuItem onClick={handleMenuClose}><Link href="/register" sx={{ textDecoration: 'none', color: 'inherit' }}>Register</Link></MenuItem>
+              <MenuItem onClick={handleMenuClose}><Link href="/registerUser" sx={{ textDecoration: 'none', color: 'inherit' }}>Register</Link></MenuItem>
               {/* Replace "Cart" text with ShoppingCart icon */}
             </Menu>
           </div>
