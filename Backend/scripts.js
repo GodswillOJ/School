@@ -21,9 +21,7 @@ const app = express();
 const PORT = process.env.PORT || 3400;
 
 // Enable CORS and allow requests from http://localhost:3000
-app.use(cors({
-  origin: 'http://localhost:3000'
-}));
+app.use(cors());
 
 app.use(express.json());
 app.use(helmet());

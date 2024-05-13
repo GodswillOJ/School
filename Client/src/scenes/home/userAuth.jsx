@@ -99,7 +99,7 @@ export const Register = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      await axios.post('/api/registerUser', { username, email, password });
+      await axios.post('https://gotech-blog.onrender.com/api/registerUser', { username, email, password });
       setUsername('');
       setEmail('');
       setPassword('');
