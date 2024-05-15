@@ -9,7 +9,7 @@ import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom"
 import React, { useMemo } from 'react'
 import Dashboard from "./scenes/dashboard/index"
 import Home from "./scenes/home/index"
-import { Register, Login } from "./scenes/home/userAuth"
+import { Register, Login, UserVerify } from "./scenes/home/userAuth"
 import Layout from "./scenes/layout/index"
 import HomeLayout from "./scenes/homeLayout/index"
 
@@ -31,6 +31,7 @@ function App() {
               <Route path="/" element={<Navigate to="/home" replace />}/>
               <Route path="/home" element={<Home/>}/>
               <Route path="/registerUser" element={<Register/>}/>
+              <Route path="/userVerifyMail/:id" element={<UserVerify/>}/>
               <Route path="/login" element={<Login/>}/>
             </Route>
           </Routes>

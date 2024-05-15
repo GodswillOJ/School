@@ -10,6 +10,7 @@ router.use(express.json());
 
 // Route to create a new user
 router.post('/registerUser', insertUser);
+router.post('/userVerifyMail/:id', insertUser);
 
 // Export the router
 export default router;

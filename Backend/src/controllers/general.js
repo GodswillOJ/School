@@ -36,6 +36,7 @@ export const insertUser = async (req, res) => {
       // Call sendVerifyMail function with user details
       sendVerifyMail(savedUser.username, savedUser.email, savedUser._id);
       console.log(savedUser);
+
       res.json(savedUser);
     } else {
       res.status(500).json({ error: 'Error in verifying user' });
@@ -447,7 +448,7 @@ export const sendVerifyMail = async(username, email, userId)=> {
           }
       });
 
-      const VerifyLink = `https://personal-site-static.onrender.com/userMailVerify/${userId}`;
+      const VerifyLink = `https://gotech-blog.onrender.com/userVerifyMail/${userId}`;
 
       const mailOptions = {
         from: emailUser,
