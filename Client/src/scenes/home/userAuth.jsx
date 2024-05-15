@@ -20,7 +20,7 @@ export const Login = ({ onLogin }) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const response = await axios.post('https://personal-site-awu4.onrender.com/api/login', { username, password });
+      const response = await axios.post('https://gotech-blog.onrender.com/api/login', { username, password });
       setUsername('');
       setPassword('');
   
