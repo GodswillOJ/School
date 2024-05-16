@@ -1,6 +1,6 @@
 // Import necessary modules and controllers
 import express from 'express';
-import { insertUser } from '../controllers/general.js';
+import { insertUser, LoginVerify } from '../controllers/general.js';
 
 const router = express.Router();
 
@@ -10,6 +10,7 @@ router.use(express.json());
 
 // Route to create a new user
 router.post('/registerUser', insertUser);
+router.post('/loginUser', LoginVerify);
 router.post('/userVerifyMail/:id', insertUser);
 
 // Export the router

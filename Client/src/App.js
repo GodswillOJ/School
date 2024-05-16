@@ -31,6 +31,7 @@ function App() {
               <Route path="/" element={<Navigate to="/home" replace />}/>
               <Route path="/home" element={<Home/>}/>
               <Route path="/registerUser" element={<Register/>}/>
+              <Route path="/loginUser" element={<Register/>}/>
               <Route path="/userVerifyMail/:id" element={<UserVerify/>}/>
               <Route path="/login" element={<Login/>}/>
             </Route>
