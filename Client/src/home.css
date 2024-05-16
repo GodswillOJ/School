@@ -160,6 +160,12 @@ form div input{
     border-radius: 2px;
 }
 
+/* userVerifyMail */
+.userVerifyMail h3{
+    position: relative;
+    margin-top: 20%;
+}
+
 @media screen and (max-width: 1200px) {
 
     /* .swiper-wrapper{

@@ -176,7 +176,7 @@ const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setP
 export const UserVerify = () => {
   return (
     <>
-      <div>
+      <div className="userVerifyMail">
         <h3>
           Your mail has been verified. Click <Link to="/login">Login</Link> to get redirected to login page
         </h3>
