@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { LightModeOutlined, DarkModeOutlined, Search, SettingsOutlined, ShoppingCart } from '@mui/icons-material'; // Import ShoppingCart icon
+import { LightModeOutlined, DarkModeOutlined, SettingsOutlined, ShoppingCart } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FlexBetween from "./flexBetween";
-import { useDispatch } from "react-redux";
-import { setMode } from "../state/index";
-import { AppBar, IconButton, InputBase, Menu, MenuItem, Toolbar, useTheme, Link } from "@mui/material"; // Added Link from React Router
+import { useDispatch, useSelector } from "react-redux";
+import { setMode, setLoginStatus } from "../state/index";
+import { AppBar, IconButton, Menu, MenuItem, Toolbar, useTheme, Link } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const HomeNavbar = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector(state => state.global.user.isLoggedIn);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuOpen = (event) => {
@@ -19,9 +22,15 @@ const HomeNavbar = () => {
     setAnchorEl(null);
   };
 
-  console.log('Rendering Navbar...'); // Debugging
+  console.log('Rendering Navbar...');
 
   const isDarkMode = theme.palette.mode === "dark";
+
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    dispatch(setLoginStatus(false));
+    navigate('/login');
+  };
 
   return (
     <AppBar 
@@ -36,7 +45,6 @@ const HomeNavbar = () => {
         {/* Left Side */}
         <FlexBetween>
           <div>
-            {/* Wrap "GO_Tech" with Link */}
             <Link href="/home" sx={{ textDecoration: 'none', color: 'inherit' }}>
               <b>GO_Tech</b>
             </Link>
@@ -45,7 +53,6 @@ const HomeNavbar = () => {
 
         {/* Right Side */}
         <FlexBetween gap= "1.5rem">
-          {/* Account Circle Icon with dropdown */}
           <div className='User_nav'>
             <IconButton onClick={handleMenuOpen}>
               <AccountCircleIcon/>
@@ -56,18 +63,24 @@ const HomeNavbar = () => {
               onClose={handleMenuClose}
             >
               <MenuItem onClick={handleMenuClose}>
-                  <Link href="/dashboard" sx={{ textDecoration: 'none' }} color= 'inherit' >Dashboard</Link>
+                <Link href="/dashboard" sx={{ textDecoration: 'none' }} color='inherit'>Dashboard</Link>
               </MenuItem>
               <MenuItem onClick={handleMenuClose}>
                 <ShoppingCart />
               </MenuItem>
-              <MenuItem onClick={handleMenuClose}><Link href="/login" sx={{ textDecoration: 'none', color: 'inherit' }}>Login</Link></MenuItem>
-              <MenuItem onClick={handleMenuClose}><Link href="/registerUser" sx={{ textDecoration: 'none', color: 'inherit' }}>Register</Link></MenuItem>
-              {/* Replace "Cart" text with ShoppingCart icon */}
+              {isLoggedIn ? (
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              ) : [
+                <MenuItem key="login" onClick={handleMenuClose}>
+                  <Link href="/login" sx={{ textDecoration: 'none', color: 'inherit' }}>Login</Link>
+                </MenuItem>,
+                <MenuItem key="register" onClick={handleMenuClose}>
+                  <Link href="/registerUser" sx={{ textDecoration: 'none', color: 'inherit' }}>Register</Link>
+                </MenuItem>
+              ]}
             </Menu>
           </div>
 
-          {/* Button for light/dark mode */}
           <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
               <DarkModeOutlined sx={{ fontSize: "25px" }} />
@@ -76,7 +89,6 @@ const HomeNavbar = () => {
             )}
           </IconButton>
 
-          {/* Button for settings */}
           <IconButton>
             <SettingsOutlined sx={{ fontSize: "25px" }} />
           </IconButton>

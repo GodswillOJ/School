@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedin, faInstagram, faTwitter, faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
-export const Login = ({ onLogin }) => {
+export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -29,9 +29,9 @@ export const Login = ({ onLogin }) => {
       // Set the access token in localStorage instead of cookies
       localStorage.setItem('access_token', response.data.access_token);
       localStorage.setItem('userID', response.data.userID); // Store user ID in localStorage as well
-      onLogin();
-      navigate('/dashboard');
-      window.location.reload();
+      
+      navigate('/');
+      // window.location.reload();
     } catch (error) {
       console.error('Error in verifying user:', error.message);
   
