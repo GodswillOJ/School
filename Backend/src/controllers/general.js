@@ -121,7 +121,7 @@ export const userVerify_Mail = async (req, res) => {
     const updateInfo = await User.updateOne({ _id: id }, { $set: { is_verified: 0 } });
     console.log(updateInfo);
 
-    res.json({ message: 'Your mail has been verified' });
+    res.json({ message: 'Your mail has been verified', userID: updateInfo._id });
   } catch (error) {
     console.error('Mail Verification error:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
