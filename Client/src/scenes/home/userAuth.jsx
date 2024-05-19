@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import {useCookies} from "react-cookie"
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedin, faInstagram, faTwitter, faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
@@ -13,28 +12,30 @@ export const Login = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const [_, setCookies] = useCookies(['access_token']);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null); // Reset error before starting the login process
+
     try {
-      setLoading(true);
       const response = await axios.post('https://gotech-ecommerce.onrender.com/api/loginUser', { username, password });
+
+      // Clear inputs only if login is successful
       setUsername('');
       setPassword('');
-  
+
+      // Store tokens in localStorage
       console.log('Access Token:', response.data.access_token);
-  
-      // Set the access token in localStorage instead of cookies
+      console.log('User Data:', response.data.userData);
       localStorage.setItem('access_token', response.data.access_token);
-      localStorage.setItem('userID', response.data.userID); // Store user ID in localStorage as well
-      
+      localStorage.setItem('userID', response.data.userID);
+
       navigate('/');
-      // window.location.reload();
     } catch (error) {
       console.error('Error in verifying user:', error.message);
-  
+
       if (error.response && error.response.status === 401) {
         setError('Invalid username or password');
       } else {
@@ -44,7 +45,6 @@ export const Login = () => {
       setLoading(false);
     }
   };
-  
 
   return (
     <div className="CounterCont">
@@ -65,7 +65,7 @@ export const Login = () => {
             {loading ? 'Logging in...' : 'Login'}
           </button>
           <p>Already Have an Account
-            <br></br>
+            <br />
             <Link to='/forget-password'>Forget Password</Link>
           </p>
           <div id="redirect_log">
@@ -76,13 +76,13 @@ export const Login = () => {
         {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
       <div id="Footer_Dash">
-          <div>
+        <div>
           <Link to="https://www.linkedin.com/in/godswill-ogono-861802144/"><li><FontAwesomeIcon icon={faLinkedin} /></li></Link>
           <Link to="https://www.twitter.com/"><li><FontAwesomeIcon icon={faTwitter} /></li></Link>
           <Link to="https://www.instagram.com/godswill_oj/"><li><FontAwesomeIcon icon={faInstagram} /></li></Link>
           <Link to="https://api.whatsapp.com/send?phone=2347036744231&text=Hello, more information!"><li><FontAwesomeIcon icon={faWhatsapp} /></li></Link>
           <Link to="https://wwww.facebook.com/"><li><FontAwesomeIcon icon={faFacebook} /></li></Link>
-          </div>
+        </div>
       </div>
     </div>
   );

@@ -113,8 +113,9 @@ export const LoginVerify = async (req, res) => {
 
     // Generate JWT token with user's role
     const token = jwt.sign({ userId: user._id, role }, JWT_Phrase, { expiresIn: '1d' });
+    console.log(user)
 
-    res.json({ access_token: token, userID: user._id });
+    res.json({ access_token: token, userID: user._id, userData: user });
   } catch (error) {
     console.error('Login error:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
