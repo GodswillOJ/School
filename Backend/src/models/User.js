@@ -48,6 +48,7 @@ const userSchema = new  mongoose.Schema({
     country: String,
     occupation: String,
     phoneNumber: String,
+    image: { type: String, required: true},
     // transactions: Array,
     // created: {
     //   type: Date,

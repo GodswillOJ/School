@@ -6,6 +6,111 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedin, faInstagram, faTwitter, faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
+export const Register = () => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [image, setImage] = useState(null); // New state for the image
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleCreateUser = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append('username', username);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('image', image); // Append image to form data
+
+      await axios.post('https://gotech-ecommerce.onrender.com/api/registerUser', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      setUsername('');
+      setEmail('');
+      setPassword('');
+      setImage(null);
+      setLoading(false);
+      alert('User added successfully. Proceed to login!');
+    } catch (error) {
+      console.error('Error adding user:', error.message);
+      setError('Error adding user. Please try again.');
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Form
+      onSubmit={handleCreateUser}
+      username={username}
+      setUsername={setUsername}
+      email={email}
+      setEmail={setEmail}
+      password={password}
+      setPassword={setPassword}
+      image={image}
+      setImage={setImage}
+      label="Register"
+      loading={loading}
+      error={error}
+    />
+  );
+};
+
+const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setPassword, image, setImage, label, loading, error }) => {
+  return (
+    <div className="Register">
+      <div className="CounterCont RegCont">
+        <h2 className="Title">Personal Website</h2>
+        <form className="Counter_Engine" id="registerInput" onSubmit={onSubmit}>
+          <h2>{label}</h2>
+          <div className="user_img">
+            <label>Profile Image:</label>
+            <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+          </div>
+          <div>
+            <label>Username:</label>
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+          </div>
+          <div>
+            <label>Email:</label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div>
+            <label>Password:</label>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <div id="verify_btn">
+            <button type="submit" disabled={loading}>
+              {loading ? 'Creating User...' : label}
+            </button>
+            {label === 'Register' && (
+              <div id="redirect_log">
+                <Link to="/login">Login</Link>
+              </div>
+            )}
+          </div>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+        </form>
+        <div id="Footer_Dash">
+          <div>
+            <Link to="https://www.linkedin.com/in/godswill-ogono-861802144/"><li><FontAwesomeIcon icon={faLinkedin} /></li></Link>
+            <Link to="https://www.twitter.com/"><li><FontAwesomeIcon icon={faTwitter} /></li></Link>
+            <Link to="https://www.instagram.com/godswill_oj/"><li><FontAwesomeIcon icon={faInstagram} /></li></Link>
+            <Link to="https://api.whatsapp.com/send?phone=2347036744231&text=Hello, more information!"><li><FontAwesomeIcon icon={faWhatsapp} /></li></Link>
+            <Link to="https://wwww.facebook.com/"><li><FontAwesomeIcon icon={faFacebook} /></li></Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -82,91 +187,6 @@ export const Login = () => {
           <Link to="https://www.instagram.com/godswill_oj/"><li><FontAwesomeIcon icon={faInstagram} /></li></Link>
           <Link to="https://api.whatsapp.com/send?phone=2347036744231&text=Hello, more information!"><li><FontAwesomeIcon icon={faWhatsapp} /></li></Link>
           <Link to="https://wwww.facebook.com/"><li><FontAwesomeIcon icon={faFacebook} /></li></Link>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const Register = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const handleCreateUser = async (e) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      await axios.post('https://gotech-ecommerce.onrender.com/api/registerUser', { username, email, password });
-      setUsername('');
-      setEmail('');
-      setPassword('');
-      setLoading(false);
-      alert('User added successfully. Proceed to login!');
-    } catch (error) {
-      console.error('Error adding user:', error.message);
-      setError('Error adding user. Please try again.'); // Provide user-friendly feedback
-      setLoading(false);
-    }
-  };
-
-  return (
-    <Form
-      onSubmit={handleCreateUser}
-      username={username}
-      setUsername={setUsername}
-      email={email}
-      setEmail={setEmail}
-      password={password}
-      setPassword={setPassword}
-      label="Register"
-      loading={loading}
-      error={error}
-    />
-  );
-};
-
-const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setPassword, label, loading, error }) => {
-  return (
-    <div className="Register">
-      <div className="CounterCont RegCont">
-        <h2 className="Title">Personal Website</h2>
-        <form className="Counter_Engine" id="registerInput" onSubmit={onSubmit}>
-          <h2>{label}</h2>
-          <div>
-            <label>Username:</label>
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-          </div>
-          <div>
-            <label>Email:</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          </div>
-          <div>
-            <label>Password:</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </div>
-          <div id="verify_btn">
-            <button type="submit" disabled={loading}>
-              {loading ? 'Creating User...' : label}
-            </button>
-            {label === 'Register' && (
-              <div id="redirect_log">
-                <Link to="/login">Login</Link>
-              </div>
-            )}
-          </div>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-        </form>
-        <div id="Footer_Dash">
-          <div>
-            <Link to="https://www.linkedin.com/in/godswill-ogono-861802144/"><li><FontAwesomeIcon icon={faLinkedin} /></li></Link>
-            <Link to="https://www.twitter.com/"><li><FontAwesomeIcon icon={faTwitter} /></li></Link>
-            <Link to="https://www.instagram.com/godswill_oj/"><li><FontAwesomeIcon icon={faInstagram} /></li></Link>
-            <Link to="https://api.whatsapp.com/send?phone=2347036744231&text=Hello, more information!"><li><FontAwesomeIcon icon={faWhatsapp} /></li></Link>
-            <Link to="https://wwww.facebook.com/"><li><FontAwesomeIcon icon={faFacebook} /></li></Link>
-          </div>
         </div>
       </div>
     </div>

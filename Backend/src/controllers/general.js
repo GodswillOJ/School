@@ -25,8 +25,9 @@ export const insertUser = async (req, res) => {
 
   // Hash the password
   const hashedPassword = await bcrypt.hash(password, 10);
+  const image = req.file.filename
 
-  const newUser = new User({ username, email, password: hashedPassword, role: 'user' });
+  const newUser = new User({ username, email, image: image, password: hashedPassword, role: 'user' });
 
   try {
     const savedUser = await newUser.save();
