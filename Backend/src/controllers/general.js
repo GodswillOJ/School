@@ -122,6 +122,18 @@ export const LoginVerify = async (req, res) => {
   }
 };
 
+export const userVerify_Mail = async (req, res) => {
+  try {
+      const id = req.query.id;
+      const updateInfo = await User.updateOne({_id: id},{$set: { is_verified:0 }});
+      console.log(updateInfo);
+      res.json({ message: 'Your Mail has been verified' });
+  } catch (error) {
+    console.error('Mail Verification error:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
 // admin logi verify
 export const AdminLoginVerify = async (req, res) => {
   const { username, password } = req.body;
