@@ -22,8 +22,6 @@ const HomeNavbar = () => {
     setAnchorEl(null);
   };
 
-  console.log('Rendering Navbar...');
-
   const isDarkMode = theme.palette.mode === "dark";
 
   const handleLogout = () => {
@@ -42,17 +40,15 @@ const HomeNavbar = () => {
       }}
     >
       <Toolbar sx={{ justifyContent: "space-between"}}>
-        {/* Left Side */}
         <FlexBetween>
           <div>
-            <Link href="/home" sx={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link href="/" sx={{ textDecoration: 'none', color: 'inherit' }}>
               <b>GO_Tech</b>
             </Link>
           </div>
         </FlexBetween>
 
-        {/* Right Side */}
-        <FlexBetween gap= "1.5rem">
+        <FlexBetween gap="1.5rem">
           <div className='User_nav'>
             <IconButton onClick={handleMenuOpen}>
               <AccountCircleIcon/>
@@ -63,7 +59,7 @@ const HomeNavbar = () => {
               onClose={handleMenuClose}
             >
               <MenuItem onClick={handleMenuClose}>
-                <Link href="/dashboard" sx={{ textDecoration: 'none' }} color='inherit'>Dashboard</Link>
+                <Link href="/dashboard" sx={{ textDecoration: 'none', color: 'inherit' }}>Dashboard</Link>
               </MenuItem>
               <MenuItem onClick={handleMenuClose}>
                 <ShoppingCart />
@@ -77,7 +73,8 @@ const HomeNavbar = () => {
                 <MenuItem key="register" onClick={handleMenuClose}>
                   <Link href="/registerUser" sx={{ textDecoration: 'none', color: 'inherit' }}>Register</Link>
                 </MenuItem>
-              ]}
+              ]
+              }
             </Menu>
           </div>
 

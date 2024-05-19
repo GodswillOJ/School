@@ -143,7 +143,7 @@ const Sidebar = (
                             <Box display="flex" alignItems="center" gap="0.5rem">
                             <FlexBetween color={theme.palette.secondary.main}>
                                 <Box display="flex" alignItems="center" ml="4rem">
-                                <Link href="/home" sx={{ textDecoration: 'none', color: 'inherit' }}>
+                                <Link href="/" sx={{ textDecoration: 'none', color: 'inherit' }}>
                                     <Typography variant="h4" fontWeight="bold">
                                         GO_Tech
                                     </Typography>

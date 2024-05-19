@@ -14,32 +14,28 @@ import Layout from "./scenes/layout/index"
 import HomeLayout from "./scenes/homeLayout/index"
 
 function App() {
-  // passing theme mode from theme folder to reset themes.
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+
   return (
     <div className="app">
-      {/* wrapping the themes with the baseline */}
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            <Route element={<Layout/>}>
-              <Route path="/dashboard" element={<Dashboard/>}/>
+            <Route element={<HomeLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/registerUser" element={<Register />} />
             </Route>
-            <Route element={<HomeLayout/>}>
-              <Route path="/" element={<Navigate to="/home" replace />}/>
-              <Route path="/home" element={<Home/>}/>
-              <Route path="/registerUser" element={<Register/>}/>
-              <Route path="/loginUser" element={<Register/>}/>
-              <Route path="/userVerifyMail/:id" element={<UserVerify/>}/>
-              <Route path="/login" element={<Login/>}/>
+            <Route element={<Layout />}>
+              <Route path="/dashboard" element={<UserVerify><Dashboard /></UserVerify>} />
             </Route>
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
     </div>
-  )
+  );
 }
 
 export default App;
