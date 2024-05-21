@@ -130,17 +130,15 @@ export const userVerify_Mail = async (req, res) => {
 };
 
 export const fetchUserData = async (req, res) => {
+  const { id } = req.params;
   try {
-    if (req.user) {
-      const user = await User.findById(req.user.userId);
-      const userRole = userData.role;
-      // send userRole in response
-      res.json({ user, userRole });
-    } else {
-      res.json({ message: 'Welcome to your dashboard!' });
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
+    res.json(user);
   } catch (error) {
-    console.error('Error loading home page:', error);
+    console.error('Error fetching user data:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };

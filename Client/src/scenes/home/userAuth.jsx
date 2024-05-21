@@ -123,25 +123,25 @@ export const Login = () => {
     e.preventDefault();
     setLoading(true);
     setError(null); // Reset error before starting the login process
-
+  
     try {
       const response = await axios.post('https://gotech-ecommerce.onrender.com/api/loginUser', { username, password });
-
+  
       // Clear inputs only if login is successful
       setUsername('');
       setPassword('');
-
+  
       // Store tokens in localStorage
       console.log('Access Token:', response.data.access_token);
       console.log('User Data:', response.data.userData);
       localStorage.setItem('access_token', response.data.access_token);
-      localStorage.setItem('userID', response.data.userID);
-
+      localStorage.setItem('userID', response.data.userID); // Ensure userID is stored here
+  
       navigate('/');
       window.location.reload(); // Reload the page after navigation
     } catch (error) {
       console.error('Error in verifying user:', error.message);
-
+  
       if (error.response && error.response.status === 401) {
         setError('Invalid username or password');
       } else {
@@ -151,6 +151,7 @@ export const Login = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="CounterCont">
