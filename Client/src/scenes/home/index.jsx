@@ -42,7 +42,7 @@ const Home = () => {
                 </Box>
                 <div className='Hero_section'>
                     <FlexBetween>
-                        <FlexBetween sx={{ flexDirection: 'column', gap: '1rem', margin: '0 2rem', mp:'1rem' }}>
+                        <FlexBetween sx={{ flexDirection: 'column', gap: '1rem', margin: '0 2rem', mp:'1rem', }}>
                             <Box sx={{ backgroundColor: 'background.alt', borderRadius: '9px', padding: '0.1rem 1.5rem' }}>
                                 <InputBase placeholder='Search....' />
                                 <IconButton>

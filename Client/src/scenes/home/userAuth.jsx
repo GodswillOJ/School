@@ -138,6 +138,7 @@ export const Login = () => {
       localStorage.setItem('userID', response.data.userID);
 
       navigate('/');
+      window.location.reload(); // Reload the page after navigation
     } catch (error) {
       console.error('Error in verifying user:', error.message);
 

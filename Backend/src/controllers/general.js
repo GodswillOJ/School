@@ -129,6 +129,22 @@ export const userVerify_Mail = async (req, res) => {
   }
 };
 
+export const fetchUserData = async (req, res) => {
+  try {
+    if (req.user) {
+      const user = await User.findById(req.user.userId);
+      const userRole = userData.role;
+      // send userRole in response
+      res.json({ user, userRole });
+    } else {
+      res.json({ message: 'Welcome to your dashboard!' });
+    }
+  } catch (error) {
+    console.error('Error loading home page:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 // admin logi verify
 export const AdminLoginVerify = async (req, res) => {
   const { username, password } = req.body;
@@ -185,21 +201,6 @@ export const Home = async (req, res) => {
 };
 
 // Controller function to fetch user data for the dashboard
-export const fetchUserData = async (req, res) => {
-  try {
-    if (req.user) {
-      const userData = await User.findById(req.user.userId);
-      const userRole = userData.role;
-      // send userRole in response
-      res.json({ userData, userRole });
-    } else {
-      res.json({ message: 'Welcome home!' });
-    }
-  } catch (error) {
-    console.error('Error loading home page:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-};
 
 export const InsertCatData = async (req, res) => {
   try {

@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   mode: 'light', // Set default mode
   user: {
-    isLoggedIn: !!localStorage.getItem('access_token'),
+    isLoggedIn: !!localStorage.getItem('access_token'), // Retrieve 'access_token'
+    userID: localStorage.getItem('userID') || null, // Retrieve 'userID' and default to null if not found
     // other properties...
   },
   // other slices of state...
