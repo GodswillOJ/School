@@ -34,7 +34,7 @@ const upload = multer({ storage: storage });
 
 router.post('/registerUser', upload.single('image'), insertUser);
 router.post('/loginUser', LoginVerify);
-router.post('/user/:id', fetchUserData);
+router.get('/user/:id', fetchUserData);
 router.get('/userVerifyMail/:id', userVerify_Mail);
 
 export default router;
