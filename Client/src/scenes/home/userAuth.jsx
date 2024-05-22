@@ -139,7 +139,7 @@ export const Login = () => {
       localStorage.setItem('userID', response.data.userID); // Ensure userID is stored here
   
       navigate('/dashboard');
-      window.location.reload(); // Reload the page after navigation
+       // Reload the page after navigation
     } catch (error) {
       console.error('Error in verifying user:', error.message);
   
