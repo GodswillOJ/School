@@ -7,7 +7,7 @@ const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem('access_token');
 
   if (!token) {
-    return <Navigate to="/registerUser" />;
+    return <Navigate to="/login" />;
   }
 
   // Optionally, you could add more checks like token validation here

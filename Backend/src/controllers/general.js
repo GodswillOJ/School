@@ -132,7 +132,7 @@ export const userVerify_Mail = async (req, res) => {
 export const fetchUserData = async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await User.findById(_id);
+    const user = await User.findById({ _id: id });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
