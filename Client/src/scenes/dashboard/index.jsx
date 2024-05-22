@@ -5,9 +5,6 @@ import { useGetUserQuery } from 'state/api';
 const Dashboard = () => {
   const { userID } = useSelector((state) => state.global.user);
   
-  // Log the user ID to ensure it's fetched correctly
-  console.log('UserProfile component userID:', userID);
-
   const { data, error, isLoading } = useGetUserQuery(userID);
 
   if (isLoading) return <div>Loading...</div>;
@@ -16,9 +13,15 @@ const Dashboard = () => {
   return (
     <div>
       <h1>User Profile</h1>
-      <p>Username: {data.username}</p>
-      <p>Email: {data.email}</p>
-      {/* Render other user data */}
+      {data ? (
+        <>
+          <p>Username: {data.username}</p>
+          <p>Email: {data.email}</p>
+          {/* Render other user data */}
+        </>
+      ) : (
+        <p>No user data available.</p>
+      )}
     </div>
   );
 };
