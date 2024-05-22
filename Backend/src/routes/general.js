@@ -9,6 +9,7 @@ import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { isAuthenticated } from '../middleware/authenticateToken.js'
 
 const router = express.Router();
 
@@ -34,7 +35,7 @@ const upload = multer({ storage: storage });
 
 router.post('/registerUser', upload.single('image'), insertUser);
 router.post('/loginUser', LoginVerify);
-router.get('/user/:id', fetchUserData);
+router.get('/user/:id', isAuthenticated, fetchUserData);
 router.get('/userVerifyMail/:id', userVerify_Mail);
 
 export default router;
