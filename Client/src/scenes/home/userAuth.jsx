@@ -134,6 +134,7 @@ export const Login = () => {
       // Store tokens in localStorage
       console.log('Access Token:', response.data.access_token);
       console.log('User Data:', response.data.userData);
+      console.log('UserID:', response.data.userID);
       localStorage.setItem('access_token', response.data.access_token);
       localStorage.setItem('userID', response.data.userID); // Ensure userID is stored here
   
