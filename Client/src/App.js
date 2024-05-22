@@ -1,17 +1,17 @@
-// import logo from './logo/svg';
-import './App.css';
-import './index.css';
+// src/App.js
+
+import React, { useMemo } from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useSelector } from 'react-redux';
 import { themeSettings } from './theme';
-import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom"
-import React, { useMemo } from 'react'
-import Dashboard from "./scenes/dashboard/index"
-import Home from "./scenes/home/index"
-import { Register, Login, UserVerify } from "./scenes/home/userAuth"
-import Layout from "./scenes/layout/index"
-import HomeLayout from "./scenes/homeLayout/index"
+import Dashboard from "./scenes/dashboard/index";
+import Home from "./scenes/home/index";
+import { Register, Login, UserVerify } from "./scenes/home/userAuth";
+import Layout from "./scenes/layout/index";
+import HomeLayout from "./scenes/homeLayout/index";
+import PrivateRoute from './Components/ProtectRoutes/PrivateRoute';
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -30,7 +30,14 @@ function App() {
               <Route path="/userVerifyMail/:id" element={<UserVerify />} />
             </Route>
             <Route element={<Layout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route 
+                path="/dashboard" 
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                } 
+              />
             </Route>
           </Routes>
         </ThemeProvider>
