@@ -110,7 +110,7 @@ const Sidebar = (
     const navigate = useNavigate();
     const theme = useTheme();
 
-    const userImageUrl = user.image ? `https://gotech-ecommerce.onrender.com/api/public/images/${user.image}` : profile;
+    const userImageUrl = user.image ? `https://gotech-ecommerce.onrender.com/public/images/${user.image}` : profile;
 
 
     useEffect(() => {
