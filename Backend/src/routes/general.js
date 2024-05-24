@@ -16,30 +16,32 @@ const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-router.use('/public', express.static(path.join(__dirname, '../../public/images')));
+router.use(express.urlencoded({ extended: true }));
+router.use(express.json());
 
-// Set up storage for multer
+// Serve static files from the "public" directory
+router.use('/public', express.static(path.resolve(__dirname, '../../public')));
+
+// Setting up multer for image uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const frontendPublicPath = path.join(__dirname, '../../public/images');
-        cb(null, frontendPublicPath);
+        const uploadPath = path.resolve(__dirname, '../../public/images');
+        console.log(`Uploading to: ${uploadPath}`);
+        cb(null, uploadPath);
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));
+        const filename = Date.now() + path.extname(file.originalname);
+        console.log(`Saving file as: ${filename}`);
+        cb(null, filename);
     }
 });
 
+// Storage of image
 const upload = multer({ storage: storage });
-
-// Serve static files (optional if needed for other purposes)
-
-// Example route for handling image uploads
 
 router.post('/registerUser', upload.single('image'), insertUser);
 router.post('/loginUser', LoginVerify);
 router.get('/user/:id', fetchUserData);
 router.get('/userVerifyMail/:id', userVerify_Mail);
-
-
 
 export default router;
