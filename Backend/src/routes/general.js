@@ -1,15 +1,14 @@
 import express from 'express';
-import { 
-    fetchUserData,
-    insertUser, 
-    LoginVerify, 
-    userVerify_Mail 
-} from '../controllers/general.js';
-import multer from 'multer';
 import path from 'path';
+import multer from 'multer';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-// import { isAuthenticated } from '../middleware/authenticateToken.js'
+import {
+    fetchUserData,
+    insertUser,
+    LoginVerify,
+    userVerify_Mail
+} from '../controllers/general.js';
 
 const router = express.Router();
 
@@ -20,7 +19,10 @@ const __dirname = dirname(__filename);
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
-// setting up multer for image uploads
+// Serve static files from the "public" directory
+router.use('/public', express.static(path.join(__dirname, 'public')));
+
+// Setting up multer for image uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, path.join(__dirname, 'public/images'));
@@ -30,7 +32,7 @@ const storage = multer.diskStorage({
     }
 });
 
-// storage of image
+// Storage of image
 const upload = multer({ storage: storage });
 
 router.post('/registerUser', upload.single('image'), insertUser);

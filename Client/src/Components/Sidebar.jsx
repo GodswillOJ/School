@@ -98,6 +98,7 @@ const navItems = [
 const Sidebar = (
 
 {    
+    user,
     drawerWidth,
     isSidebarOpen,
     setIsSidebarOpen,
@@ -108,6 +109,9 @@ const Sidebar = (
     const [ active, setActive ] = useState("")
     const navigate = useNavigate();
     const theme = useTheme();
+
+    const userImageUrl = user.image ? `https://gotech-ecommerce.onrender.com/api/public/images/${user.image}` : profile;
+
 
     useEffect(() => {
         setActive(pathname.substring(1));
@@ -225,7 +229,7 @@ const Sidebar = (
                             <Box
                                 component="img"
                                 alt="profile"
-                                src={profile}
+                                src={userImageUrl}
                                 height="40px"
                                 width="40px"
                                 borderRadius="50%"
@@ -233,7 +237,7 @@ const Sidebar = (
                             />
                             <Box textAlign="left">
                                 <Typography fontWeight="bold" fontSize="0.9rem" sx={{ color: theme.palette.secondary[100] }}>
-                                    God'swill
+                                    {user.username}
                                 </Typography>
                                 <Typography fontSize="0.8rem" sx={{ color: theme.palette.secondary[300] }}>
                                     Username
