@@ -31,10 +31,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Middleware to parse JSON and urlencoded form data
-router.use(express.json());
-router.use(express.urlencoded({ extended: true }));
-
 // Serve static files (optional if needed for other purposes)
 
 // Example route for handling image uploads
