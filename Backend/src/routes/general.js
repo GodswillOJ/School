@@ -20,15 +20,19 @@ router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
 // Serve static files from the "public" directory
-router.use('/public', express.static(path.join(__dirname, '../../public'))); // Adjust the path to point to the root level
+router.use('/public', express.static(path.resolve(__dirname, '../../public')));
 
 // Setting up multer for image uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, '../../public/images')); // Adjust the path to point to the root level
+        const uploadPath = path.resolve(__dirname, '../../public/images');
+        console.log(`Uploading to: ${uploadPath}`);
+        cb(null, uploadPath);
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));
+        const filename = Date.now() + path.extname(file.originalname);
+        console.log(`Saving file as: ${filename}`);
+        cb(null, filename);
     }
 });
 
