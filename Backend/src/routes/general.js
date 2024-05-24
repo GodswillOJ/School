@@ -16,6 +16,8 @@ const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+router.use('/public', express.static(path.join(__dirname, '../../public/images')));
+
 // Set up storage for multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -34,7 +36,6 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 // Serve static files (optional if needed for other purposes)
-router.use('/public', express.static(path.join(__dirname, '../../public/images')));
 
 // Example route for handling image uploads
 
