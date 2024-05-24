@@ -58,6 +58,7 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
     const theme = useTheme();
 
     const userImageUrl = user.image ? `https://gotech-ecommerce.onrender.com/public/images/${user.image}` : profile;
+    console.log(userImageUrl)
 
     useEffect(() => {
         setActive(pathname.substring(1));
