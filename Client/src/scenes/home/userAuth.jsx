@@ -24,6 +24,8 @@ export const Register = () => {
       formData.append('password', password);
       formData.append('image', image); // Append image to form data
 
+      console.log(image)
+
       await axios.post('https://gotech-ecommerce.onrender.com/api/registerUser', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
