@@ -10,7 +10,7 @@ export const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [image, setImage] = useState(null); // New state for the image
+  const [file, setFile] = useState(null); // New state for the image
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -22,11 +22,11 @@ export const Register = () => {
       formData.append('username', username);
       formData.append('email', email);
       formData.append('password', password);
-      formData.append('image', image); // Append image to form data
+      formData.append('image', file); // Append image to form data
 
-      console.log(image)
+      console.log(file)
 
-      await axios.post('https://gotech-ecommerce.onrender.com/api/registerUser', formData, {
+      await axios.post('/api/registerUser', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -35,7 +35,7 @@ export const Register = () => {
       setUsername('');
       setEmail('');
       setPassword('');
-      setImage(null);
+      setFile(null);
       setLoading(false);
       alert('User added successfully. Proceed to login!');
     } catch (error) {
@@ -54,8 +54,8 @@ export const Register = () => {
       setEmail={setEmail}
       password={password}
       setPassword={setPassword}
-      image={image}
-      setImage={setImage}
+      image={file}
+      setImage={setFile}
       label="Register"
       loading={loading}
       error={error}
@@ -63,7 +63,7 @@ export const Register = () => {
   );
 };
 
-const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setPassword, image, setImage, label, loading, error }) => {
+const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setPassword, file, setFile, label, loading, error }) => {
   return (
     <div className="Register">
       <div className="CounterCont RegCont">
@@ -72,7 +72,7 @@ const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setP
           <h2>{label}</h2>
           <div className="user_img">
             <label>Profile Image:</label>
-            <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+            <input type="file" onChange={(e) => setFile(e.target.files[0])} />
           </div>
           <div>
             <label>Username:</label>

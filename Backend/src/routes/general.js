@@ -31,7 +31,7 @@ const storage = multer.diskStorage({
         cb(null, 'public/images');
     },
     filename: function (req, file, cb) {
-        const filename = Date.now() + path.extname(file.originalname);
+        const filename = file.fieldname + "_" + Date.now() + path.extname(file.originalname);
         console.log(`Saving file as: ${filename}`);
         cb(null, filename);
     }
@@ -40,7 +40,7 @@ const storage = multer.diskStorage({
 // Storage of image
 const upload = multer({ storage: storage });
 
-router.post('/registerUser', upload.single('image'), insertUser);
+router.post('/registerUser', upload.single('file'), insertUser);
 router.post('/loginUser', LoginVerify);
 router.get('/user/:id', fetchUserData);
 router.get('/userVerifyMail/:id', userVerify_Mail);
