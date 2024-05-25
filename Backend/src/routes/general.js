@@ -19,13 +19,13 @@ const __dirname = dirname(__filename);
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
-// Serve static files from the "public" directory
-router.use('/public/images', express.static(path.join(__dirname, '../../public/images')));
+// Serve static files from the "client/src/assets/images" directory
+router.use('/assets', express.static(path.join(__dirname, '../../../Client/src/assets')));
 
 // Setting up multer for image uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../../public/images'));
+    cb(null, path.join(__dirname, '../../../Client/src/assets'));
   },
   filename: function (req, file, cb) {
     const filename = Date.now() + path.extname(file.originalname);
@@ -36,12 +36,6 @@ const storage = multer.diskStorage({
 
 // Storage of image
 const upload = multer({ storage: storage });
-
-// Test route to check image serving
-router.get('/test-image', (req, res) => {
-  const imagePath = path.join(__dirname, '../../public/images/file_1716668352107.jpg'); // Replace with your actual image name
-  res.sendFile(imagePath);
-});
 
 router.post('/registerUser', upload.single('file'), insertUser);
 router.post('/loginUser', LoginVerify);
