@@ -4,10 +4,10 @@ import multer from 'multer';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import {
-    fetchUserData,
-    insertUser,
-    LoginVerify,
-    userVerify_Mail
+  fetchUserData,
+  insertUser,
+  LoginVerify,
+  userVerify_Mail
 } from '../controllers/general.js';
 
 const router = express.Router();
@@ -24,18 +24,24 @@ router.use('/public/images', express.static(path.join(__dirname, '../../public/i
 
 // Setting up multer for image uploads
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, '../../public/images'));
-    },
-    filename: function (req, file, cb) {
-        const filename = file.fieldname + "_" + Date.now() + path.extname(file.originalname);
-        console.log(`Saving file as: ${filename}`);
-        cb(null, filename);
-    }
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '../../public/images'));
+  },
+  filename: function (req, file, cb) {
+    const filename = Date.now() + path.extname(file.originalname);
+    console.log(`Saving file as: ${filename}`);
+    cb(null, filename);
+  }
 });
 
 // Storage of image
 const upload = multer({ storage: storage });
+
+// Test route to check image serving
+router.get('/test-image', (req, res) => {
+  const imagePath = path.join(__dirname, '../../public/images/file_1716668352107.jpg'); // Replace with your actual image name
+  res.sendFile(imagePath);
+});
 
 router.post('/registerUser', upload.single('file'), insertUser);
 router.post('/loginUser', LoginVerify);
