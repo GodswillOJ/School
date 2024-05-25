@@ -22,11 +22,11 @@ export const Register = () => {
       formData.append('username', username);
       formData.append('email', email);
       formData.append('password', password);
-      formData.append('image', file); // Append image to form data
+      formData.append('file', file); // Append image to form data
 
       console.log(file)
 
-      await axios.post('/api/registerUser', formData, {
+      await axios.post('https://gotech-ecommerce.onrender.com/api/registerUser', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -54,8 +54,8 @@ export const Register = () => {
       setEmail={setEmail}
       password={password}
       setPassword={setPassword}
-      image={file}
-      setImage={setFile}
+      file={file}
+      setFile={setFile}
       label="Register"
       loading={loading}
       error={error}
