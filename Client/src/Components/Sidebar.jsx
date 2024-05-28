@@ -57,7 +57,7 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
     const navigate = useNavigate();
     const theme = useTheme();
 
-    const userImageUrl = `https://gotech-ecommerce.onrender.com/${user.image}`;
+    const userImageUrl = `https://gotech-ecommerce.onrender.com/public/${user.image}`;
     console.log(userImageUrl);    
 
     useEffect(() => {
