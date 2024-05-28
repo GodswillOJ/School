@@ -19,21 +19,13 @@ const __dirname = dirname(__filename);
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
-
-// Serve static files from the built React app directory
-router.use(express.static(path.join(__dirname, '../Client/build')));
-
-// Serve static files from the "client/src/assets/images" directory
-// router.use('/public', express.static(path.join(__dirname, '../public')));
-router.use('/public', express.static('public'));
+// Serve static files from the "public" directory
+router.use('/public', express.static(path.join(__dirname, '../../public')));
 
 // Setting up multer for image uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    // const uploadPath = path.join(__dirname, '../public');
-    // console.log(`Uploading file to: ${uploadPath}`);
-    // cb(null, uploadPath);
-    cb(null, 'public');
+    cb(null, path.join(__dirname, '../../public'));
   },
   filename: function (req, file, cb) {
     const filename = Date.now() + path.extname(file.originalname);
@@ -49,8 +41,5 @@ router.post('/registerUser', upload.single('file'), insertUser);
 router.post('/loginUser', LoginVerify);
 router.get('/user/:id', fetchUserData);
 router.get('/userVerifyMail/:id', userVerify_Mail);
-router.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../Client/build', 'index.html'));
-});
 
 export default router;
