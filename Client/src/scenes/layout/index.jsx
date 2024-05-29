@@ -14,8 +14,8 @@ const Layout = () => {
   console.log('data', data, error);
   return (
     <Box display={isNonMobile ? "flex" : "block"} width="100%" height="100%">
-      <Sidebar
-        user={data || {}}
+      <Sidebar 
+        user={data || {}} //ensures no break in data fetch
         isNonMobile={isNonMobile}
         drawerWidth="250px"
         isSidebarOpen={isSidebarOpen}
