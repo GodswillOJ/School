@@ -16,7 +16,7 @@ const orderSchema = new Schema({
         },
       productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post',
+        ref: 'Product',
         required: true
         },
       quantity: {

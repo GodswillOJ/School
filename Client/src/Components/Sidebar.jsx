@@ -57,10 +57,7 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
     const navigate = useNavigate();
     const theme = useTheme();
 
-    // getting the userImage
-
     const userImageUrl = `https://gotech-ecommerce.onrender.com/public/${user.image}`;
-    console.log(userImageUrl);    
 
     useEffect(() => {
         setActive(pathname.substring(1));
@@ -112,7 +109,7 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
                                 {navItems.map(({ text, icon }) => {
                                     if (!icon) {
                                         return (
-                                            <Typography key={text} sx={{ m: "2.25rem 0 1rem 3rem" }}>
+                                            <Typography key={text} sx={{ m: "0.25rem 0 1rem 3rem" }}>
                                                 {text}
                                             </Typography>
                                         );
@@ -155,13 +152,14 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
                     </Box>
 
                     {/* User image */}
-                    <Box position="absolute" bottom="2rem">
+                    <Box position="absolute" bottom="-6rem" width='222px'>
                         <Divider />
                         <FlexBetween textTransform="none" gap="1rem" m="1rem 2rem 0 3rem">
                             <Box
                                 component="img"
                                 alt="profile"
                                 src={userImageUrl}
+                                onError={(e) => { e.target.onerror = null; e.target.src = profile; }}
                                 height="40px"
                                 width="40px"
                                 borderRadius="50%"

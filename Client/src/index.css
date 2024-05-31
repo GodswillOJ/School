@@ -19,3 +19,10 @@
 .MuiBox-root{
     overflow-x: hidden;
 }
+
+/* App Product Page */
+
+.prod_name{
+    display: flex;
+    position: relative;
+}

@@ -1,7 +1,11 @@
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema;
-const PostSchema = new Schema({
+const ProductSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
     title: {
         type: String,
         required: true
@@ -35,7 +39,7 @@ const PostSchema = new Schema({
     category:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
-        required: true
+        // required: true
     },
     richDescription:{
         type: String,
@@ -77,6 +81,6 @@ const PostSchema = new Schema({
 });
 
 
-const Post = mongoose.model('Post', PostSchema);
+const Product = mongoose.model('Product', ProductSchema);
 
-module.exports = Post
+module.exports = Product
