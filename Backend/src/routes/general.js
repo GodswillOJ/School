@@ -44,6 +44,6 @@ router.get('/user/:id', fetchUserData);
 router.get('/userVerifyMail/:id', userVerify_Mail);
 
 // getting user products
-router.get('/add_product', NewProduct)
+router.get('/add_product', upload.single('file'), NewProduct)
 
 export default router;

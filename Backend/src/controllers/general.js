@@ -1,4 +1,5 @@
-import { Product, User } from '../models/User.js';
+import { Post, User } from '../models/User.js';
+import { Product } from '../models/productSchema.js';
 import { Category, Message, MessageModel } from '../models/category.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
