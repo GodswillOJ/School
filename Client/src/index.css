@@ -17,12 +17,25 @@
 }
 
 .MuiBox-root{
-    overflow-x: hidden;
+    /* overflow-x: hidden;   */
+    overflow: hidden;  
 }
 
 /* App Product Page */
 
-.prod_name{
+#productForm form #prod_name {
     display: flex;
-    position: relative;
-}
+    /* flex-direction: column; */
+    gap: 10px; /* Optional: Add gap between inputs */
+  }
+  
+  #prod_name span {
+    width: 100%;
+  }
+  
+  #prod_name input {
+    width: 100%;
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width */
+    padding: 10px; /* Optional: Add padding for better appearance */
+  }
+  
