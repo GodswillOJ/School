@@ -85,8 +85,8 @@ const AddProduct = () => {
             <label>Product Image</label>
           </div>
           
-          <div>
-            <input type="text" value={price} onChange={(e) => setDetail(e.target.price)} required />
+          <div className="Prod_Price">
+            <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required />
             <label>price</label>
           </div>
 
