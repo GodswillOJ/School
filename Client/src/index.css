@@ -39,3 +39,14 @@
     padding: 10px; /* Optional: Add padding for better appearance */
   }
   
+  .User_Ids{
+    /* margin-left: 6.8rem; */
+    text-align: center;
+  }
+  #add_ProdStat{
+    border: 2px solid #000;
+    width: 120px;
+    margin-left: 6.8rem;
+    padding-left: 15px;
+    border-radius:5px;
+  }

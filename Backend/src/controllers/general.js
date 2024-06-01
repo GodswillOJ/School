@@ -46,6 +46,30 @@ export const insertUser = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+ export const NewProduct = async (req, res) => {
+  const {name, title, detail, price } = req.body;
+
+  // validate inputs
+  if (!name || !title || !detail || !price) {
+    return res.status(400).json({ error: 'Name, Title, details, and price are required' });
+  }
+  const image = req.file.filename
+
+  const newProduct = new Product({ name, image: image, title, price, detail});
+
+  try {
+    const savedProduct = await newProduct.save();
+    if (savedProduct) {
+      console.log(savedProduct);
+      res.json(savedProduct);
+    } else{
+      res.status(500).json({ error: 'error in adding Product' })
+    }
+  } catch (error) {
+    console.Console.error('Error adding Product:', error);
+    res.status(500).json({ error: 'Internal server error' })
+  }
+ }
 
 // inserting Admin
 export const insertAdmin = async (req, res) => {

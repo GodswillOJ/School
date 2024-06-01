@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useGetUserQuery } from 'state/api';
 import 'index.css'
 
@@ -53,15 +54,19 @@ const AddProduct = () => {
 
   return (
     <div>
-      <h1>User Profile</h1>
-      {data ? (
-        <>
-          <p>Username: {data.username}</p>
-          <p>Email: {data.email}</p>
-        </>
-      ) : (
-        <p>No user data available.</p>
-      )}
+      <div id='add_ProdStat'>
+        <Link to="/add_productStat" style={{ textDecoration: 'none', color: 'inherit' }}><b>Add Product Statistic</b></Link>
+      </div>
+      <div className="User_Ids">
+        {data ? (
+          <>
+            <p>Hi, {data.username}</p>
+            <p><b>Add Product</b></p>
+          </>
+        ) : (
+          <p>No user data available.</p>
+        )}
+      </div>
       <div id="productForm">
         <form onSubmit={handleNewProduct}>
           <div id="prod_name">

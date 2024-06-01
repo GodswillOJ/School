@@ -7,7 +7,8 @@ import {
   fetchUserData,
   insertUser,
   LoginVerify,
-  userVerify_Mail
+  userVerify_Mail,
+  NewProduct
 } from '../controllers/general.js';
 
 const router = express.Router();
@@ -41,5 +42,8 @@ router.post('/registerUser', upload.single('file'), insertUser);
 router.post('/loginUser', LoginVerify);
 router.get('/user/:id', fetchUserData);
 router.get('/userVerifyMail/:id', userVerify_Mail);
+
+// getting user products
+router.get('/add_product', NewProduct)
 
 export default router;
