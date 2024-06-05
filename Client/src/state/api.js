@@ -19,7 +19,7 @@ export const api = createApi({
 
     // getting products API
     getProducts: build.query({
-      query: () => 'client/user/products',
+      query: () => '/user/products',
       providesTags: ['Products'],
     }),
   }),
