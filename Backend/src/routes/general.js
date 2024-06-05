@@ -8,8 +8,11 @@ import {
   insertUser,
   LoginVerify,
   userVerify_Mail,
-  NewProduct
+  NewProduct,
 } from '../controllers/general.js';
+import {
+  Products
+} from '../controllers/client.js';
 
 const router = express.Router();
 
@@ -43,7 +46,10 @@ router.post('/loginUser', LoginVerify);
 router.get('/user/:id', fetchUserData);
 router.get('/userVerifyMail/:id', userVerify_Mail);
 
-// getting user products
-router.get('/add_product', upload.single('file'), NewProduct)
+// Change the following line to use POST instead of GET
+router.post('/add_product', upload.single('file'), NewProduct);
+
+
+
 
 export default router;

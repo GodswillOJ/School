@@ -47,30 +47,6 @@ export const insertUser = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
- export const NewProduct = async (req, res) => {
-  const {name, title, detail, price } = req.body;
-
-  // validate inputs
-  if (!name || !title || !detail || !price) {
-    return res.status(400).json({ error: 'Name, Title, details, and price are required' });
-  }
-  const image = req.file.filename
-
-  const newProduct = new Product({ name, image: image, title, price, detail});
-
-  try {
-    const savedProduct = await newProduct.save();
-    if (savedProduct) {
-      console.log(savedProduct);
-      res.json(savedProduct);
-    } else{
-      res.status(500).json({ error: 'error in adding Product' })
-    }
-  } catch (error) {
-    console.Console.error('Error adding Product:', error);
-    res.status(500).json({ error: 'Internal server error' })
-  }
- }
 
 // inserting Admin
 export const insertAdmin = async (req, res) => {
@@ -107,7 +83,6 @@ export const insertAdmin = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 // user login
 
 export const LoginVerify = async (req, res) => {
@@ -224,6 +199,32 @@ export const Home = async (req, res) => {
   }
 };
 
+export const NewProduct = async (req, res) => {
+  const { name, title, detail, price, author } = req.body;
+
+  // validate inputs
+  if (!name || !title || !detail || !price || !author) {
+    return res.status(400).json({ error: 'Name, Title, details, price, and author are required' });
+  }
+  const image = req.file.filename;
+
+  const newProduct = new Product({ name, image: image, title, price, details: detail, author });
+
+  try {
+    const savedProduct = await newProduct.save();
+    if (savedProduct) {
+      console.log(savedProduct);
+      res.json(savedProduct);
+    } else {
+      res.status(500).json({ error: 'error in adding Product' });
+    }
+  } catch (error) {
+    console.log('Error adding Product:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+
 // Controller function to fetch user data for the dashboard
 
 export const InsertCatData = async (req, res) => {
@@ -294,24 +295,6 @@ export const fetchCatData = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
-export const insertCourseInformation = async (req, res) => {
-  try {
-    const category = await Category.find()
-    if (category) {
-      console.log(category)
-      res.json(category)
-    } else {
-      console.error('Error is displaying category')
-      res.status(500).json({error: 'Error in fetching category'})
-    }
-  } catch (error) {
-    console.error('Error at backend Server category controller:', error);
-    res.status(500).json({ error: 'Internal Server Error Category Controller' });
-  }
-
-};
-
 
 // For verify mail
 const port = process.env.PORT

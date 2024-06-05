@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { themeSettings } from './theme';
 import Dashboard from "./scenes/dashboard/index";
 import AddProduct from "./scenes/dashboard/addProducts";
+import Products from "./scenes/dashboard/addProductStat";
 import Home from "./scenes/home/index";
 import { Register, Login, UserVerify } from "./scenes/home/userAuth";
 import Layout from "./scenes/layout/index";
@@ -44,6 +45,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <AddProduct />
+                  </PrivateRoute>
+                } 
+              />
+              <Route 
+                path="/user/products" 
+                element={
+                  <PrivateRoute>
+                    <Products />
                   </PrivateRoute>
                 } 
               />

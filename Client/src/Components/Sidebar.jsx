@@ -35,20 +35,20 @@ import FlexBetween from './flexBetween';
 import profile from '../assets/profile.jpg';
 
 const navItems = [
-    { text: "dashboard", icon: <HomeOutlined /> }, 
+    { text: "dashboard", icon: <HomeOutlined />, path: "/dashboard" },
     { text: "Client Operand", icon: null },
-    { text: "Products", icon: <ShoppingCartOutlined /> },
-    { text: "Customers", icon: <Groups2Outlined /> },
-    { text: "Transactions", icon: <ReceiptLongOutlined /> },
-    { text: "Geography", icon: <PublicOutlined /> },
+    { text: "Products", icon: <ShoppingCartOutlined />, path: "/user/products" },
+    { text: "Customers", icon: <Groups2Outlined />, path: "/customers" },
+    { text: "Transactions", icon: <ReceiptLongOutlined />, path: "/transactions" },
+    { text: "Geography", icon: <PublicOutlined />, path: "/geography" },
     { text: "Sales", icon: null },
-    { text: "Overview", icon: <PointOfSaleOutlined /> },
-    { text: "Daily", icon: <TodayOutlined /> },
-    { text: "Monthly", icon: <CalendarMonthOutlined /> },
-    { text: "Breakdown", icon: <PieChartOutlined /> },
+    { text: "Overview", icon: <PointOfSaleOutlined />, path: "/overview" },
+    { text: "Daily", icon: <TodayOutlined />, path: "/daily" },
+    { text: "Monthly", icon: <CalendarMonthOutlined />, path: "/monthly" },
+    { text: "Breakdown", icon: <PieChartOutlined />, path: "/breakdown" },
     { text: "Management", icon: null },
-    { text: "Admin", icon: <AdminPanelSettingsOutlined /> },
-    { text: "Performance", icon: <TrendingUpOutlined /> },
+    { text: "Admin", icon: <AdminPanelSettingsOutlined />, path: "/admin" },
+    { text: "Performance", icon: <TrendingUpOutlined />, path: "/performance" },
 ];
 
 const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobile }) => {
@@ -106,7 +106,7 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
                                 </Box>
                             </FlexBetween>
                             <List>
-                                {navItems.map(({ text, icon }) => {
+                                {navItems.map(({ text, icon, path }) => {
                                     if (!icon) {
                                         return (
                                             <Typography key={text} sx={{ m: "0.25rem 0 1rem 3rem" }}>
@@ -121,7 +121,7 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
                                         <ListItem key={text} disablePadding>
                                             <ListItemButton
                                                 onClick={() => {
-                                                    navigate(`/${lcText}`);
+                                                    navigate(path);
                                                     setActive(lcText);
                                                 }}
                                                 sx={{

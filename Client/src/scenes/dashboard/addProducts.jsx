@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useGetUserQuery } from 'state/api';
-import 'index.css'
+import 'index.css';
 
 const AddProduct = () => {
   const [name, setName] = useState('');
@@ -22,11 +22,13 @@ const AddProduct = () => {
       formData.append('name', name);
       formData.append('title', title);
       formData.append('detail', detail);
+      formData.append('price', price);
       formData.append('file', file);
+      formData.append('author', data._id); // Set author here
 
       console.log(file);
 
-      await axios.post('https://gotech-ecommerce.onrender.com/api/add_product', formData, {
+      await axios.post('/api/add_product', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -55,7 +57,7 @@ const AddProduct = () => {
   return (
     <div>
       <div id='add_ProdStat'>
-        <Link to="/add_productStat" style={{ textDecoration: 'none', color: 'inherit' }}><b>Add Product Statistic</b></Link>
+        <Link to="/user/products" style={{ textDecoration: 'none', color: 'inherit' }}><b>View products</b></Link>
       </div>
       <div className="User_Ids">
         {data ? (
@@ -91,9 +93,12 @@ const AddProduct = () => {
           </div>
 
           <div>
-            <textarea type="text" value={detail} onChange={(e) => setDetail(e.target.price)} required />
+            <textarea type="text" value={detail} onChange={(e) => setDetail(e.target.value)} required />
             <label>Product detail</label>
           </div>
+        
+          {/* Hidden field for author */}
+          <input type="hidden" value={data._id} />
 
           <button type="submit" disabled={loading}>
             {loading ? 'Submitting...' : 'Add Product'}
