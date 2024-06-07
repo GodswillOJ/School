@@ -40,6 +40,7 @@ function App() {
                   </PrivateRoute>
                 } 
               />
+
               <Route 
                 path="/add_product" 
                 element={
@@ -48,6 +49,7 @@ function App() {
                   </PrivateRoute>
                 } 
               />
+              
               <Route 
                 path="/user/products" 
                 element={
