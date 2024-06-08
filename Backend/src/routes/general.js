@@ -6,6 +6,7 @@ import { dirname } from 'path';
 import {
   fetchUserData,
   insertUser,
+  insertAdmin,
   LoginVerify,
   userVerify_Mail,
   NewProduct,
@@ -41,7 +42,8 @@ const storage = multer.diskStorage({
 // Storage of image
 const upload = multer({ storage: storage });
 
-router.post('/registerUser', upload.single('file'), insertUser);
+router.post('/registerUser', upload.single('file'), insertAdmin);
+router.post('/registerClient', upload.single('file'), insertUser);
 router.post('/loginUser', LoginVerify);
 router.get('/user/:id', fetchUserData);
 router.get('/userVerifyMail/:id', userVerify_Mail);

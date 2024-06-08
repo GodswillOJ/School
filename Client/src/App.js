@@ -11,7 +11,9 @@ import AddProduct from "./scenes/dashboard/addProducts";
 import Products from "./scenes/dashboard/addProductStat";
 import Home from "./scenes/home/index";
 import { Register, Login, UserVerify } from "./scenes/home/userAuth";
+import { RegisterClient, loginClient } from "./scenes/client/home/clientLogin";
 import Layout from "./scenes/layout/index";
+import ClientLayout from "./scenes/client/layout/index";
 import HomeLayout from "./scenes/homeLayout/index";
 import PrivateRoute from './Components/ProtectRoutes/PrivateRoute';
 
@@ -28,10 +30,39 @@ function App() {
             <Route element={<HomeLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/registerClient" element={<RegisterClient />} />
               <Route path="/registerUser" element={<Register />} />
               <Route path="/userVerifyMail/:id" element={<UserVerify />} />
             </Route>
             <Route element={<Layout />}>
+              <Route 
+                path="/dashboard" 
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                } 
+              />
+
+              <Route 
+                path="/add_product" 
+                element={
+                  <PrivateRoute>
+                    <AddProduct />
+                  </PrivateRoute>
+                } 
+              />
+              
+              <Route 
+                path="/user/products" 
+                element={
+                  <PrivateRoute>
+                    <Products />
+                  </PrivateRoute>
+                } 
+              />
+            </Route>
+            <Route element={<ClientLayout />}>
               <Route 
                 path="/dashboard" 
                 element={

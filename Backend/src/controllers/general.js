@@ -76,15 +76,15 @@ export const insertAdmin = async (req, res) => {
       console.log(savedUser);
       res.json(savedUser);
     } else {
-      res.status(500).json({ error: 'Error in verifying user' });
+      res.status(500).json({ error: 'Error in verifying admin' });
     }
   } catch (error) {
-    console.error('Error adding user:', error);
+    console.error('Error adding admin:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-// user login
 
+// user login
 export const LoginVerify = async (req, res) => {
   const { username, password } = req.body;
 
@@ -226,7 +226,6 @@ export const NewProduct = async (req, res) => {
 
 
 // Controller function to fetch user data for the dashboard
-
 export const InsertCatData = async (req, res) => {
   try {
     // Fetch user data

@@ -71,7 +71,7 @@ const HomeNavbar = () => {
                   <Link href="/login" sx={{ textDecoration: 'none', color: 'inherit' }}>Login</Link>
                 </MenuItem>,
                 <MenuItem key="register" onClick={handleMenuClose}>
-                  <Link href="/registerUser" sx={{ textDecoration: 'none', color: 'inherit' }}>Register</Link>
+                  <Link href="/registerClient" sx={{ textDecoration: 'none', color: 'inherit' }}>Register</Link>
                 </MenuItem>
               ]
               }
