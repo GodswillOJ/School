@@ -88,7 +88,7 @@ const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setP
           </div>
           <div id="verify_btn">
             <button type="submit" disabled={loading}>
-              {loading ? 'Creating User...' : label}
+              {loading ? 'Creating User...' : "Register"}
             </button>
             {label === 'Register' && (
               <div id="redirect_log">

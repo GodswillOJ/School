@@ -26,7 +26,7 @@ export const Register = () => {
 
       console.log(file)
 
-      await axios.post('https://gotech-ecommerce.onrender.com/api/registerUser', formData, {
+      await axios.post('/api/registerUser', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
