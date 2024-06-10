@@ -6,14 +6,15 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useSelector } from 'react-redux';
 import { themeSettings } from './theme';
+import ClientDashboard from "./scenes/client/dashboard/index";
 import Dashboard from "./scenes/dashboard/index";
 import AddProduct from "./scenes/dashboard/addProducts";
 import Products from "./scenes/dashboard/addProductStat";
 import Home from "./scenes/home/index";
 import { Register, Login, UserVerify } from "./scenes/home/userAuth";
-import { RegisterClient, loginClient } from "./scenes/client/home/clientLogin";
-import Layout from "./scenes/layout/index";
-import ClientLayout from "./scenes/client/layout/index";
+import { RegisterClient, LoginClient } from "./scenes/client/home/clientLogin";
+import Layout from "./scenes/layout/index"; // for admin
+import ClientLayout from "./scenes/client/layout/index"; // for clients navbar and setups
 import HomeLayout from "./scenes/homeLayout/index";
 import PrivateRoute from './Components/ProtectRoutes/PrivateRoute';
 
@@ -30,6 +31,7 @@ function App() {
             <Route element={<HomeLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/client_login" element={<LoginClient />} />
               <Route path="/registerClient" element={<RegisterClient />} />
               <Route path="/registerUser" element={<Register />} />
               <Route path="/userVerifyMail/:id" element={<UserVerify />} />
@@ -64,10 +66,10 @@ function App() {
             </Route>
             <Route element={<ClientLayout />}>
               <Route 
-                path="/dashboard" 
+                path="/clientDashboard" 
                 element={
                   <PrivateRoute>
-                    <Dashboard />
+                    <ClientDashboard />
                   </PrivateRoute>
                 } 
               />

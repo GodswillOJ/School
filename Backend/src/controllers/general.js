@@ -315,7 +315,7 @@ export const sendAdminVerifyMail = async(username, email, userId)=> {
           }
       });
 
-      const VerifyLink = `https://personal-site-static.onrender.com/adminMailVerify/${userId}`;
+      const VerifyLink = `/adminMailVerify/${userId}`;
 
       const mailOptions = {
         from: emailUser,

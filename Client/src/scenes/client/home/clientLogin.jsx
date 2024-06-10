@@ -112,7 +112,7 @@ const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setP
   );
 };
 
-export const Login = () => {
+export const LoginClient = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);

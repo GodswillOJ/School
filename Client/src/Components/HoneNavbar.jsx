@@ -12,6 +12,7 @@ const HomeNavbar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const isLoggedIn = useSelector(state => state.global.user.isLoggedIn);
+  const userRole = useSelector(state => state.global.user.role); // Assuming the role is stored in state.global.user.role
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuOpen = (event) => {
@@ -59,7 +60,9 @@ const HomeNavbar = () => {
               onClose={handleMenuClose}
             >
               <MenuItem onClick={handleMenuClose}>
-                <Link href="/dashboard" sx={{ textDecoration: 'none', color: 'inherit' }}>Dashboard</Link>
+                <Link href={userRole === 'admin' ? '/clientDashboard' : '/dashboard'} sx={{ textDecoration: 'none', color: 'inherit' }}>
+                  Dashboard
+                </Link>
               </MenuItem>
               <MenuItem onClick={handleMenuClose}>
                 <ShoppingCart />
@@ -73,13 +76,12 @@ const HomeNavbar = () => {
                 <MenuItem key="register" onClick={handleMenuClose}>
                   <Link href="/registerClient" sx={{ textDecoration: 'none', color: 'inherit' }}>Register</Link>
                 </MenuItem>
-              ]
-              }
+              ]}
             </Menu>
           </div>
 
           <IconButton onClick={() => dispatch(setMode())}>
-            {theme.palette.mode === "dark" ? (
+            {isDarkMode ? (
               <DarkModeOutlined sx={{ fontSize: "25px" }} />
             ) : (
               <LightModeOutlined sx={{ fontSize: "25px" }} />

@@ -36,7 +36,7 @@ import profile from '../assets/profile.jpg';
 
 const navItems = [
     { text: "dashboard", icon: <HomeOutlined />, path: "/dashboard" },
-    { text: "Client Operand", icon: null },
+    { text: "Client Sidebar", icon: null },
     { text: "Products", icon: <ShoppingCartOutlined />, path: "/user/products" },
     { text: "Customers", icon: <Groups2Outlined />, path: "/customers" },
     { text: "Transactions", icon: <ReceiptLongOutlined />, path: "/transactions" },
