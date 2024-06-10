@@ -87,7 +87,7 @@ export const insertAdmin = async (req, res) => {
 };
 
 // user login
-export const LoginVerify = async (req, res) => {
+export const LoginVerifyUser = async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -106,6 +106,39 @@ export const LoginVerify = async (req, res) => {
     const role = user.role;
 
     if (role !== 'user') {
+      return res.status(403).json({ error: 'Access forbidden for admin users' });
+    }
+
+    const token = jwt.sign({ userId: user._id, role }, JWT_Phrase, { expiresIn: '1d' });
+    console.log(user);
+
+    res.json({ access_token: token, userID: user._id, userData: user });
+  } catch (error) {
+    console.error('Login error:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+// admin login
+export const LoginVerify = async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    const validPassword = await bcrypt.compare(password, user.password);
+
+    if (!validPassword) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    const role = user.role;
+
+    if (role !== 'admin') {
       return res.status(403).json({ error: 'Access forbidden for admin users' });
     }
 
