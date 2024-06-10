@@ -11,6 +11,7 @@ import Dashboard from "./scenes/dashboard/index";
 import AddProduct from "./scenes/dashboard/addProducts";
 import Products from "./scenes/dashboard/addProductStat";
 import Home from "./scenes/home/index";
+import VerifyMail from "./scenes/home/verifyMail";
 import { Register, Login, UserVerify } from "./scenes/home/userAuth";
 import { RegisterClient, LoginClient } from "./scenes/client/home/clientLogin";
 import Layout from "./scenes/layout/index"; // for admin
@@ -35,6 +36,7 @@ function App() {
               <Route path="/registerClient" element={<RegisterClient />} />
               <Route path="/registerUser" element={<Register />} />
               <Route path="/userVerifyMail/:id" element={<UserVerify />} />
+              <Route path="/clientVerifyMail/:id" element={<VerifyMail />} />
             </Route>
             <Route element={<Layout />}>
               <Route 
@@ -75,7 +77,7 @@ function App() {
               />
 
               <Route 
-                path="/add_product" 
+                path="/" 
                 element={
                   <PrivateRoute>
                     <AddProduct />

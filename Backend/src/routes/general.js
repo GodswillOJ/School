@@ -9,6 +9,7 @@ import {
   insertAdmin,
   LoginVerify,
   userVerify_Mail,
+  clientVerify_Mail,
   NewProduct,
 } from '../controllers/general.js';
 import {
@@ -47,6 +48,7 @@ router.post('/registerClient', upload.single('file'), insertUser);
 router.post('/loginUser', LoginVerify);
 router.get('/user/:id', fetchUserData);
 router.get('/userVerifyMail/:id', userVerify_Mail);
+router.get('/clientVerifyMail/:id', clientVerify_Mail);
 
 // Change the following line to use POST instead of GET
 router.post('/add_product', upload.single('file'), NewProduct);

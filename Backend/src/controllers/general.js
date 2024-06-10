@@ -119,7 +119,21 @@ export const LoginVerify = async (req, res) => {
   }
 };
 
+// client and admin verifications.
 export const userVerify_Mail = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateInfo = await User.updateOne({ _id: id }, { $set: { is_verified: 1 } });
+    console.log(updateInfo);
+
+    res.json({ message: 'Your mail has been verified', userID: updateInfo._id });
+  } catch (error) {
+    console.error('Mail Verification error:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+export const clientVerify_Mail = async (req, res) => {
   try {
     const { id } = req.params;
     const updateInfo = await User.updateOne({ _id: id }, { $set: { is_verified: 0 } });
@@ -131,6 +145,7 @@ export const userVerify_Mail = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 export const fetchUserData = async (req, res) => {
   const { id } = req.params;
@@ -302,7 +317,7 @@ const port = process.env.PORT
 const emailUser = process.env.EmailUser
 const emailPassword = process.env.EmailPassword
 
-export const sendAdminVerifyMail = async(username, email, userId)=> {
+export const sendVerifyMail = async(username, email, userId)=> {
   try {
       const transporter = nodemailer.createTransport({
           host: 'smtp.gmail.com',
@@ -315,7 +330,7 @@ export const sendAdminVerifyMail = async(username, email, userId)=> {
           }
       });
 
-      const VerifyLink = `/adminMailVerify/${userId}`;
+      const VerifyLink = `https://gotech-blog.onrender.com/userVerifyMail/${userId}`;
 
       const mailOptions = {
         from: emailUser,
@@ -335,6 +350,42 @@ export const sendAdminVerifyMail = async(username, email, userId)=> {
       console.log(error.message)
   }
 }
+
+export const sendAdminVerifyMail = async(username, email, userId)=> {
+  try {
+      const transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true,
+          requireTLS: true,
+          auth: {
+              user: emailUser,
+              pass: emailPassword
+          }
+      });
+
+      const VerifyLink = `https://gotech-blog.onrender.com/clientVerifyMail/${userId}`;
+
+      const mailOptions = {
+        from: emailUser,
+        to: email,
+        subject: 'Verify Mail Link',
+        html: `<p>Hi ${username},<br/>Please click <a href="${VerifyLink}">here</a> to verify your mail</p>`
+      };
+
+      transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+              console.log(error)
+          } else {
+              console.log('Email has been sent:-', info.response)
+          }
+      })
+  } catch (error) {
+      console.log(error.message)
+  }
+}
+
+
 
 // MessageAdmin
 export const insertOrderInformation = async (req, res) => {
@@ -450,41 +501,6 @@ export const sendUser_MessageMail = async (fullName, userEmail, description) => 
     console.error('Error sending order confirmation email:', error);
   }
 };
-
-
-export const sendVerifyMail = async(username, email, userId)=> {
-  try {
-      const transporter = nodemailer.createTransport({
-          host: 'smtp.gmail.com',
-          port: 465,
-          secure: true,
-          requireTLS: true,
-          auth: {
-              user: emailUser,
-              pass: emailPassword
-          }
-      });
-
-      const VerifyLink = `https://gotech-blog.onrender.com/userVerifyMail/${userId}`;
-
-      const mailOptions = {
-        from: emailUser,
-        to: email,
-        subject: 'Verify Mail Link',
-        html: `<p>Hi ${username},<br/>Please click <a href="${VerifyLink}">here</a> to verify your mail</p>`
-      };
-
-      transporter.sendMail(mailOptions, function(error, info){
-          if (error) {
-              console.log(error)
-          } else {
-              console.log('Email has been sent:-', info.response)
-          }
-      })
-  } catch (error) {
-      console.log(error.message)
-  }
-}
 
 //Reset Password 
 const JWT_SECRET = process.env.JWT_SECRET;
