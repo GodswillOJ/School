@@ -18,7 +18,7 @@ const VerifyMail = () => {
             <h1>User Verify Mail</h1>
             <div>
                 <p>
-                    Email verified please click to redirect to login<Link to='/loginClient'> proceed to login</Link>
+                    Email verified please click to redirect to login<Link to='/loginUser'> proceed to login</Link>
                 </p>
             </div>
         </div>

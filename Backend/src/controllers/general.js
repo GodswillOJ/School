@@ -179,7 +179,6 @@ export const clientVerify_Mail = async (req, res) => {
   }
 };
 
-
 export const fetchUserData = async (req, res) => {
   const { id } = req.params;
   try {

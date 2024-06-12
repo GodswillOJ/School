@@ -92,7 +92,7 @@ const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setP
             </button>
             {label === 'Register' && (
               <div id="redirect_log">
-                <Link to="/login">Login</Link>
+                <Link to="/loginUser">Login</Link>
               </div>
             )}
           </div>
@@ -126,7 +126,7 @@ export const LoginClient = () => {
     setError(null); // Reset error before starting the login process
   
     try {
-      const response = await axios.post('https://gotech-ecommerce.onrender.com/api/loginClient', { username, password });
+      const response = await axios.post('https://gotech-ecommerce.onrender.com/api/loginUser', { username, password });
   
       // Clear inputs only if login is successful
       setUsername('');
@@ -203,7 +203,7 @@ export const UserVerify = () => {
     <>
       <div className="userVerifyMail">
         <h3>
-          Your mail has been verified. Click <Link to="/loginClient">Login</Link> to get redirected to login page
+          Your mail has been verified. Click <Link to="/loginUser">Login</Link> to get redirected to login page
         </h3>
       </div>
     </>

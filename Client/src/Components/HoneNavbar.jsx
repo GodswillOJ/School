@@ -71,7 +71,7 @@ const HomeNavbar = () => {
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               ) : [
                 <MenuItem key="login" onClick={handleMenuClose}>
-                  <Link href="/login" sx={{ textDecoration: 'none', color: 'inherit' }}>Login</Link>
+                  <Link href="/loginUser" sx={{ textDecoration: 'none', color: 'inherit' }}>Login</Link>
                 </MenuItem>,
                 <MenuItem key="register" onClick={handleMenuClose}>
                   <Link href="/registerClient" sx={{ textDecoration: 'none', color: 'inherit' }}>Register</Link>

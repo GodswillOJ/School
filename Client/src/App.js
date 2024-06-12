@@ -11,6 +11,7 @@ import Dashboard from "./scenes/dashboard/index";
 import AddProduct from "./scenes/dashboard/addProducts";
 import Products from "./scenes/dashboard/addProductStat";
 import Home from "./scenes/home/index";
+import AdminHome from "./scenes/home/admin_home";
 import VerifyMail from "./scenes/home/verifyMail";
 import { Register, Login, UserVerify } from "./scenes/home/userAuth";
 import { RegisterClient, LoginClient } from "./scenes/client/home/clientLogin";
@@ -32,9 +33,9 @@ function App() {
             <Route element={<HomeLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/client_login" element={<LoginClient />} />
+              <Route path="/loginUser" element={<LoginClient />} />
               <Route path="/registerClient" element={<RegisterClient />} />
-              <Route path="/registerUser" element={<Register />} />
+              <Route path="/register" element={<Register />} />
               <Route path="/userVerifyMail/:id" element={<UserVerify />} />
               <Route path="/clientVerifyMail/:id" element={<VerifyMail />} />
             </Route>

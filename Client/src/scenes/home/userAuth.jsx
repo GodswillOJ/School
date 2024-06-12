@@ -26,7 +26,7 @@ export const Register = () => {
 
       console.log(file)
 
-      await axios.post('api/registerUser', formData, {
+      await axios.post('https://gotech-ecommerce.onrender.com/api/register', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -127,7 +127,7 @@ export const Login = () => {
     setError(null); // Reset error before starting the login process
   
     try {
-      const response = await axios.post('https://gotech-ecommerce.onrender.com/api/loginUser', { username, password });
+      const response = await axios.post('https://gotech-ecommerce.onrender.com/api/login', { username, password });
   
       // Clear inputs only if login is successful
       setUsername('');
