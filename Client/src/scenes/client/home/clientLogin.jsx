@@ -213,7 +213,7 @@ export const LoginClient = () => {
       try {
         if (isLoggedIn) {
           const accessToken = localStorage.getItem('access_token');
-          const response = await axios.get(`https://gotech-ecommerce.onrender.com/api/userVerifyMail/${id}`, {
+          const response = await axios.get(`https://gotech-ecommerce.onrender.com/api/clientVerifyMail/${id}`, {
             headers: {
               Authorization: `Bearer ${accessToken}`
             }

@@ -178,10 +178,18 @@ export const userVerify_Mail = async (req, res) => {
 export const clientVerify_Mail = async (req, res) => {
   try {
     const { id } = req.params;
-    const updateInfo = await User.updateOne({ _id: id }, { $set: { is_verified: 0 } });
-    console.log(updateInfo);
+    console.log(`Verifying user with ID: ${id}`);
 
-    res.json({ message: 'Your mail has been verified', userID: updateInfo._id });
+    // Perform the update operation
+    const updateInfo = await User.updateOne({ _id: id }, { $set: { is_verified: 0 } });
+
+    if (updateInfo.nModified === 1) {
+      console.log('No document was updated.');
+      return res.status(404).json({ error: 'User not found or already verified.' });
+    }
+
+    console.log('Update successful:', updateInfo);
+    res.json({ message: 'Your mail has been verified', userID: id });
   } catch (error) {
     console.error('Mail Verification error:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
