@@ -362,7 +362,7 @@ export const sendVerifyMail = async(username, email, userId)=> {
           }
       });
 
-      const VerifyLink = `https://gotech-blog.onrender.com/userVerifyMail/${userId}`;
+      const VerifyLink = `https://gotech-blog.onrender.com/clientVerifyMail/${userId}`;
 
       const mailOptions = {
         from: emailUser,
@@ -396,7 +396,7 @@ export const sendAdminVerifyMail = async(username, email, userId)=> {
           }
       });
 
-      const VerifyLink = `https://gotech-blog.onrender.com/clientVerifyMail/${userId}`;
+      const VerifyLink = `https://gotech-blog.onrender.com/userVerifyMail/${userId}`;
 
       const mailOptions = {
         from: emailUser,
