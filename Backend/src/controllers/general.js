@@ -152,14 +152,13 @@ export const LoginVerify = async (req, res) => {
   }
 };
 
-// user verification
 export const userVerify_Mail = async (req, res) => {
   try {
     const { id } = req.params;
     console.log(`Verifying user with ID: ${id}`);
 
-    // Perform the update operation
     const updateInfo = await User.updateOne({ _id: id }, { $set: { is_verified: 1 } });
+    console.log('Update response:', updateInfo);
 
     if (updateInfo.nModified === 0) {
       console.log('No document was updated.');
@@ -173,6 +172,7 @@ export const userVerify_Mail = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 
 export const clientVerify_Mail = async (req, res) => {

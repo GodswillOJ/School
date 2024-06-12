@@ -211,26 +211,21 @@ export const UserVerify = ({ isLoggedIn }) => {
  
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);  // Start loading before the API call
       try {
-        if (isLoggedIn) {
-          const accessToken = localStorage.getItem('access_token');
-          const response = await axios.get(`https://gotech-ecommerce.onrender.com/api/userVerifyMail/${id}`, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`
-            }
-          });
-          console.log('User Data:', response.data);
-        }
+        const response = await axios.get(`https://gotech-ecommerce.onrender.com/api/userVerifyMail/${id}`);
+        console.log('User Data:', response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
         setError(error);
       } finally {
-        setLoading(false);
+        setLoading(false);  // Stop loading after the API call
       }
     };
+  
     fetchData();
-
-  }, [isLoggedIn, id]);
+  }, [id]);
+  
 
 
   if (loading) {
