@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useGetUserQuery } from 'state/api';
 import { Link } from '@mui/material'
 
-const VerifyMail = () => {
+const VerifyClient = () => {
     const { userID } = useSelector((state) => state.global.user);
   
     const { data, error, isLoading } = useGetUserQuery(userID);
@@ -26,4 +26,4 @@ const VerifyMail = () => {
   );
 };
 
-export default VerifyMail;
+export default VerifyClient;

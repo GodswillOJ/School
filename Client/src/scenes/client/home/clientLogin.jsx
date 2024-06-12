@@ -198,7 +198,7 @@ export const LoginClient = () => {
   );
 };
 
-export const UserVerify = () => {
+export const VerifyClient = () => {
   return (
     <>
       <div className="userVerifyMail">

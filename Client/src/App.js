@@ -14,7 +14,7 @@ import Home from "./scenes/home/index";
 import AdminHome from "./scenes/home/admin_home";
 import VerifyMail from "./scenes/home/verifyMail";
 import { Register, Login, UserVerify } from "./scenes/home/userAuth";
-import { RegisterClient, LoginClient } from "./scenes/client/home/clientLogin";
+import { RegisterClient, LoginClient, VerifyClient } from "./scenes/client/home/clientLogin";
 import Layout from "./scenes/layout/index"; // for admin
 import ClientLayout from "./scenes/client/layout/index"; // for clients navbar and setups
 import HomeLayout from "./scenes/homeLayout/index";
@@ -37,7 +37,7 @@ function App() {
               <Route path="/registerClient" element={<RegisterClient />} />
               <Route path="/register" element={<Register />} />
               <Route path="/userVerifyMail/:id" element={<UserVerify />} />
-              <Route path="/clientVerifyMail/:id" element={<VerifyMail />} />
+              <Route path="/clientVerifyMail/:id" element={<VerifyClient />} />
             </Route>
             <Route element={<Layout />}>
               <Route 
