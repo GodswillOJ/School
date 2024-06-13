@@ -199,22 +199,23 @@ export const Login = () => {
   );
 };
 
-export const UserVerify = ({ isLoggedIn }) => {
-  const { token, id } = useParams(); // Extract the token and ID parameters from the URL
+export const UserVerify = () => {
+  const { id } = useParams(); // Extract the token and ID parameters from the URL
+  const [data, setUserData] = useState(null);
+  const [message, setUserMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
 
-  console.log('Token:', token);
   console.log('ID:', id);
 
- 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);  // Start loading before the API call
       try {
         const response = await axios.get(`https://gotech-ecommerce.onrender.com/api/userVerifyMail/${id}`);
         console.log('User Data:', response.data);
+        setUserData(response.data.userID);
+        setUserMessage(response.data.message);
       } catch (error) {
         console.error('Error fetching user data:', error);
         setError(error);
@@ -222,11 +223,9 @@ export const UserVerify = ({ isLoggedIn }) => {
         setLoading(false);  // Stop loading after the API call
       }
     };
-  
+
     fetchData();
   }, [id]);
-  
-
 
   if (loading) {
     return <div>Loading...</div>;
@@ -238,14 +237,15 @@ export const UserVerify = ({ isLoggedIn }) => {
 
   return (
     <div className="VerifyCont">
+      <div>
+        <h1>Admin Verify Mail</h1>
         <div>
-            <h1>Admin Verify Mail</h1>
-            <div>
-                <p>
-                    Email verified please click to redirect to login<Link to='/login'> proceed to login</Link>
-                </p>
-            </div>
+          <p>
+            <b>Hi, {data.userID.username} </b>
+            {message} please click to redirect to login <Link to='/login'>proceed to login</Link>
+          </p>
         </div>
+      </div>
     </div>
   );
 };
