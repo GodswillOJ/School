@@ -198,39 +198,33 @@ export const LoginClient = () => {
   );
 };
 
- export const VerifyClient = ({ isLoggedIn }) => {
-  const { token, id } = useParams(); // Extract the token and ID parameters from the URL
+export const VerifyClient = () => {
+  const { id } = useParams(); // Extract the token and ID parameters from the URL
+  const [data, setUserData] = useState(null);
+  const [message, setUserMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
 
-  console.log('Token:', token);
   console.log('ID:', id);
 
- 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);  // Start loading before the API call
       try {
-        if (isLoggedIn) {
-          const accessToken = localStorage.getItem('access_token');
-          const response = await axios.get(`https://gotech-ecommerce.onrender.com/api/clientVerifyMail/${id}`, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`
-            }
-          });
-          console.log('User Data:', response.data);
-        }
+        const response = await axios.get(`https://gotech-ecommerce.onrender.com/api/clientVerifyMail/${id}`);
+        console.log('User Data:', response.data);
+        setUserData(response.data.userID);
+        setUserMessage(response.data.message);
       } catch (error) {
         console.error('Error fetching user data:', error);
         setError(error);
       } finally {
-        setLoading(false);
+        setLoading(false);  // Stop loading after the API call
       }
     };
+
     fetchData();
-
-  }, [isLoggedIn, id]);
-
+  }, [id]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -241,15 +235,20 @@ export const LoginClient = () => {
   }
 
   return (
-    <div className="VerifyCont">
+    <div id="VerifyCont">
+      <div id="Verify_info">
+        <h1>User Verify Mail</h1>
         <div>
-            <h1>Admin Verify Mail</h1>
-            <div>
-                <p>
-                    Email verified please click to redirect to login<Link to='/loginUser'> proceed to login</Link>
-                </p>
-            </div>
+          {data ? (
+            <p>
+              <b>Hi, {data.username}</b>
+              {message} please click to redirect to login <Link to='/login'>proceed to login</Link>
+            </p>
+          ) : (
+            <p>User data not available</p>
+          )}
         </div>
+      </div>
     </div>
   );
 };
