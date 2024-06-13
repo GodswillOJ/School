@@ -240,12 +240,17 @@ export const UserVerify = () => {
       <div>
         <h1>Admin Verify Mail</h1>
         <div>
-          <p>
-            <b>Hi, {data.userID.username} </b>
-            {message} please click to redirect to login <Link to='/login'>proceed to login</Link>
-          </p>
+          {data ? (
+            <p>
+              <b>Hi, {data.username}</b>
+              {message} please click to redirect to login <Link to='/login'>proceed to login</Link>
+            </p>
+          ) : (
+            <p>User data not available</p>
+          )}
         </div>
       </div>
     </div>
   );
 };
+

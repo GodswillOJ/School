@@ -165,8 +165,9 @@ export const userVerify_Mail = async (req, res) => {
       return res.status(404).json({ error: 'User not found or already verified.' });
     }
 
-    console.log('Update successful:', updateInfo);
-    res.json({ message: 'Your mail has been verified', userID: updateInfo });
+    const user = await User.findById(id);
+    console.log('Update successful:', user);
+    res.json({ message: 'Your mail has been verified', userID: user });
   } catch (error) {
     console.error('Mail Verification error:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
