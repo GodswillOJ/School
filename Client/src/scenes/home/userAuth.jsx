@@ -236,8 +236,8 @@ export const UserVerify = () => {
   }
 
   return (
-    <div className="VerifyCont">
-      <div>
+    <div id="VerifyCont">
+      <div id="Verify_info">
         <h1>Admin Verify Mail</h1>
         <div>
           {data ? (

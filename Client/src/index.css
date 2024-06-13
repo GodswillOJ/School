@@ -54,7 +54,16 @@
     padding: 10px;
   }
 
+  /* Verifying page */
+  #VerifyCont{
+    position: relative;
+    margin: 2rem
+  }
 
+  #Verify_info{
+    position: relative;
+    display: block;
+  }
   /* for scroll */
   /* Custom scrollbar styles */
 .custom-scrollbar {
