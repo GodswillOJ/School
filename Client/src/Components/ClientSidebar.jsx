@@ -35,9 +35,9 @@ import FlexBetween from './flexBetween';
 import profile from '../assets/profile.jpg';
 
 const navItems = [
-    { text: "dashboard", icon: <HomeOutlined />, path: "/dashboard" },
+    { text: "dashboard", icon: <HomeOutlined />, path: "/clientDashboard" },
     { text: "Client Sidebar", icon: null },
-    { text: "Products", icon: <ShoppingCartOutlined />, path: "/user/products" },
+    { text: "Products", icon: <ShoppingCartOutlined />, path: "/user/orders" },
     { text: "Customers", icon: <Groups2Outlined />, path: "/customers" },
     { text: "Transactions", icon: <ReceiptLongOutlined />, path: "/transactions" },
     { text: "Geography", icon: <PublicOutlined />, path: "/geography" },
