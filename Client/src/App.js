@@ -18,6 +18,7 @@ import { RegisterClient, LoginClient, VerifyClient } from "./scenes/client/home/
 import Layout from "./scenes/layout/index"; // for admin
 import ClientLayout from "./scenes/client/layout/index"; // for clients navbar and setups
 import HomeLayout from "./scenes/homeLayout/index";
+import Customers from "./scenes/customers/customer";
 import PrivateRoute from './Components/ProtectRoutes/PrivateRoute';
 
 function App() {
@@ -66,6 +67,16 @@ function App() {
                   </PrivateRoute>
                 } 
               />
+
+              <Route 
+                path="/user/customers" 
+                element={
+                  <PrivateRoute>
+                    <Customers />
+                  </PrivateRoute>
+                } 
+              />
+
             </Route>
             <Route element={<ClientLayout />}>
               <Route 

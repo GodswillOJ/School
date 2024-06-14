@@ -2,6 +2,7 @@
 import express from 'express';
 import {
 Products,
+getCustomers
 } from '../controllers/client.js';
 
 const router = express.Router();
@@ -12,5 +13,6 @@ router.use(express.json());
 
 
 router.get('/user/products', Products)
+router.get('/user/customers', getCustomers)
 
 export default router;

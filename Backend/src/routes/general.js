@@ -8,6 +8,7 @@ import {
   insertUser,
   insertAdmin,
   LoginVerify,
+  LoginVerifyUser,
   userVerify_Mail,
   clientVerify_Mail,
   NewProduct,
@@ -46,7 +47,7 @@ const upload = multer({ storage: storage });
 router.post('/register', upload.single('file'), insertAdmin);
 router.post('/registerClient', upload.single('file'), insertUser);
 router.post('/login', LoginVerify);
-router.post('/loginUser', LoginVerify);
+router.post('/loginUser', LoginVerifyUser);
 router.get('/user/:id', fetchUserData);
 router.get('/userVerifyMail/:id', userVerify_Mail);
 router.get('/clientVerifyMail/:id', clientVerify_Mail);

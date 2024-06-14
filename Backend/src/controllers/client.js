@@ -20,3 +20,13 @@ export const Products = async(req, res) => {
       res.status(404).json({ message: error.message })
     }
   }
+// fetch customers
+export const getCustomers = async(req, res) => {
+    try {
+      const users = await User.find({ role: "user"}).select("-password");
+  
+      return res.status(200).json(users)
+    } catch ( error) {
+      res.status(404).json({ message: error.message })
+    }
+  }

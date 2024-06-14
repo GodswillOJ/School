@@ -185,6 +185,7 @@ export const LoginClient = () => {
 
         {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
+      
       <div id="Footer_Dash">
         <div>
           <Link to="https://www.linkedin.com/in/godswill-ogono-861802144/"><li><FontAwesomeIcon icon={faLinkedin} /></li></Link>
