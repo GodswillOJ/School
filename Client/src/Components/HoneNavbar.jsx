@@ -28,7 +28,7 @@ const HomeNavbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('access_token');
     dispatch(setLoginStatus(false));
-    navigate('/login');
+    navigate('/loginUser');
   };
 
   return (

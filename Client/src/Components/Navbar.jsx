@@ -46,7 +46,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const handleLogout = () => {
     localStorage.removeItem('access_token');
     dispatch(setLoginStatus(false));
-    navigate('/login');
+    navigate('/loginUser');
   };
 
   return (
