@@ -3,7 +3,7 @@ import { Box, useMediaQuery } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Navbar from 'Components/Navbar';
-import ClientSidebar from "Components/Sidebar";
+import ClientSidebar from "Components/ClientSidebar";
 import { useGetUserQuery } from 'state/api';
 
 const ClientLayout = () => {
