@@ -10,6 +10,8 @@ import ClientDashboard from "./scenes/client/dashboard/index";
 import Dashboard from "./scenes/dashboard/index";
 import AddProduct from "./scenes/dashboard/addProducts";
 import Products from "./scenes/dashboard/addProductStat";
+import AddCart from "./scenes/client/cart/addCart";
+import GetCart from "./scenes/client/cart/getCart";
 import Home from "./scenes/home/index";
 import AdminHome from "./scenes/home/admin_home";
 import VerifyMail from "./scenes/home/verifyMail";
@@ -38,6 +40,7 @@ function App() {
               <Route path="/registerClient" element={<RegisterClient />} />
               <Route path="/register" element={<Register />} />
               <Route path="/userVerifyMail/:id" element={<UserVerify />} />
+              <Route path="/user/addCart" element={<AddCart />} />
               <Route path="/clientVerifyMail/:id" element={<VerifyClient />} />
             </Route>
             <Route element={<Layout />}>
@@ -98,10 +101,10 @@ function App() {
               />
               
               <Route 
-                path="/user/products" 
+                path="/user/cart" 
                 element={
                   <PrivateRoute>
-                    <Products />
+                    <GetCart />
                   </PrivateRoute>
                 } 
               />
