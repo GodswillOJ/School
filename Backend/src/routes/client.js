@@ -2,6 +2,7 @@
 import express from 'express';
 import {
 Products,
+Products_Showcase,
 getCustomers
 } from '../controllers/client.js';
 
@@ -13,6 +14,7 @@ router.use(express.json());
 
 
 router.get('/user/products', Products)
+router.get('/user/home', Products_Showcase)
 router.get('/user/customers', getCustomers)
 
 export default router;

@@ -31,7 +31,9 @@ function App() {
     <div className="app">
       <BrowserRouter>
         <ThemeProvider theme={theme}>
+
           <CssBaseline />
+
           <Routes>
             <Route element={<HomeLayout />}>
               <Route path="/" element={<Home />} />
@@ -43,6 +45,7 @@ function App() {
               <Route path="/user/addCart" element={<AddCart />} />
               <Route path="/clientVerifyMail/:id" element={<VerifyClient />} />
             </Route>
+
             <Route element={<Layout />}>
               <Route 
                 path="/dashboard" 
@@ -81,6 +84,7 @@ function App() {
               />
 
             </Route>
+
             <Route element={<ClientLayout />}>
               <Route 
                 path="/clientDashboard" 
@@ -110,6 +114,7 @@ function App() {
               />
             </Route>
           </Routes>
+          
         </ThemeProvider>
       </BrowserRouter>
     </div>

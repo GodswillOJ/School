@@ -30,3 +30,13 @@ export const getCustomers = async(req, res) => {
       res.status(404).json({ message: error.message })
     }
   }
+
+export const Products_Showcase = async (req, res) => {
+    try {
+      const products = await Product.find().select("title image rating price"); // Select only the necessary fields
+      return res.json(products);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+    }
+  }
+  

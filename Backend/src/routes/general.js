@@ -14,7 +14,8 @@ import {
   NewProduct,
 } from '../controllers/general.js';
 import {
-  Products
+  Products,
+  Products_Showcase
 } from '../controllers/client.js';
 
 const router = express.Router();
@@ -44,6 +45,7 @@ const storage = multer.diskStorage({
 // Storage of image
 const upload = multer({ storage: storage });
 
+router.get('/', Products_Showcase);
 router.post('/register', upload.single('file'), insertAdmin);
 router.post('/registerClient', upload.single('file'), insertUser);
 router.post('/login', LoginVerifyUser);
