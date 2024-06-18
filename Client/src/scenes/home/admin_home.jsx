@@ -8,6 +8,9 @@ import 'swiper/css/navigation';
 import { Pagination, Navigation } from 'swiper/modules';
 import FlexBetween from "Components/flexBetween";
 import phone from 'assets/phone.jpg';
+import fan from 'assets/fan.jpg';
+import ac from 'assets/ac.jpg';
+import solar from 'assets//solar_inverter.jpg';
 import room from 'assets/room.jpg';
 import lapp2 from 'assets/lapp2.jpg';
 import axios from 'axios';
@@ -19,12 +22,33 @@ const Home = () => {
     const theme = useTheme();
     const [products, setProducts] = useState([]);
 
+    // Shuffle array utility function
+    const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    };
+
     useEffect(() => {
         // Fetch products from backend
         const fetchProducts = async () => {
             try {
                 const response = await axios.get('https://gotech-ecommerce.onrender.com/api/');
-                setProducts(response.data);
+                const fetchedProducts = response.data;
+
+                // List of images to assign randomly
+                const images = [phone, fan, ac, solar, room, lapp2];
+
+                // Shuffle images and assign to products
+                const shuffledImages = shuffleArray(images.slice());
+                const productsWithImages = fetchedProducts.map((product, index) => ({
+                    ...product,
+                    image: shuffledImages[index % shuffledImages.length] // Assign a random image
+                }));
+
+                setProducts(productsWithImages);
             } catch (error) {
                 console.error('Error fetching products', error);
             }
@@ -35,6 +59,23 @@ const Home = () => {
 
     const toggleDropdown = () => {
         setShowDropdown(!showDropdown);
+    };
+
+    const handleImageError = (event, category) => {
+        switch (category) {
+            case 'Phones':
+                event.target.src = phone;
+                break;
+            case 'Fans':
+                event.target.src = fan;
+                break;
+            case 'ACs':
+                event.target.src = ac;
+                break;
+            default:
+                event.target.src = phone; // default fallback image
+                break;
+        }
     };
 
     return (
@@ -108,10 +149,16 @@ const Home = () => {
                 </div>
             </Box>
 
-            <Box display="flex" flexWrap="wrap" justifyContent="center" gap={4} >
+            <Box display="flex" flexWrap="wrap" justifyContent="center" gap={4}>
                 {products.map(product => (
                     <Card key={product._id} sx={{ maxWidth: 345 }}>
-                        <CardMedia component="img" height="140" image={product.image} alt={product.title} />
+                        <CardMedia
+                            component="img"
+                            height="140"
+                            image={product.image}
+                            alt={product.title}
+                            onError={(e) => handleImageError(e, product.category)}
+                        />
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="div">
                                 {product.title}
@@ -127,6 +174,42 @@ const Home = () => {
                         </CardActions>
                     </Card>
                 ))}
+            </Box>
+
+            {/* New Box container for latest products and browse more products */}
+            <Box mt={4}>
+                <Box display="flex" justifyContent="space-between" mb={2}>
+                <Box textAlign="center" width="100%">
+                        <Typography variant="h4">Browse More Products</Typography>
+                        <Typography variant="h2">Latest Products</Typography>
+                    </Box>
+                </Box>
+                <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gap={2}>
+                    {products.slice(0, 4).map(product => (
+                        <Card key={product._id} sx={{ maxWidth: 345 }}>
+                            <CardMedia
+                                component="img"
+                                height="140"
+                                image={product.image}
+                                alt={product.title}
+                                onError={(e) => handleImageError(e, product.category)}
+                            />
+                            <CardContent>
+                                <Typography gutterBottom variant="h5" component="div">
+                                    {product.title}
+                                </Typography>
+                                <Rating value={product.rating} readOnly />
+                                <Typography variant="body2" color="text.secondary">
+                                    ${product.price.toFixed(2)}
+                                </Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button size="small">Add to Cart</Button>
+                                <Button size="small">View Details</Button>
+                            </CardActions>
+                        </Card>
+                    ))}
+                </Box>
             </Box>
         </div>
     );
