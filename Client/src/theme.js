@@ -40,6 +40,7 @@ export const tokensDark = {
     700: "#997d3d",
     800: "#665429",
     900: "#332a14",
+    1000: '#8e8760',
   },
 };
   
@@ -95,7 +96,7 @@ export const tokensDark = {
               },
               secondary: {
                 ...tokensLight.secondary,
-                main: tokensDark.secondary[600],
+                main: tokensDark.secondary[1000],
                 light: tokensDark.secondary[700],
               },
               neutral: {

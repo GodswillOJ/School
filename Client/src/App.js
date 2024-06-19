@@ -42,7 +42,11 @@ function App() {
               <Route path="/registerClient" element={<RegisterClient />} />
               <Route path="/register" element={<Register />} />
               <Route path="/userVerifyMail/:id" element={<UserVerify />} />
-              <Route path="/user/addCart" element={<AddCart />} />
+              <Route path="/user/addCart"  element={
+                  <PrivateRoute>
+                    <AddCart />
+                  </PrivateRoute>
+                } />
               <Route path="/clientVerifyMail/:id" element={<VerifyClient />} />
             </Route>
 

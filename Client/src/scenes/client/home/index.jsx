@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Box, Typography, IconButton, InputBase, useTheme } from "@mui/material";
-import { LightModeOutlined, DarkModeOutlined, SettingsOutlined, ShoppingCart, Search } from '@mui/icons-material';
+import { LightModeOutlined, DarkModeOutlined, SettingsOutlined, ShoppingCart, Search, ShoppingCartOutlined, CreditCardOutlined, LocalShippingOutlined, BadgeOutlined, Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -21,6 +21,7 @@ const Home = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const theme = useTheme();
     const [products, setProducts] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState(null); // State for the selected product
 
     // Shuffle array utility function
     const shuffleArray = (array) => {
@@ -78,10 +79,18 @@ const Home = () => {
         }
     };
 
+    const handleViewDetails = (product) => {
+        setSelectedProduct(product); // Set the selected product
+    };
+
+    const handleCloseDetails = () => {
+        setSelectedProduct(null); // Clear the selected product
+    };
+
     return (
         <div className='User_home' id="home_a">
             <div className="hero_sec">
-                <Box>
+                <Box mb="1rem">
                     <IconButton onClick={toggleDropdown}>
                         <Typography variant="h4" fontWeight="bold">
                             Explore category
@@ -100,8 +109,23 @@ const Home = () => {
                 <div className='Hero_section'>
                     <FlexBetween>
                         <FlexBetween sx={{ flexDirection: 'column', gap: '1rem', margin: '0 2rem', mp: '1rem' }}>
-                            <Box sx={{ backgroundColor: 'background.alt', borderRadius: '9px', padding: '0.1rem 1.5rem' }}>
-                                <InputBase placeholder='Search....' />
+                            <Box
+                                sx={{
+                                    backgroundColor: 'background.alt',
+                                    borderRadius: '9px',
+                                    padding: '0.1rem 1.5rem',
+                                    width: {
+                                        xs: '100%', // 100% width on extra-small screens
+                                        sm: '80%',  // 80% width on small screens
+                                        md: '100%',  // 60% width on medium screens
+                                        lg: '100%',  // 40% width on large screens
+                                        xl: '150%'   // 30% width on extra-large screens
+                                    }
+                                }}
+                                display="flex"
+                                padding="5px"
+                            >
+                                <InputBase placeholder='Search....' sx={{ width: '100%' }} />
                                 <IconButton>
                                     <Search />
                                 </IconButton>
@@ -169,8 +193,34 @@ const Home = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <Button size="small">Add to Cart</Button>
-                            <Button size="small">View Details</Button>
+                            <Link href="/user/addCart">
+                                <Button 
+                                    size="small" 
+                                    sx={{
+                                        backgroundColor: theme.palette.primary.main, 
+                                        color: theme.palette.primary.contrastText,
+                                        '&:hover': {
+                                            backgroundColor: theme.palette.primary.dark,
+                                        },
+                                    }}
+                                >
+                                    Add to Cart
+                                </Button>
+                            </Link>
+                            
+                            <Button 
+                                size="small" 
+                                sx={{
+                                    backgroundColor: theme.palette.secondary.main, 
+                                    color: theme.palette.secondary.contrastText,
+                                    '&:hover': {
+                                        backgroundColor: theme.palette.secondary.dark,
+                                    },
+                                }}
+                                onClick={() => handleViewDetails(product)} // Event handler for View Details
+                            >
+                                View Details
+                            </Button>
                         </CardActions>
                     </Card>
                 ))}
@@ -179,12 +229,12 @@ const Home = () => {
             {/* New Box container for latest products and browse more products */}
             <Box mt={4}>
                 <Box display="flex" justifyContent="space-between" mb={2}>
-                    <Box textAlign="center">
-                        <Typography variant="h4">Browse More Products</Typography>
+                    <Box textAlign="center" width="100%">
                         <Typography variant="h2">Latest Products</Typography>
+                        <Typography variant="h4">Browse More Products</Typography>
                     </Box>
                 </Box>
-                <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gap={2}>
+                <Box display="flex" flexWrap="wrap" justifyContent="center" gap={2}>
                     {products.slice(0, 4).map(product => (
                         <Card key={product._id} sx={{ maxWidth: 345 }}>
                             <CardMedia
@@ -204,13 +254,161 @@ const Home = () => {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size="small">Add to Cart</Button>
-                                <Button size="small">View Details</Button>
+                                <Link href="/user/addCart">
+                                    <Button 
+                                        size="small" 
+                                        sx={{
+                                            backgroundColor: theme.palette.primary.main, 
+                                            color: theme.palette.primary.contrastText,
+                                            '&:hover': {
+                                                backgroundColor: theme.palette.primary.dark,
+                                            },
+                                        }}
+                                    >
+                                        Add to Cart
+                                    </Button>
+                                </Link>
+                                
+                                <Button 
+                                    size="small" 
+                                    sx={{
+                                        backgroundColor: theme.palette.secondary.main, 
+                                        color: theme.palette.secondary.contrastText,
+                                        '&:hover': {
+                                            backgroundColor: theme.palette.secondary.dark,
+                                        },
+                                    }}
+                                    onClick={() => handleViewDetails(product)} // Event handler for View Details
+                                >
+                                    View Details
+                                </Button>
                             </CardActions>
                         </Card>
                     ))}
                 </Box>
             </Box>
+
+            {/* New Box container for "Why Choose Us" and "Why Us" */}
+            <Box mt={4}>
+                <Box display="flex" justifyContent="space-between" mb={2}>
+                    <Box textAlign="center" width="100%">
+                        <Typography paragraph>Why Choose Us</Typography>
+                        <Typography variant="h2">Why Us</Typography>
+                    </Box>
+                </Box>
+                <Box display="flex" flexWrap="wrap" justifyContent="center" gap={2}>
+                    {[
+                        { icon: <ShoppingCartOutlined />, text: 'We offer endless shopping experience.' },
+                        { icon: <CreditCardOutlined />, text: 'We accept both online and offline payments.' },
+                        { icon: <LocalShippingOutlined />, text: 'We offer the fastest delivery services.' },
+                        { icon: <BadgeOutlined />, text: 'We keep to our policies, and agreements.' }
+                    ].map((item, index) => (
+                        <Box key={index} display="flex" flexDirection="column" alignItems="center">
+                            <Box display="flex" alignItems="center" mb={1}>
+                                {item.icon}
+                            </Box>
+                            <Typography>{item.text}</Typography>
+                        </Box>
+                    ))}
+                </Box>
+            </Box>
+
+            {/* Footer Box container */}
+            <Box 
+                sx={{ 
+                    display: "flex", 
+                    flexDirection: "column", 
+                    alignItems: "center", 
+                    py: 4, 
+                    bgcolor: "background.paper",
+                    mt:"1rem",
+                    width: "100%"
+                }}
+            >
+                <Box display="flex" justifyContent="center" gap={2}>
+                    <IconButton href="https://facebook.com" target="_blank" sx={{ color: "primary.main" }}>
+                        <Facebook />
+                    </IconButton>
+                    <IconButton href="https://twitter.com" target="_blank" sx={{ color: "primary.main" }}>
+                        <Twitter />
+                    </IconButton>
+                    <IconButton href="https://instagram.com" target="_blank" sx={{ color: "primary.main" }}>
+                        <Instagram />
+                    </IconButton>
+                    <IconButton href="https://linkedin.com" target="_blank" sx={{ color: "primary.main" }}>
+                        <LinkedIn />
+                    </IconButton>
+                </Box>
+                <Box mt={2}>
+                    <Typography variant="body2" color="text.secondary">
+                        &copy; 2024, Developer Godswill Ogono
+                    </Typography>
+                </Box>
+            </Box>
+
+            {/* Product Details Box */}
+            {selectedProduct && (
+                <Box 
+                    sx={{ 
+                        position: 'fixed', 
+                        top: 0, 
+                        left: 0, 
+                        width: '100%', 
+                        height: '100%', 
+                        bgcolor: 'rgba(0, 0, 0, 0.5)', 
+                        display: 'flex', 
+                        justifyContent: 'center', 
+                        alignItems: 'center', 
+                        zIndex: 9999 
+                    }}
+                    onClick={handleCloseDetails} // Close the details box on clicking outside
+                >
+                    <Box 
+                        sx={{ 
+                            backgroundColor: 'background.paper', 
+                            padding: 4, 
+                            borderRadius: 2, 
+                            display: 'flex', 
+                            flexDirection: 'row',
+                            gap: 4
+                        }}
+                        onClick={(e) => e.stopPropagation()} // Prevent closing the box when clicking inside
+                    >
+                        <Box>
+                            <CardMedia
+                                component="img"
+                                height="300"
+                                image={selectedProduct.image}
+                                alt={selectedProduct.title}
+                            />
+                        </Box>
+                        <Box display="flex" flexDirection="column" justifyContent="space-between">
+                            <Box>
+                                <Typography variant="h4" gutterBottom>
+                                    {selectedProduct.title}
+                                </Typography>
+                                <Typography variant="body1" paragraph>
+                                    {selectedProduct.description}
+                                </Typography>
+                                <Typography variant="h6" color="text.secondary" gutterBottom>
+                                    ${selectedProduct.price.toFixed(2)}
+                                </Typography>
+                            </Box>
+                            <Button 
+                                sx={{
+                                    backgroundColor: theme.palette.primary.main, 
+                                    color: theme.palette.primary.contrastText,
+                                    '&:hover': {
+                                        backgroundColor: theme.palette.primary.dark,
+                                    },
+                                }}
+                            >
+                                Add to Cart
+                            </Button>
+                        </Box>
+                    </Box>
+                </Box>
+            )}
         </div>
     );
 };

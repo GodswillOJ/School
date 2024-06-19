@@ -7,7 +7,7 @@ body{
 }
 
 .swiper{
-    width: 800px;
+    width: 1000px;
     margin-left: 0;
     margin-top: 1rem;
 }
@@ -36,14 +36,13 @@ h4.css-l795ef-MuiTypography-root{
 
 /* Inside your global CSS or specific CSS file */
 .Hero_section{
-    margin-right: 2rem;
     width: 100%;
 }
 
 .User_home {
     position: relative;
     margin: 0 auto;
-    padding: 20px;
+    /* padding: 20px; */
     z-index: 0;
   }
 
@@ -55,6 +54,7 @@ h4.css-l795ef-MuiTypography-root{
 .hero_sec{
     display: grid;
     width: 100%;
+    padding: 20px;
     gap: 0.5rem;
     grid-template-columns: 1fr 3fr;
 }
@@ -139,7 +139,6 @@ form div{
     position: relative;
     display: flex;
     justify-content: space-between;
-    margin: 13rem 10% 0 10%;
 }
 .CounterCont #Footer_Dash div a{
     list-style-type: none;
@@ -166,20 +165,19 @@ form div input{
     margin-top: 20%;
 }
 
+/* for home button styles */
+
 
 @media screen and (max-width: 1200px) {
 
-    /* .swiper-wrapper{
-        width: 600px;
-    } */
+    .hero_sec {
+        display: block;
+    }
     .cat_dropdown{
         margin: 0 0 0 1rem;
     }
 
-    .User_home {
-        margin: 0 auto;
-        padding: 0;
-      }
+    
 }
 
 @media screen and (max-width: 760px) {
@@ -187,9 +185,7 @@ form div input{
         margin:  10% 0 10% 0;
     }
     .User_home {
-        
         margin: 0 auto;
-        padding: 20px;
       }
 
     .cart_link{

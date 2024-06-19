@@ -1,67 +1,89 @@
-// VerifyLogin.js
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
+import { Box, IconButton, Typography } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLinkedin, faInstagram, faTwitter, faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
 
 export const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [file, setFile] = useState(null); // New state for the image
+  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleCreateUser = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('file', file);
+
     try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append('username', username);
-      formData.append('email', email);
-      formData.append('password', password);
-      formData.append('file', file); // Append image to form data
-
-      console.log(file)
-
       await axios.post('https://gotech-ecommerce.onrender.com/api/register', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       });
-
       setUsername('');
       setEmail('');
       setPassword('');
       setFile(null);
-      setLoading(false);
       alert('User added successfully. Proceed to login!');
     } catch (error) {
-      console.error('Error adding user:', error.message);
       setError('Error adding user. Please try again.');
+    } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Form
-      onSubmit={handleCreateUser}
-      username={username}
-      setUsername={setUsername}
-      email={email}
-      setEmail={setEmail}
-      password={password}
-      setPassword={setPassword}
-      file={file}
-      setFile={setFile}
-      label="Register"
-      loading={loading}
-      error={error}
-    />
+    <div className="Register">
+      <Form
+        onSubmit={handleCreateUser}
+        username={username}
+        setUsername={setUsername}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        file={file}
+        setFile={setFile}
+        label="Register"
+        loading={loading}
+        error={error}
+      />
+      <Footer />
+    </div>
   );
 };
+
+const Footer = () => (
+  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 4, bgcolor: 'background.paper', mt: '1rem', width: '100%' }}>
+    <Box display="flex" justifyContent="center" gap={2}>
+      <IconButton href="https://facebook.com" target="_blank" sx={{ color: 'primary.main' }}>
+        <Facebook />
+      </IconButton>
+      <IconButton href="https://twitter.com" target="_blank" sx={{ color: 'primary.main' }}>
+        <Twitter />
+      </IconButton>
+      <IconButton href="https://instagram.com" target="_blank" sx={{ color: 'primary.main' }}>
+        <Instagram />
+      </IconButton>
+      <IconButton href="https://linkedin.com" target="_blank" sx={{ color: 'primary.main' }}>
+        <LinkedIn />
+      </IconButton>
+    </Box>
+    <Box mt={2}>
+      <Typography variant="body2" color="text.secondary">
+        &copy; 2024, Developer Godswill Ogono
+      </Typography>
+    </Box>
+  </Box>
+);
+
 
 const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setPassword, file, setFile, label, loading, error }) => {
   return (
@@ -99,102 +121,97 @@ const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setP
           {error && <p style={{ color: 'red' }}>{error}</p>}
         </form>
         <div id="Footer_Dash">
-          <div>
-            <Link to="https://www.linkedin.com/in/godswill-ogono-861802144/"><li><FontAwesomeIcon icon={faLinkedin} /></li></Link>
-            <Link to="https://www.twitter.com/"><li><FontAwesomeIcon icon={faTwitter} /></li></Link>
-            <Link to="https://www.instagram.com/godswill_oj/"><li><FontAwesomeIcon icon={faInstagram} /></li></Link>
-            <Link to="https://api.whatsapp.com/send?phone=2347036744231&text=Hello, more information!"><li><FontAwesomeIcon icon={faWhatsapp} /></li></Link>
-            <Link to="https://wwww.facebook.com/"><li><FontAwesomeIcon icon={faFacebook} /></li></Link>
-          </div>
+            {/* Footer Box container */}
+            <Box 
+              sx={{ 
+                  display: "flex", 
+                  flexDirection: "column", 
+                  alignItems: "center", 
+                  py: 4, 
+                  bgcolor: "background.paper",
+                  mt:"1rem",
+                  width: "100%"
+              }}
+          >
+              <Box display="flex" justifyContent="center" gap={2}>
+                  <IconButton href="https://facebook.com" target="_blank" sx={{ color: "primary.main" }}>
+                      <Facebook />
+                  </IconButton>
+                  <IconButton href="https://twitter.com" target="_blank" sx={{ color: "primary.main" }}>
+                      <Twitter />
+                  </IconButton>
+                  <IconButton href="https://instagram.com" target="_blank" sx={{ color: "primary.main" }}>
+                      <Instagram />
+                  </IconButton>
+                  <IconButton href="https://linkedin.com" target="_blank" sx={{ color: "primary.main" }}>
+                      <LinkedIn />
+                  </IconButton>
+              </Box>
+              <Box mt={2}>
+                  <Typography variant="body2" color="text.secondary">
+                      &copy; 2024, Developer Godswill Ogono
+                  </Typography>
+              </Box>
+          </Box>
         </div>
       </div>
     </div>
   );
 };
 
-
 export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(null); // Reset error before starting the login process
-  
+    setError(null);
+
     try {
       const response = await axios.post('https://gotech-ecommerce.onrender.com/api/login', { username, password });
-  
-      // Clear inputs only if login is successful
-      setUsername('');
-      setPassword('');
-  
-      // Store tokens in localStorage
-      console.log('Access Token:', response.data.access_token);
-      console.log('User Data:', response.data.userData);
-      console.log('UserID:', response.data.userID);
       localStorage.setItem('access_token', response.data.access_token);
-      localStorage.setItem('userID', response.data.userID); // Ensure userID is stored here
-  
+      localStorage.setItem('userID', response.data.userID);
       navigate('/dashboard');
       window.location.reload();
-       // Reload the page after navigation
     } catch (error) {
-      console.error('Error in verifying user:', error.message);
-  
-      if (error.response && error.response.status === 401) {
-        setError('Invalid username or password');
-      } else {
-        setError('Error in verifying user. Please try again.');
-      }
+      setError(error.response && error.response.status === 401 ? 'Invalid username or password' : 'Error logging in. Please try again.');
     } finally {
       setLoading(false);
     }
   };
-  
 
   return (
-    <div className="CounterCont">
-      <h2 className="Title">Personal Site</h2>
-      <form onSubmit={handleLogin} className="Counter_Engine" id="registerInput">
+    <div className="Login">
+      <div className="FormContainer">
         <h2>Login</h2>
-        <div>
-          <label>Username:</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-
-        <div id="verify_btn">
-          <button type="submit" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
-          </button>
-          <p>Already Have an Account
-            <br />
-            <Link to='/forget-password'>Forget Password</Link>
-          </p>
-          <div id="redirect_log">
-            <Link to="/registerUser">Register</Link>
+        <form onSubmit={handleLogin}>
+          <div>
+            <label>Username:</label>
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
           </div>
-        </div>
-
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-      </form>
-      <div id="Footer_Dash">
+          <div>
+            <label>Password:</label>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <div>
+            <button type="submit" disabled={loading}>
+              {loading ? 'Logging in...' : 'Login'}
+            </button>
+          </div>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+        </form>
         <div>
-          <Link to="https://www.linkedin.com/in/godswill-ogono-861802144/"><li><FontAwesomeIcon icon={faLinkedin} /></li></Link>
-          <Link to="https://www.twitter.com/"><li><FontAwesomeIcon icon={faTwitter} /></li></Link>
-          <Link to="https://www.instagram.com/godswill_oj/"><li><FontAwesomeIcon icon={faInstagram} /></li></Link>
-          <Link to="https://api.whatsapp.com/send?phone=2347036744231&text=Hello, more information!"><li><FontAwesomeIcon icon={faWhatsapp} /></li></Link>
-          <Link to="https://wwww.facebook.com/"><li><FontAwesomeIcon icon={faFacebook} /></li></Link>
+          <Link to='/forget-password'>Forget Password</Link>
+        </div>
+        <div>
+          <Link to="/register">Register</Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

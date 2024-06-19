@@ -1,10 +1,8 @@
-// VerifyLogin.js
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
+import { Box, IconButton, Typography } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLinkedin, faInstagram, faTwitter, faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
 
 export const RegisterClient = () => {
   const [username, setUsername] = useState('');
@@ -99,13 +97,37 @@ const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setP
           {error && <p style={{ color: 'red' }}>{error}</p>}
         </form>
         <div id="Footer_Dash">
-          <div>
-            <Link to="https://www.linkedin.com/in/godswill-ogono-861802144/"><li><FontAwesomeIcon icon={faLinkedin} /></li></Link>
-            <Link to="https://www.twitter.com/"><li><FontAwesomeIcon icon={faTwitter} /></li></Link>
-            <Link to="https://www.instagram.com/godswill_oj/"><li><FontAwesomeIcon icon={faInstagram} /></li></Link>
-            <Link to="https://api.whatsapp.com/send?phone=2347036744231&text=Hello, more information!"><li><FontAwesomeIcon icon={faWhatsapp} /></li></Link>
-            <Link to="https://wwww.facebook.com/"><li><FontAwesomeIcon icon={faFacebook} /></li></Link>
-          </div>
+            <Box 
+              sx={{ 
+                  display: "flex", 
+                  flexDirection: "column", 
+                  alignItems: "center", 
+                  py: 4, 
+                  bgcolor: "background.paper",
+                  mt:"1rem",
+                  width: "100%"
+              }}
+          >
+              <Box display="flex" justifyContent="center" gap={2}>
+                  <IconButton href="https://facebook.com" target="_blank" sx={{ color: "primary.main" }}>
+                      <Facebook />
+                  </IconButton>
+                  <IconButton href="https://twitter.com" target="_blank" sx={{ color: "primary.main" }}>
+                      <Twitter />
+                  </IconButton>
+                  <IconButton href="https://instagram.com" target="_blank" sx={{ color: "primary.main" }}>
+                      <Instagram />
+                  </IconButton>
+                  <IconButton href="https://linkedin.com" target="_blank" sx={{ color: "primary.main" }}>
+                      <LinkedIn />
+                  </IconButton>
+              </Box>
+              <Box mt={2}>
+                  <Typography variant="body2" color="text.secondary">
+                      &copy; 2024, Developer Godswill Ogono
+                  </Typography>
+              </Box>
+          </Box>
         </div>
       </div>
     </div>
@@ -179,7 +201,7 @@ export const LoginClient = () => {
             <Link to='/forget-password'>Forget Password</Link>
           </p>
           <div id="redirect_log">
-            <Link to="/registerUser">Register</Link>
+            <Link to="/registerClient">Register</Link>
           </div>
         </div>
 
@@ -187,17 +209,51 @@ export const LoginClient = () => {
       </form>
       
       <div id="Footer_Dash">
-        <div>
-          <Link to="https://www.linkedin.com/in/godswill-ogono-861802144/"><li><FontAwesomeIcon icon={faLinkedin} /></li></Link>
-          <Link to="https://www.twitter.com/"><li><FontAwesomeIcon icon={faTwitter} /></li></Link>
-          <Link to="https://www.instagram.com/godswill_oj/"><li><FontAwesomeIcon icon={faInstagram} /></li></Link>
-          <Link to="https://api.whatsapp.com/send?phone=2347036744231&text=Hello, more information!"><li><FontAwesomeIcon icon={faWhatsapp} /></li></Link>
-          <Link to="https://wwww.facebook.com/"><li><FontAwesomeIcon icon={faFacebook} /></li></Link>
-        </div>
+            <Box 
+              sx={{ 
+                  display: "flex", 
+                  flexDirection: "column", 
+                  alignItems: "center", 
+                  py: 4, 
+                  bgcolor: "background.paper",
+                  mt:"1rem",
+                  width: "100%"
+              }}
+          >
+              <Box display="flex" justifyContent="center" gap={2}>
+                  <IconButton href="https://facebook.com" target="_blank" sx={{ color: "primary.main" }}>
+                      <Facebook />
+                  </IconButton>
+                  <IconButton href="https://twitter.com" target="_blank" sx={{ color: "primary.main" }}>
+                      <Twitter />
+                  </IconButton>
+                  <IconButton href="https://instagram.com" target="_blank" sx={{ color: "primary.main" }}>
+                      <Instagram />
+                  </IconButton>
+                  <IconButton href="https://linkedin.com" target="_blank" sx={{ color: "primary.main" }}>
+                      <LinkedIn />
+                  </IconButton>
+              </Box>
+              <Box mt={2}>
+                  <Typography variant="body2" color="text.secondary">
+                      &copy; 2024, Developer Godswill Ogono
+                  </Typography>
+              </Box>
+          </Box>
       </div>
     </div>
   );
 };
+
+// VerifyLogin.js
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import { Link, useParams } from 'react-router-dom';
+// import { Box, IconButton, Typography } from '@mui/material';
+// import { Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
+// import { useNavigate } from "react-router-dom";
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faLinkedin, faInstagram, faTwitter, faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 export const VerifyClient = () => {
   const { id } = useParams(); // Extract the token and ID parameters from the URL
