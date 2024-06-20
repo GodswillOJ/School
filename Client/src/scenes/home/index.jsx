@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Box, Typography, IconButton, InputBase, useTheme } from "@mui/material";
-import { LightModeOutlined, DarkModeOutlined, SettingsOutlined, ShoppingCart, Search, ShoppingCartOutlined, CreditCardOutlined, LocalShippingOutlined, BadgeOutlined, Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
+import { Search, ShoppingCartOutlined, CreditCardOutlined, LocalShippingOutlined, BadgeOutlined, Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -369,8 +369,15 @@ const Home = () => {
                             padding: 4, 
                             borderRadius: 2, 
                             display: 'flex', 
-                            flexDirection: 'row',
-                            gap: 4
+                            flexDirection: 'column', // Display as column by default (for mobile view)
+                            gap: 2,
+                            width: '90%', // Adjusted width for mobile view
+                            maxWidth: 600, // Maximum width for desktop view
+                            [theme.breakpoints.up('sm')]: {
+                                flexDirection: 'row', // Switch to row layout on larger screens
+                                width: 'auto',
+                                display: 'flex', // Ensure display is flex for larger screens
+                            }
                         }}
                         onClick={(e) => e.stopPropagation()} // Prevent closing the box when clicking inside
                     >
@@ -382,7 +389,15 @@ const Home = () => {
                                 alt={selectedProduct.title}
                             />
                         </Box>
-                        <Box display="flex" flexDirection="column" justifyContent="space-between">
+                        <Box 
+                            display="flex" 
+                            flexDirection="column" 
+                            justifyContent="space-between" 
+                            sx={{ 
+                                flexGrow: 1, // Ensure inner box grows to fill available space
+                                marginLeft: { xs: 0, sm: 4 }, // Add left margin on larger screens for spacing
+                            }}
+                        >
                             <Box>
                                 <Typography variant="h4" gutterBottom>
                                     {selectedProduct.title}
@@ -394,19 +409,23 @@ const Home = () => {
                                     ${selectedProduct.price.toFixed(2)}
                                 </Typography>
                             </Box>
-                            <Button 
-                                sx={{
-                                    backgroundColor: theme.palette.primary.main, 
-                                    color: theme.palette.primary.contrastText,
-                                    '&:hover': {
-                                        backgroundColor: theme.palette.primary.dark,
-                                    },
-                                }}
-                            >
-                                Add to Cart
-                            </Button>
+                            <Link href="/user/addCart">
+                                <Button 
+                                    size="small" 
+                                    sx={{
+                                        backgroundColor: theme.palette.primary.main, 
+                                        color: theme.palette.primary.contrastText,
+                                        '&:hover': {
+                                            backgroundColor: theme.palette.primary.dark,
+                                        },
+                                    }}
+                                >
+                                    Add to Cart
+                                </Button>
+                            </Link>
                         </Box>
                     </Box>
+
                 </Box>
             )}
         </div>
