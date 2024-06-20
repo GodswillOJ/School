@@ -19,7 +19,7 @@ const AddToCartForm = ({ product }) => {
         formData.append('quantity', 1);
 
         try {
-            await axios.post('http://localhost:3400/api/user/addCart', formData); // Corrected URL
+            await axios.post('https://gotech-ecommerce.onrender.com/api/user/addCart', formData); // Corrected URL
             alert('Product added to cart successfully!');
         } catch (error) {
             console.error('Error adding product to cart', error);
