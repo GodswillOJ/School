@@ -7,19 +7,19 @@ import { useGetUserQuery } from 'state/api';
 const AddToCartForm = ({ product }) => {
     const theme = useTheme();
     const { userID } = useSelector((state) => state.global.user);
-  
     const { data, error, isLoading } = useGetUserQuery(userID);
+    console.log(data)
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         const formData = new FormData();
-        formData.append('userId', userID);
+        formData.append('userId', data._id);
         formData.append('productId', product._id);
         formData.append('quantity', 1);
 
         try {
-            await axios.post('/api/user/addCart', formData);
+            await axios.post('https://gotech-ecommerce.onrender.com/api/user/addCart', formData);
             alert('Product added to cart successfully!');
         } catch (error) {
             console.error('Error adding product to cart', error);
