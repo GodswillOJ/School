@@ -245,16 +245,6 @@ export const LoginClient = () => {
   );
 };
 
-// VerifyLogin.js
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import { Link, useParams } from 'react-router-dom';
-// import { Box, IconButton, Typography } from '@mui/material';
-// import { Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
-// import { useNavigate } from "react-router-dom";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faLinkedin, faInstagram, faTwitter, faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-
 export const VerifyClient = () => {
   const { id } = useParams(); // Extract the token and ID parameters from the URL
   const [data, setUserData] = useState(null);
