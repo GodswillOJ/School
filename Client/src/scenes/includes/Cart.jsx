@@ -1,18 +1,25 @@
 import React from 'react';
 import axios from 'axios';
 import { Button, useTheme } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { useGetUserQuery } from 'state/api';
 
 const AddToCartForm = ({ product }) => {
     const theme = useTheme();
+    const { userID } = useSelector((state) => state.global.user);
+  
+    const { data, error, isLoading } = useGetUserQuery(userID);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const formData = new FormData(event.target);
-        formData.append('product.quantity', 1); // Add default quantity to form data
+        const formData = new FormData();
+        formData.append('userId', userID);
+        formData.append('productId', product._id);
+        formData.append('quantity', 1);
 
         try {
-            await axios.post('https://gotech-ecommerce.onrender.com/api/user/addCart', formData);
+            await axios.post('/api/user/addCart', formData);
             alert('Product added to cart successfully!');
         } catch (error) {
             console.error('Error adding product to cart', error);
@@ -22,11 +29,6 @@ const AddToCartForm = ({ product }) => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input type="hidden" name="product.image" value={product.image} />
-            <input type="hidden" name="product.title" value={product.title} />
-            <input type="hidden" name="product.price" value={product.price} />
-            <input type="hidden" name="product._id" value={product._id} />
-            <input type="hidden" name="product.quantity" value={1} /> {/* Hidden quantity input */}
             <Button 
                 type="submit" 
                 size="small" 
