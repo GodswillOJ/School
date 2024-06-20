@@ -39,4 +39,37 @@ export const Products_Showcase = async (req, res) => {
       res.status(404).json({ message: error.message });
     }
   }
-  
+
+export const addToCart = async (req, res) => {
+  const { userId, productId, quantity } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+    const product = await Product.findById(productId);
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    const existingCartItemIndex = user.cart.items.findIndex(item => item.productId.toString() === productId);
+
+    if (existingCartItemIndex >= 0) {
+      user.cart.items[existingCartItemIndex].quantity += quantity;
+    } else {
+      user.cart.items.push({
+        name: product.title,
+        productId: product._id,
+        quantity,
+        price: product.price,
+        image: product.image,
+      });
+    }
+
+    user.cart.totalPrice = user.cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+
+    await user.save();
+
+    res.status(200).json({ message: 'Product added to cart successfully', cart: user.cart });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

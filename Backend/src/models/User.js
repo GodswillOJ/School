@@ -25,87 +25,35 @@ const postSchema = new mongoose.Schema({
   }
 });
 
-const userSchema = new  mongoose.Schema({
-    username: { 
-      type: String,
-      required: true,
-      min: 2,
-      max: 100,  
-    },
-    email: { 
-      type: String,
-      required: true,
-      min: 50,
-      unique: true
-    },
-    password: { 
-      type: String,
-      required: true,
-      min: 5,
-    },
-    city: String,
-    state: String,
-    country: String,
-    occupation: String,
-    phoneNumber: String,
-    image: { type: String, required: true},
-    // transactions: Array,
-    // created: {
-    //   type: Date,
-    //   required: true,
-    //   default: Date.now(),
-    // },
-    product:{
-      posts: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
-        // required: true
-      }]
-    },
-    cart: {
-      totalPrice: {type: Number, default: 0},
-      items: [{
-        name: {
-        type: String,
-        required: true
-        },
-      productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
-        required: true
-        },
-      quantity: {
-        type: Number,
-        required: true
-        },
-      price: {
-        type: Number,
-        },
-      image: {
-        type: String,
-        }
-      }]
-    },
-    // orders:[{
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'Order',
-    //   required: true
-    // }],
-    // updatedAt: {
-    //   type: Date, 
-    //   default: Date.now(), 
-    // }, 
-    role: {
-      type: String,
-      enum: ['admin', 'user', 'superadmin'],
-      default: 'user',
-      required: true
-    },
-    is_verified: {
-      type: Number,
-      default: 0
-    },
-},  { timestamps: true })
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, min: 2, max: 100 },
+  email: { type: String, required: true, min: 50, unique: true },
+  password: { type: String, required: true, min: 5 },
+  city: String,
+  state: String,
+  country: String,
+  occupation: String,
+  phoneNumber: String,
+  image: { type: String, required: true },
+  product: {
+    posts: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+    }]
+  },
+  cart: {
+    totalPrice: { type: Number, default: 0 },
+    items: [{
+      name: { type: String, required: true },
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+      quantity: { type: Number, required: true },
+      price: { type: Number },
+      image: { type: String },
+    }]
+  },
+  role: { type: String, enum: ['admin', 'user', 'superadmin'], default: 'user', required: true },
+  is_verified: { type: Number, default: 0 },
+}, { timestamps: true });
 
 
 

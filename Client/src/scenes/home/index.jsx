@@ -10,11 +10,12 @@ import FlexBetween from "Components/flexBetween";
 import phone from 'assets/phone.jpg';
 import fan from 'assets/fan.jpg';
 import ac from 'assets/ac.jpg';
-import solar from 'assets//solar_inverter.jpg';
+import solar from 'assets/solar_inverter.jpg';
 import room from 'assets/room.jpg';
 import lapp2 from 'assets/lapp2.jpg';
 import axios from 'axios';
 import { Card, CardMedia, CardContent, CardActions, Button, Rating } from '@mui/material';
+import AddToCartForm from '../includes/Cart'; // Import the AddToCartForm component
 import 'home.css';
 
 const Home = () => {
@@ -22,6 +23,7 @@ const Home = () => {
     const theme = useTheme();
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null); // State for the selected product
+    console.log(products)
 
     // Shuffle array utility function
     const shuffleArray = (array) => {
@@ -193,20 +195,7 @@ const Home = () => {
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <Link href="/user/addCart">
-                                <Button 
-                                    size="small" 
-                                    sx={{
-                                        backgroundColor: theme.palette.primary.main, 
-                                        color: theme.palette.primary.contrastText,
-                                        '&:hover': {
-                                            backgroundColor: theme.palette.primary.dark,
-                                        },
-                                    }}
-                                >
-                                    Add to Cart
-                                </Button>
-                            </Link>
+                            <AddToCartForm product={product} /> {/* Replace Link with AddToCartForm */}
                             
                             <Button 
                                 size="small" 
@@ -254,20 +243,7 @@ const Home = () => {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Link href="/user/addCart">
-                                    <Button 
-                                        size="small" 
-                                        sx={{
-                                            backgroundColor: theme.palette.primary.main, 
-                                            color: theme.palette.primary.contrastText,
-                                            '&:hover': {
-                                                backgroundColor: theme.palette.primary.dark,
-                                            },
-                                        }}
-                                    >
-                                        Add to Cart
-                                    </Button>
-                                </Link>
+                                <AddToCartForm product={product} /> {/* Replace Link with AddToCartForm */}
                                 
                                 <Button 
                                     size="small" 
@@ -409,23 +385,9 @@ const Home = () => {
                                     ${selectedProduct.price.toFixed(2)}
                                 </Typography>
                             </Box>
-                            <Link href="/user/addCart">
-                                <Button 
-                                    size="small" 
-                                    sx={{
-                                        backgroundColor: theme.palette.primary.main, 
-                                        color: theme.palette.primary.contrastText,
-                                        '&:hover': {
-                                            backgroundColor: theme.palette.primary.dark,
-                                        },
-                                    }}
-                                >
-                                    Add to Cart
-                                </Button>
-                            </Link>
+                            <AddToCartForm product={selectedProduct} /> {/* Replace Link with AddToCartForm */}
                         </Box>
                     </Box>
-
                 </Box>
             )}
         </div>
