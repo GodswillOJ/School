@@ -28,7 +28,7 @@ const AddProduct = () => {
 
       console.log(file);
 
-      await axios.post('/api/add_product', formData, {
+      await axios.post('https://gotech-ecommerce.onrender.com/api/add_product', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
