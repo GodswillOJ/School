@@ -18,7 +18,7 @@ const AddToCartForm = ({ product }) => {
     const formData = { userID: data._id, productId: product._id };
 
     try {
-      await axios.post('/api/user/addCart', formData);
+      await axios.post('https://gotech-ecommerce.onrender.com/api/user/addCart', formData);
       setMessage('Product added to cart successfully!');
       setIsError(false);
     } catch (error) {
