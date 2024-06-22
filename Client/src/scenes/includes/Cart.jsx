@@ -18,7 +18,7 @@ const AddToCartForm = ({ product }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     
-    if (!userID || data) {
+    if (!userID || !data) {
       // Redirect to login if not authenticated
       navigate('/login');
       return;
