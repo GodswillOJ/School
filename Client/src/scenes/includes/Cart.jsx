@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Button, useTheme, Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useGetUserQuery } from 'state/api';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const AddToCartForm = ({ product }) => {
   const theme = useTheme();
@@ -12,11 +13,19 @@ const AddToCartForm = ({ product }) => {
   const { data, error, isLoading } = useGetUserQuery(userID);
   const [message, setMessage] = useState(null);
   const [isError, setIsError] = useState(false);
+  const navigate = useNavigate(); // Use useNavigate hook
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Form data:', { userID: data._id, productId: product._id });
     
+    if (!userID) {
+      // Redirect to login if not authenticated
+      navigate('/login');
+      return;
+    }
+
+    console.log('Form data:', { userID: data._id, productId: product._id });
+
     const formData = { userID: data._id, productId: product._id };
 
     try {
