@@ -31,9 +31,7 @@ function App() {
     <div className="app">
       <BrowserRouter>
         <ThemeProvider theme={theme}>
-
           <CssBaseline />
-
           <Routes>
             <Route element={<HomeLayout />}>
               <Route path="/" element={<Home />} />
@@ -42,83 +40,53 @@ function App() {
               <Route path="/registerClient" element={<RegisterClient />} />
               <Route path="/register" element={<Register />} />
               <Route path="/userVerifyMail/:id" element={<UserVerify />} />
-              <Route path="/user/addCart"  element={
-                  <PrivateRoute>
-                    <AddToCartForm />
-                  </PrivateRoute>
-                } />
+              <Route path="/user/addCart" element={
+                <PrivateRoute>
+                  <AddToCartForm />
+                </PrivateRoute>
+              } />
               <Route path="/clientVerifyMail/:id" element={<VerifyClient />} />
             </Route>
-
             <Route element={<Layout />}>
-              <Route 
-                path="/dashboard" 
-                element={
-                  <PrivateRoute>
-                    <Dashboard />
-                  </PrivateRoute>
-                } 
-              />
-
-              <Route 
-                path="/add_product" 
-                element={
-                  <PrivateRoute>
-                    <AddProduct />
-                  </PrivateRoute>
-                } 
-              />
-              
-              <Route 
-                path="/user/products" 
-                element={
-                  <PrivateRoute>
-                    <Products />
-                  </PrivateRoute>
-                } 
-              />
-
-              <Route 
-                path="/user/customers" 
-                element={
-                  <PrivateRoute>
-                    <Customers />
-                  </PrivateRoute>
-                } 
-              />
-
+              <Route path="/dashboard" element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              } />
+              <Route path="/add_product" element={
+                <PrivateRoute>
+                  <AddProduct />
+                </PrivateRoute>
+              } />
+              <Route path="/user/products" element={
+                <PrivateRoute>
+                  <Products />
+                </PrivateRoute>
+              } />
+              <Route path="/user/customers" element={
+                <PrivateRoute>
+                  <Customers />
+                </PrivateRoute>
+              } />
             </Route>
-
             <Route element={<ClientLayout />}>
-              <Route 
-                path="/clientDashboard" 
-                element={
-                  <PrivateRoute>
-                    <ClientDashboard />
-                  </PrivateRoute>
-                } 
-              />
-
-              <Route 
-                path="/" 
-                element={
-                  <PrivateRoute>
-                    <AddProduct />
-                  </PrivateRoute>
-                } 
-              />
-              
-              <Route 
-                path="/user/cart" 
-                element={
-                  <PrivateRoute>
-                    <GetCart />
-                  </PrivateRoute>
-                } 
-              />
+              <Route path="/clientDashboard" element={
+                <PrivateRoute>
+                  <ClientDashboard />
+                </PrivateRoute>
+              } />
+              <Route path="/" element={
+                <PrivateRoute>
+                  <AddProduct />
+                </PrivateRoute>
+              } />
+              <Route path="/user/cart" element={
+                <PrivateRoute>
+                  <GetCart />
+                </PrivateRoute>
+              } />
             </Route>
           </Routes>
-          
         </ThemeProvider>
       </BrowserRouter>
     </div>
