@@ -55,11 +55,10 @@
   }
 
   /* Verifying page */
-  #VerifyCont{
+  #VerifyCont {
+    margin: 5rem;
     position: relative;
-    margin: 2rem
-  }
-
+}
   #Verify_info{
     position: relative;
     display: block;

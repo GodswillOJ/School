@@ -120,40 +120,6 @@ const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setP
           </div>
           {error && <p style={{ color: 'red' }}>{error}</p>}
         </form>
-        <div id="Footer_Dash">
-            {/* Footer Box container */}
-            <Box 
-              sx={{ 
-                  display: "flex", 
-                  flexDirection: "column", 
-                  alignItems: "center", 
-                  py: 4, 
-                  bgcolor: "background.paper",
-                  mt:"1rem",
-                  width: "100%"
-              }}
-          >
-              <Box display="flex" justifyContent="center" gap={2}>
-                  <IconButton href="https://facebook.com" target="_blank" sx={{ color: "primary.main" }}>
-                      <Facebook />
-                  </IconButton>
-                  <IconButton href="https://twitter.com" target="_blank" sx={{ color: "primary.main" }}>
-                      <Twitter />
-                  </IconButton>
-                  <IconButton href="https://instagram.com" target="_blank" sx={{ color: "primary.main" }}>
-                      <Instagram />
-                  </IconButton>
-                  <IconButton href="https://linkedin.com" target="_blank" sx={{ color: "primary.main" }}>
-                      <LinkedIn />
-                  </IconButton>
-              </Box>
-              <Box mt={2}>
-                  <Typography variant="body2" color="text.secondary">
-                      &copy; 2024, Developer Godswill Ogono
-                  </Typography>
-              </Box>
-          </Box>
-        </div>
       </div>
     </div>
   );
