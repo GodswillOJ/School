@@ -20,7 +20,7 @@ const AddToCartForm = ({ product }) => {
     
     if (!userID || !data) {
       // Redirect to login if not authenticated
-      navigate('/login');
+      navigate('/loginUser');
       return;
     }
 
