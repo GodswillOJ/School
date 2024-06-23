@@ -13,6 +13,7 @@ const HomeNavbar = () => {
   const navigate = useNavigate();
   const isLoggedIn = useSelector(state => state.global.user.isLoggedIn);
   const userRole = useSelector(state => state.global.user.role); // Assuming the role is stored in state.global.user.role
+  const userCart = useSelector(state => state.global.user.cart); // Assuming the role is stored in state.global.user.cart
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuOpen = (event) => {
@@ -65,7 +66,10 @@ const HomeNavbar = () => {
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleMenuClose}>
-                <ShoppingCart />
+                <Link href="/user/cart" sx={{ textDecoration: 'none', color: 'inherit' }}>
+                  <ShoppingCart />
+                  {userCart.items ? userCart.items.length : 0}
+                </Link>
               </MenuItem>
               {isLoggedIn ? (
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
