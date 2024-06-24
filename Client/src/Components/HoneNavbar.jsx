@@ -4,8 +4,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FlexBetween from "./flexBetween";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLoginStatus } from "../state/index";
+import { useGetUserQuery } from 'state/api';
 import { AppBar, IconButton, Menu, MenuItem, Toolbar, useTheme, Link } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Corrected import statement
 
 const HomeNavbar = () => {
   const dispatch = useDispatch();
@@ -13,8 +14,11 @@ const HomeNavbar = () => {
   const navigate = useNavigate();
   const isLoggedIn = useSelector(state => state.global.user.isLoggedIn);
   const userRole = useSelector(state => state.global.user.role); // Assuming the role is stored in state.global.user.role
-  const userCart = useSelector(state => state.global.user.cart); // Assuming the role is stored in state.global.user.cart
+  const { userID } = useSelector((state) => state.global.user);
+  const { data, error, isLoading } = useGetUserQuery(userID);
   const [anchorEl, setAnchorEl] = useState(null);
+  
+  console.log("data: ", data, userID)
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -68,7 +72,7 @@ const HomeNavbar = () => {
               <MenuItem onClick={handleMenuClose}>
                 <Link href="/user/cart" sx={{ textDecoration: 'none', color: 'inherit' }}>
                   <ShoppingCart />
-                  {userCart.items ? userCart.items.length : 0}
+                  {data && data.cart ? data.cart.items.length : 0} {/* Adjust this to reflect your data structure */}
                 </Link>
               </MenuItem>
               {isLoggedIn ? (
