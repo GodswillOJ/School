@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { IconButton, Button, List, ListItem, ListItemText, ListItemSecondaryAction, Typography } from '@mui/material';
+import { IconButton, Button, List, ListItem, ListItemText, ListItemSecondaryAction, Typography, CircularProgress } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { clearCart, removeFromCart } from 'state/cartFunctions/cartActions'; // Assuming these actions are defined in your state management
+import { useGetUserQuery } from 'state/api';
 
 const GetCart = () => {
   const dispatch = useDispatch();
-  const cart = useSelector(state => state.cart.items); // Assuming the cart is stored in state.cart.items
+  const { userID } = useSelector((state) => state.global.user);
+  const { data, error, isLoading } = useGetUserQuery(userID);
+  console.log(data);
 
   const handleRemove = (productId) => {
     dispatch(removeFromCart(productId));
@@ -16,37 +19,35 @@ const GetCart = () => {
     dispatch(clearCart());
   };
 
+  if (isLoading) {
+    return <CircularProgress />;
+  }
+
+  if (error) {
+    return <Typography variant="subtitle1" color="error">Error loading cart.</Typography>;
+  }
+
+  const cartItems = data?.cart?.items || [];
+  const totalPrice = data?.cart?.totalPrice || 0;
+
   return (
-    <div>
-      <Typography variant="h4" gutterBottom>
-        Shopping Cart
-      </Typography>
+    <>
+      <Typography variant="h6">Your Cart</Typography>
       <List>
-        {cart.map((item) => (
+        {cartItems.map((item) => (
           <ListItem key={item.productId}>
-            <ListItemText
-              primary={item.name}
-              secondary={`Price: $${item.price} - Quantity: ${item.quantity}`}
-            />
+            <ListItemText primary={item.name} secondary={`Price: ${item.price}`} />
             <ListItemSecondaryAction>
-              <IconButton edge="end" onClick={() => handleRemove(item.productId)}>
+              <IconButton edge="end" aria-label="delete" onClick={() => handleRemove(item.productId)}>
                 <DeleteIcon />
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
         ))}
       </List>
-      {cart.length > 0 && (
-        <Button variant="contained" color="secondary" onClick={handleClear}>
-          Clear Cart
-        </Button>
-      )}
-      {cart.length === 0 && (
-        <Typography variant="subtitle1" gutterBottom>
-          Your cart is empty.
-        </Typography>
-      )}
-    </div>
+      <Typography variant="h6">Total Price: {totalPrice}</Typography>
+      <Button variant="contained" color="secondary" onClick={handleClear}>Clear Cart</Button>
+    </>
   );
 };
 
