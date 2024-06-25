@@ -4,7 +4,6 @@ import '../src/styles.css';
 import App from './App';
 import { configureStore } from '@reduxjs/toolkit';
 import globalReducer from 'state';
-import cartReducer from 'state/cartFunctions/cartReducer'; // Adjust the import path as needed
 import { Provider } from 'react-redux';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { api } from 'state/api';
@@ -12,7 +11,6 @@ import { api } from 'state/api';
 const store = configureStore({
   reducer: {
     global: globalReducer,
-    cart: cartReducer, // Add the cartReducer here
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefault) => getDefault().concat(api.middleware),
