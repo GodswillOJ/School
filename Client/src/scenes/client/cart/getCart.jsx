@@ -12,7 +12,7 @@ const GetCart = () => {
 
   const removeFromCart = async (productId) => {
     try {
-      await axios.post('https://gotech-ecommerce.onrender.com/user/removeFromCart', { userID, productId });
+      await axios.post('https://gotech-ecommerce.onrender.com/api/user/removeFromCart', { userID, productId });
       refetch();  // Refetch cart data after removing item
     } catch (error) {
       console.error('Error removing product from cart:', error);
@@ -21,7 +21,7 @@ const GetCart = () => {
 
   const clearCart = async () => {
     try {
-      await axios.post('https://gotech-ecommerce.onrender.com/user/clearCart', { userID });
+      await axios.post('https://gotech-ecommerce.onrender.com/api/user/clearCart', { userID });
       refetch();  // Refetch cart data after clearing cart
     } catch (error) {
       console.error('Error clearing cart:', error);
