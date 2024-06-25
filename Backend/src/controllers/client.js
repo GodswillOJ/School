@@ -39,7 +39,7 @@ export const Products_Showcase = async (req, res) => {
       res.status(404).json({ message: error.message });  
     }
 }
-
+// add to cart
 export const addToCart = async (req, res) => {
   const { userID, productId } = req.body;
 
@@ -77,6 +77,57 @@ export const addToCart = async (req, res) => {
     res.status(200).json({ message: 'Product added to cart successfully', cart: user.cart });
   } catch (error) {
     console.error('Error in addToCart:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+// Remove a product from the cart
+export const removeFromCart = async (req, res) => {
+  const { userID, productId } = req.body;
+
+  if (!userID || !productId) {
+    return res.status(400).json({ message: 'User ID and Product ID are required' });
+  }
+
+  try {
+    const user = await User.findById(userID);
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    user.cart.items = user.cart.items.filter(item => item.productId.toString() !== productId);
+
+    user.cart.totalPrice = user.cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+
+    await user.save();
+
+    res.status(200).json({ message: 'Product removed from cart successfully', cart: user.cart });
+  } catch (error) {
+    console.error('Error in removeFromCart:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+// Clear the entire cart
+export const clearCart = async (req, res) => {
+  const { userID } = req.body;
+
+  if (!userID) {
+    return res.status(400).json({ message: 'User ID is required' });
+  }
+
+  try {
+    const user = await User.findById(userID);
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    user.cart.items = [];
+    user.cart.totalPrice = 0;
+
+    await user.save();
+
+    res.status(200).json({ message: 'Cart cleared successfully', cart: user.cart });
+  } catch (error) {
+    console.error('Error in clearCart:', error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };

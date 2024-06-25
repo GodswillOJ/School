@@ -1,22 +1,31 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { IconButton, Button, List, ListItem, ListItemText, ListItemSecondaryAction, Typography, CircularProgress } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { IconButton, Box, Button, List, ListItem, ListItemText, ListItemSecondaryAction, Typography, CircularProgress } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { clearCart, removeFromCart } from 'state/cartFunctions/cartActions'; // Assuming these actions are defined in your state management
 import { useGetUserQuery } from 'state/api';
+import axios from 'axios';
 
 const GetCart = () => {
-  const dispatch = useDispatch();
   const { userID } = useSelector((state) => state.global.user);
-  const { data, error, isLoading } = useGetUserQuery(userID);
+  const { data, error, isLoading, refetch } = useGetUserQuery(userID);
   console.log(data);
 
-  const handleRemove = (productId) => {
-    dispatch(removeFromCart(productId));
+  const removeFromCart = async (productId) => {
+    try {
+      await axios.post('https://gotech-ecommerce.onrender.com/user/removeFromCart', { userID, productId });
+      refetch();  // Refetch cart data after removing item
+    } catch (error) {
+      console.error('Error removing product from cart:', error);
+    }
   };
 
-  const handleClear = () => {
-    dispatch(clearCart());
+  const clearCart = async () => {
+    try {
+      await axios.post('https://gotech-ecommerce.onrender.com/user/clearCart', { userID });
+      refetch();  // Refetch cart data after clearing cart
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+    }
   };
 
   if (isLoading) {
@@ -31,14 +40,22 @@ const GetCart = () => {
   const totalPrice = data?.cart?.totalPrice || 0;
 
   return (
-    <>
+    <Box margin={'2rem'}>
       <Typography variant="h6">Your Cart</Typography>
       <List>
         {cartItems.map((item) => (
           <ListItem key={item.productId}>
-            <ListItemText primary={item.name} secondary={`Price: ${item.price}`} />
+            <ListItemText 
+              primary={
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span>{item.name}</span>
+                  <span>Quantity: {item.quantity}</span>
+                  <span>Price: {item.price}</span>
+                </div>
+              }
+            />
             <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="delete" onClick={() => handleRemove(item.productId)}>
+              <IconButton edge="end" aria-label="delete" onClick={() => removeFromCart(item.productId)}>
                 <DeleteIcon />
               </IconButton>
             </ListItemSecondaryAction>
@@ -46,8 +63,8 @@ const GetCart = () => {
         ))}
       </List>
       <Typography variant="h6">Total Price: {totalPrice}</Typography>
-      <Button variant="contained" color="secondary" onClick={handleClear}>Clear Cart</Button>
-    </>
+      <Button variant="contained" color="secondary" onClick={clearCart}>Clear Cart</Button>
+    </Box>
   );
 };
 
