@@ -16,7 +16,6 @@ import {
 import {
     SettingsOutlined,
     ChevronRightOutlined,
-    ChevronLeft,
     HomeOutlined,
     ShoppingCartOutlined,
     Groups2Outlined,
@@ -27,6 +26,7 @@ import {
     AdminPanelSettingsOutlined,
     TrendingUpOutlined,
     PieChartOutlined,
+    Menu as MenuIcon,
     PointOfSaleOutlined
 } from "@mui/icons-material";
 import { useEffect, useState } from 'react';
@@ -37,9 +37,9 @@ import profile from '../assets/profile.jpg';
 const navItems = [
     { text: "dashboard", icon: <HomeOutlined />, path: "/clientDashboard" },
     { text: "Client Sidebar", icon: null },
-    { text: "Products", icon: <ShoppingCartOutlined />, path: "/user/cart" },
-    { text: "Customers", icon: <Groups2Outlined />, path: "/customers" },
-    { text: "Transactions", icon: <ReceiptLongOutlined />, path: "/transactions" },
+    { text: "Cart", icon: <ShoppingCartOutlined />, path: "/user/cart" },
+    { text: "Profile", icon: <Groups2Outlined />, path: "user/profile" },
+    { text: "Accounts", icon: <ReceiptLongOutlined />, path: "user/accounts" },
     { text: "Geography", icon: <PublicOutlined />, path: "/geography" },
     { text: "Sales", icon: null },
     { text: "Overview", icon: <PointOfSaleOutlined />, path: "/overview" },
@@ -99,7 +99,7 @@ const ClientSidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isN
                                         </Box>
                                         {!isNonMobile && (
                                             <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-                                                <ChevronLeft />
+                                                <MenuIcon />
                                             </IconButton>
                                         )}
                                     </FlexBetween>

@@ -40,7 +40,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const userImageUrl = `https://gotech-ecommerce.onrender.com/public/${user.image}`;
 
   useEffect(() => {
-      setActive(pathname.substring(1));
+    setActive(pathname.substring(1));
   }, [pathname]);
 
   const handleLogout = () => {
@@ -50,7 +50,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   };
 
   return (
-    <AppBar 
+    <AppBar
       sx={{
         position: "static",
         background: "none",
@@ -63,7 +63,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
           <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
             <MenuIcon />
           </IconButton>
-          <FlexBetween 
+          <FlexBetween
             backgroundColor={theme.palette.background.alt}
             borderRadius="9px"
             gap="3rem"
@@ -89,16 +89,16 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
             <SettingsOutlined sx={{ fontSize: "25px" }} />
           </IconButton>
           <FlexBetween>
-            <Button 
-              onClick={handleClick} 
-              sx={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
+            <Button
+              onClick={handleClick}
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
                 alignItems: "center",
                 textTransform: 'none',
                 gap: '1rem',
               }}
-            > 
+            >
               <Box
                 component="img"
                 alt="profile"
@@ -116,24 +116,36 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                 <Typography fontSize="0.75rem" sx={{ color: theme.palette.secondary[300] }}>
                   Username
                 </Typography>
-              </Box> 
+              </Box>
               <ArrowDropDownOutlined
                 sx={{ color: theme.palette.secondary[300], fontSize: '25px' }}
-              /> 
+              />
             </Button>
             <Menu
               anchorEl={anchorEl}
               open={isOpen}
               onClose={handleClose}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center"}}
+              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
-              {/* Add Menu Items Here */}
-              <MenuItem onClick={handleClose}>
-                <Link to="/add_product" style={{ textDecoration: 'none', color: 'inherit' }}>Add Product</Link>
-              </MenuItem>
-              <MenuItem onClick={() => { handleClose(); handleLogout(); }}>
-                Log Out
-              </MenuItem>
+              {user.role === 'user' ? (
+                <>
+                  <MenuItem onClick={handleClose}>
+                    <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>Home</Link>
+                  </MenuItem>
+                  <MenuItem onClick={() => { handleClose(); handleLogout(); }}>
+                    Log Out
+                  </MenuItem>
+                </>
+              ) : (
+                <>
+                  <MenuItem onClick={handleClose}>
+                    <Link to="/add_product" style={{ textDecoration: 'none', color: 'inherit' }}>Add Product</Link>
+                  </MenuItem>
+                  <MenuItem onClick={() => { handleClose(); handleLogout(); }}>
+                    Log Out
+                  </MenuItem>
+                </>
+              )}
             </Menu>
           </FlexBetween>
         </FlexBetween>

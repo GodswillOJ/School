@@ -65,14 +65,14 @@ const HomeNavbar = () => {
               onClose={handleMenuClose}
             >
               <MenuItem onClick={handleMenuClose}>
-                <Link href={userRole === 'admin' ? '/clientDashboard' : '/dashboard'} sx={{ textDecoration: 'none', color: 'inherit' }}>
+                <Link href={data?.role !== 'admin' ? '/ClientDashboard' : '/dashboard'} sx={{ textDecoration: 'none', color: 'inherit' }}>
                   Dashboard
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleMenuClose}>
                 <Link href="/user/cart" sx={{ textDecoration: 'none', color: 'inherit' }}>
                   <ShoppingCart />
-                  {data && data.cart ? data.cart.items.length : 0} {/* Adjust this to reflect your data structure */}
+                  {data?.cart?.items?.length || 0} {/* Adjust this to reflect your data structure */}
                 </Link>
               </MenuItem>
               {isLoggedIn ? (
