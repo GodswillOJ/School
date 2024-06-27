@@ -19,19 +19,7 @@ const app = express();
 const PORT = process.env.PORT || 3400;
 
 // Middleware
-app.use(cors({
-  origin: (origin, callback) => {
-    const allowedOrigins = ['https://gotech-blog.onrender.com', 'http://localhost:3000'];
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
@@ -48,7 +36,7 @@ app.use('/api', Management);
 app.use('/api', Sales);
 app.use('/api', General);
 
-mongoose.connect(process.env.MONGODB_URL, {
+mongoose.connect(process.env.MONGODB_URl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
