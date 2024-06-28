@@ -134,7 +134,6 @@ export const clearCart = async (req, res) => {
   }
 };
 
-// post order
 export const placeOrder = async (req, res) => {
   const { userID, orderDetails, shippingAddress1, shippingAddress2, city, zip, country, phone } = req.body;
 
@@ -146,7 +145,7 @@ export const placeOrder = async (req, res) => {
     }
 
     const order = new Order({
-      orderItem: user._id,
+      userID: user._id,
       orderDetails,
       shippingAddress1,
       shippingAddress2,
@@ -157,15 +156,17 @@ export const placeOrder = async (req, res) => {
     });
 
     const savedOrder = await order.save();
-    
+
     user.orders.push(savedOrder._id);
     await user.save();
 
     res.status(201).send(savedOrder);
   } catch (error) {
+    console.error('Error creating order:', error);
     res.status(500).send({ message: 'Failed to create order', error });
   }
 };
+
 
 
 
