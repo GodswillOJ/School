@@ -22,7 +22,7 @@ export const Register = () => {
     formData.append('file', file);
 
     try {
-      await axios.post('c/api/register', formData, {
+      await axios.post('https://gotech-ecommerce.onrender.com/api/register', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
