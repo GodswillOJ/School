@@ -48,9 +48,8 @@ export const api = createApi({
       providesTags: ['OrderNew'],
     }),
 
-    // Order view
     getOrderView: build.query({
-      query: () => '/user/view_order/:userID',
+      query: (userID) => `/user/view_order/${userID}`,
       providesTags: ['OrderView'],
     }),
   }),
