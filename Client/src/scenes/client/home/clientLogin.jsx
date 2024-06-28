@@ -289,7 +289,7 @@ export const VerifyClient = () => {
           {data ? (
             <p>
               <b>Hi, {data.username}</b>
-              {message} please click to redirect to login <Link to='/login'>proceed to login</Link>
+              {message} please click to redirect to login <Link to='/loginUser'>proceed to login</Link>
             </p>
           ) : (
             <p>User data not available</p>
