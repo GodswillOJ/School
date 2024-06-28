@@ -1,5 +1,6 @@
 import { Post, User } from '../models/User.js';
 import { Product } from '../models/productSchema.js';
+import { Order } from '../models/orderSchema.js';
 import { Category, Message, MessageModel } from '../models/category.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -131,5 +132,39 @@ export const clearCart = async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
+// post order
+export const placeOrder = async (req, res) => {
+  const { userID, orderDetails, shippingAddress1, shippingAddress2, city, zip, country, phone } = req.body;
+
+  try {
+    const user = await User.findById(userID);
+
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+
+    const order = new Order({
+      orderItem: user._id,
+      orderDetails,
+      shippingAddress1,
+      shippingAddress2,
+      city,
+      zip,
+      country,
+      phone
+    });
+
+    const savedOrder = await order.save();
+    
+    user.orders.push(savedOrder._id);
+    await user.save();
+
+    res.status(201).send(savedOrder);
+  } catch (error) {
+    res.status(500).send({ message: 'Failed to create order', error });
+  }
+};
+
 
 

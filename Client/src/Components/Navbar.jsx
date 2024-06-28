@@ -49,6 +49,24 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
     navigate('/loginUser');
   };
 
+  const userMenuItems = user.role === 'user'
+    ? [
+        <MenuItem key="home" onClick={handleClose}>
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>Home</Link>
+        </MenuItem>,
+        <MenuItem key="logout" onClick={() => { handleClose(); handleLogout(); }}>
+          Log Out
+        </MenuItem>
+      ]
+    : [
+        <MenuItem key="add_product" onClick={handleClose}>
+          <Link to="/add_product" style={{ textDecoration: 'none', color: 'inherit' }}>Add Product</Link>
+        </MenuItem>,
+        <MenuItem key="logout" onClick={() => { handleClose(); handleLogout(); }}>
+          Log Out
+        </MenuItem>
+      ];
+
   return (
     <AppBar
       sx={{
@@ -127,25 +145,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
               onClose={handleClose}
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
-              {user.role === 'user' ? (
-                <>
-                  <MenuItem onClick={handleClose}>
-                    <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>Home</Link>
-                  </MenuItem>
-                  <MenuItem onClick={() => { handleClose(); handleLogout(); }}>
-                    Log Out
-                  </MenuItem>
-                </>
-              ) : (
-                <>
-                  <MenuItem onClick={handleClose}>
-                    <Link to="/add_product" style={{ textDecoration: 'none', color: 'inherit' }}>Add Product</Link>
-                  </MenuItem>
-                  <MenuItem onClick={() => { handleClose(); handleLogout(); }}>
-                    Log Out
-                  </MenuItem>
-                </>
-              )}
+              {userMenuItems}
             </Menu>
           </FlexBetween>
         </FlexBetween>

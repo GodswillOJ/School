@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Button, useMediaQuery } from '@mui/material';
+import { Link, Box, Typography, Button, useMediaQuery } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useGetUserQuery } from 'state/api';
 import defaultProfile from 'assets/profile.jpg'; // Import the default profile image
@@ -48,6 +48,9 @@ const UserProfile = () => {
           {/* About Me container */}
           <Box textAlign="center">
             <Typography variant="h4" gutterBottom>About Me</Typography>
+            <Link href='/user/edit_profile' sx={{ display: 'block', marginBottom: '1rem', color: '#1976d2', textDecoration: 'none' }}>
+              Edit Profile
+            </Link>
             <Typography>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </Typography>

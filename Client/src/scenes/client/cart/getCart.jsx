@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { IconButton, Box, Button, List, ListItem, ListItemText, ListItemSecondaryAction, Typography, CircularProgress } from '@mui/material';
+import { Link, IconButton, Box, Button, List, ListItem, ListItemText, ListItemSecondaryAction, Typography, CircularProgress } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useGetUserQuery } from 'state/api';
 import axios from 'axios';
@@ -63,7 +63,10 @@ const GetCart = () => {
         ))}
       </List>
       <Typography variant="h6">Total Price: {totalPrice}</Typography>
-      <Button variant="contained" color="secondary" onClick={clearCart}>Clear Cart</Button>
+      <Box display={'grid'} gap={'1rem'}>
+        <Button variant="contained" color="secondary" onClick={clearCart}>Clear Cart</Button>
+        <Button variant="contained" color="primary"><Link href='/user/order_new' sx={{ textDecoration: 'none', color: 'inherit' }}>Place Order</Link></Button>
+      </Box>
     </Box>
   );
 };

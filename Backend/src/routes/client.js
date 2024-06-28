@@ -1,5 +1,5 @@
 import express from 'express';
-import { Products, Products_Showcase, getCustomers, addToCart, removeFromCart, clearCart } from '../controllers/client.js';
+import { Products, Products_Showcase, getCustomers, addToCart, removeFromCart, clearCart, placeOrder } from '../controllers/client.js';
 
 const router = express.Router();
 
@@ -12,5 +12,7 @@ router.get('/user/customers', getCustomers);
 router.post('/user/addCart', addToCart);
 router.post('/user/removeFromCart', removeFromCart);
 router.post('/user/clearCart', clearCart);
+router.post('/user/order_new', placeOrder);
+router.post('/user/view_order');
 
 export default router;

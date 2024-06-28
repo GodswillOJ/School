@@ -51,6 +51,11 @@ const userSchema = new mongoose.Schema({
       image: { type: String },
     }]
   },
+  orders:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Order',
+    required: true
+  }],
   role: { type: String, enum: ['admin', 'user', 'superadmin'], default: 'user', required: true },
   is_verified: { type: Number, default: 0 },
 }, { timestamps: true });

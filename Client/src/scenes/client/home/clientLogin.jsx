@@ -148,7 +148,7 @@ export const LoginClient = () => {
     setError(null); // Reset error before starting the login process
   
     try {
-      const response = await axios.post('https://gotech-ecommerce.onrender.com/api/loginUser', { username, password });
+      const response = await axios.post('/api/loginUser', { username, password });
   
       // Clear inputs only if login is successful
       setUsername('');

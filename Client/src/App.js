@@ -12,6 +12,7 @@ import AddProduct from "./scenes/dashboard/addProducts";
 import Products from "./scenes/dashboard/addProductStat";
 import AddToCartForm from "./scenes/includes/Cart";
 import GetCart from "./scenes/client/cart/getCart";
+import OrderNew from "./scenes/client/cart/orderNew";
 import UserProfile from "./scenes/client/dashboard/profile";
 import Home from "./scenes/home/index";
 import AdminHome from "./scenes/home/admin_home";
@@ -90,6 +91,12 @@ function App() {
               <Route path="/user/profile" element={
                 <PrivateRoute>
                   <UserProfile />
+                </PrivateRoute>
+              } />
+
+              <Route path="/user/order_new" element={
+                <PrivateRoute>
+                  <OrderNew />
                 </PrivateRoute>
               } />
             </Route>
