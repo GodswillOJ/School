@@ -13,6 +13,6 @@ router.post('/user/addCart', addToCart);
 router.post('/user/removeFromCart', removeFromCart);
 router.post('/user/clearCart', clearCart);
 router.post('/user/order_new', placeOrder);
-router.post('/user/view_order');
+router.post('/user/view_order/:userID', fetchOrders);
 
 export default router;
