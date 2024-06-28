@@ -47,7 +47,7 @@ const OrderNew = () => {
         console.log(totalPrice);
 
         try {
-            const response = await axios.post('https://gotech-ecommerce.onrender.com/api/order_new', { userID, orderDetails, ...formData });
+            const response = await axios.post('https://gotech-ecommerce.onrender.com/api/user/order_new', { userID, orderDetails, ...formData });
             console.log('Order placed:', response.data);
         } catch (error) {
             console.error('Error placing order:', error);
