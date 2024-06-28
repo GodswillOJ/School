@@ -13,6 +13,7 @@ import Products from "./scenes/dashboard/addProductStat";
 import AddToCartForm from "./scenes/includes/Cart";
 import GetCart from "./scenes/client/cart/getCart";
 import OrderNew from "./scenes/client/cart/orderNew";
+import OrderView from "./scenes/client/orders/orderView";
 import UserProfile from "./scenes/client/dashboard/profile";
 import Home from "./scenes/home/index";
 import AdminHome from "./scenes/home/admin_home";
@@ -97,6 +98,12 @@ function App() {
               <Route path="/user/order_new" element={
                 <PrivateRoute>
                   <OrderNew />
+                </PrivateRoute>
+              } />
+
+              <Route path="/user/view_order/:userID" element={
+                <PrivateRoute>
+                  <OrderView />
                 </PrivateRoute>
               } />
             </Route>

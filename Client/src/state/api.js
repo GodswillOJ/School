@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://gotech-ecommerce.onrender.com/api' }),
   reducerPath: 'api',
-  tagTypes: ['User', 'Products', 'Customers', 'Cart', 'Profile', 'OrderNew'],
+  tagTypes: ['User', 'Products', 'Customers', 'Cart', 'Profile', 'OrderNew', 'OrderView'],
   endpoints: (build) => ({
     // getting user API
     getUser: build.query({
@@ -47,6 +47,12 @@ export const api = createApi({
       query: () => '/user/order_new',
       providesTags: ['OrderNew'],
     }),
+
+    // Order view
+    getOrderView: build.query({
+      query: () => '/user/view_order/:userID',
+      providesTags: ['OrderView'],
+    }),
   }),
 });
 
@@ -57,4 +63,5 @@ export const {
   useGetCartQuery,
   useGetProfileQuery,
   useGetOrderNewQuery,
+  useGetOrderViewQuery,
 } = api;

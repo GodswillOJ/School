@@ -39,7 +39,7 @@ const navItems = [
     { text: "Client Sidebar", icon: null },
     { text: "Cart", icon: <ShoppingCartOutlined />, path: "/user/cart" },
     { text: "Profile", icon: <Groups2Outlined />, path: "user/profile" },
-    { text: "Accounts", icon: <ReceiptLongOutlined />, path: "user/accounts" },
+    { text: "Accounts", icon: <ReceiptLongOutlined />, path: "/user/view_order/:userID" },
     { text: "Geography", icon: <PublicOutlined />, path: "/geography" },
     { text: "Sales", icon: null },
     { text: "Overview", icon: <PointOfSaleOutlined />, path: "/overview" },
