@@ -40,6 +40,7 @@ export const Products_Showcase = async (req, res) => {
       res.status(404).json({ message: error.message });  
     }
 }
+
 // add to cart
 export const addToCart = async (req, res) => {
   const { userID, productId } = req.body;
