@@ -1,5 +1,14 @@
 import express from 'express';
-import { Products, Products_Showcase, getCustomers, addToCart, removeFromCart, clearCart, placeOrder, fetchOrders } from '../controllers/client.js';
+import {
+  Products,
+  Products_Showcase,
+  getCustomers,
+  addToCart,
+  removeFromCart,
+  clearCart,
+  placeOrder,
+  fetchOrders
+} from '../controllers/client.js';
 
 const router = express.Router();
 
@@ -13,6 +22,6 @@ router.post('/user/addCart', addToCart);
 router.post('/user/removeFromCart', removeFromCart);
 router.post('/user/clearCart', clearCart);
 router.post('/user/order_new', placeOrder);
-router.post('/user/view_order/:userID', fetchOrders);
+router.get('/user/view_order/:userID', fetchOrders); // Change to GET method
 
 export default router;
