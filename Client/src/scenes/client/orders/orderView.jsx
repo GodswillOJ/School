@@ -46,23 +46,21 @@ const OrderView = () => {
         <table>
           <thead>
             <tr>
-              <th>Product ID</th>
+              <th>Order ID</th>
               <th>Date of Order</th>
               <th>Status</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-          {orders.map((order) => 
-                  order.orderDetails.items.map((item) => (
-                    <tr key={item.productId}>
-                      <td>{item.productId}</td>
-                      <td>{new Date(order.dateOrdered).toLocaleDateString()}</td>
-                      <td>{order.status}</td>
-                      <td><Button onClick={() => handleSeeMore(order)}>See More</Button></td>
-                    </tr>
-                  ))
-                )}
+            {orders.map((order) => (
+              <tr key={order._id}>
+                <td>{order._id}</td>
+                <td>{new Date(order.dateOrdered).toLocaleDateString()}</td>
+                <td>{order.status}</td>
+                <td><Button onClick={() => handleSeeMore(order)}>See More</Button></td>
+              </tr>
+            ))}
           </tbody>
         </table>
       ) : (
