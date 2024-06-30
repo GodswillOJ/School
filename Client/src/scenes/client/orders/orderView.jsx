@@ -56,7 +56,7 @@ const OrderView = () => {
           <tbody>
             {orders.map((order, index) => (
               <tr key={index}>
-                <td>{order.orderDetails.items[0].productId}</td>
+                <td>{order.orderDetails.productId}</td>
                 <td>{new Date(order.dateOrdered).toLocaleDateString()}</td>
                 <td>{order.status}</td>
                 <td><Button onClick={() => handleSeeMore(order)}>See More</Button></td>
