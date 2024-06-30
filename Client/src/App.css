@@ -11,3 +11,34 @@ body{
 
 /* Inside your global CSS or specific CSS file */
 
+/* Order styles */
+.order-view {
+  margin: 2rem;
+}
+
+.order-view h6 {
+  text-align: center;
+}
+
+.order-view table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.order-view th, .order-view td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.order-view th {
+  background-color: #f2f2f2;
+}
+
+.order-details {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  background-color: #f9f9f9;
+}

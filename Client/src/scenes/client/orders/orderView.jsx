@@ -1,50 +1,73 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useGetOrderViewQuery } from 'state/api';
+import 'App.css';
 
 const OrderView = () => {
   const { userID } = useSelector((state) => state.global.user);
   const { data, isLoading } = useGetOrderViewQuery(userID);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  console.log(orders)
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   useEffect(() => {
     if (!isLoading && data) {
-      setOrders(data.orders);
+      const uniqueOrders = data.orders.filter(
+        (order, index, self) => index === self.findIndex((o) => o._id === order._id)
+      );
+      setOrders(uniqueOrders);
       setLoading(false);
     }
   }, [isLoading, data]);
 
+  const handleSeeMore = (order) => {
+    setSelectedOrder(order);
+  };
+
   return (
-    <Box margin="2rem">
-      <Typography variant="h6" sx={{ textAlign: 'center' }}>My Orders</Typography>
+    <Box className="order-view">
+      <Typography variant="h6">My Orders</Typography>
+      {selectedOrder && (
+        <Box className="order-details">
+          <Typography variant="h6">Order Details</Typography>
+          <Typography>Order ID: {selectedOrder._id}</Typography>
+          <Typography>Total Price: {selectedOrder.orderDetails.totalPrice}</Typography>
+          <Typography>Shipping Address 1: {selectedOrder.shippingAddress1}</Typography>
+          <Typography>Shipping Address 2: {selectedOrder.shippingAddress2}</Typography>
+          <Typography>City: {selectedOrder.city}</Typography>
+          <Typography>ZIP Code: {selectedOrder.zip}</Typography>
+          <Typography>Country: {selectedOrder.country}</Typography>
+          <Typography>Phone: {selectedOrder.phone}</Typography>
+          <Typography>Name: {selectedOrder.orderDetails.name}</Typography>
+          <Button onClick={() => setSelectedOrder(null)}>Close</Button>
+        </Box>
+      )}
       {loading ? (
         <Typography>Loading...</Typography>
       ) : orders.length > 0 ? (
-        orders.map(order => (
-          <Box key={order._id} marginBottom="1rem">
-            <Typography>Order ID: {order._id}</Typography>
-            {order.orderDetails.totalPrice && (
-              <Typography>Total Price: ${order.orderDetails.totalPrice}</Typography>
+        <table>
+          <thead>
+            <tr>
+              <th>Product ID</th>
+              <th>Date of Order</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => 
+              order.orderDetails.items.map((item) => (
+                <tr key={item.productId}>
+                  <td>{item.productId}</td>
+                  <td>{new Date(order.dateOrdered).toLocaleDateString()}</td>
+                  <td>{order.status}</td>
+                  <td><Button onClick={() => handleSeeMore(order)}>See More</Button></td>
+                </tr>
+              ))
             )}
-            <Typography>Shipping Address 1: {order.orderDetails.shippingAddress1}</Typography>
-            <Typography>Shipping Address 2: {order.orderDetails.shippingAddress2}</Typography>
-            <Typography>City: {order.orderDetails.city}</Typography>
-            <Typography>ZIP Code: {order.orderDetails.zip}</Typography>
-            <Typography>Country: {order.orderDetails.country}</Typography>
-            <Typography>Phone: {order.orderDetails.phone}</Typography>
-            {order.orderDetails.items && order.orderDetails.items.length > 0 && (
-              <Typography>Items:</Typography>
-            )}
-            {order.orderDetails.items && order.orderDetails.items.map(item => (
-              <Box key={item.productId} paddingLeft="1rem">
-                <Typography>{item.name} - Quantity: {item.quantity} - Price: ${item.price}</Typography>
-              </Box>
-            ))}
-          </Box>
-        ))
+          </tbody>
+        </table>
       ) : (
         <Typography>No orders found.</Typography>
       )}
