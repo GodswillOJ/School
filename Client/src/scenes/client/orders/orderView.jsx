@@ -51,7 +51,7 @@ const OrderView = () => {
             <tr>
               <th>Product ID</th>
               <th>Date of Order</th>
-              <th>Status</th>hj
+              <th>Status</th>
               <th></th>
             </tr>
           </thead>
