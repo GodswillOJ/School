@@ -37,7 +37,6 @@ const OrderView = () => {
           <Typography>Country: {selectedOrder.country}</Typography>
           <Typography>Phone: {selectedOrder.phone}</Typography>
           <Typography>Name: {selectedOrder.orderDetails.name}</Typography>
-          {/* Display additional order details as needed */}
           <Button onClick={() => setSelectedOrder(null)}>Close</Button>
         </Box>
       )}
@@ -54,14 +53,16 @@ const OrderView = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order, index) => (
-              <tr key={index}>
-                <td>{order.orderDetails.productId}</td>
-                <td>{new Date(order.dateOrdered).toLocaleDateString()}</td>
-                <td>{order.status}</td>
-                <td><Button onClick={() => handleSeeMore(order)}>See More</Button></td>
-              </tr>
-            ))}
+          {orders.map((order) => 
+                  order.orderDetails.items.map((item) => (
+                    <tr key={item.productId}>
+                      <td>{item.productId}</td>
+                      <td>{new Date(order.dateOrdered).toLocaleDateString()}</td>
+                      <td>{order.status}</td>
+                      <td><Button onClick={() => handleSeeMore(order)}>See More</Button></td>
+                    </tr>
+                  ))
+                )}
           </tbody>
         </table>
       ) : (

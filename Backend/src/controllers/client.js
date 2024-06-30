@@ -170,18 +170,24 @@ export const placeOrder = async (req, res) => {
 export const fetchOrders = async (req, res) => {
   try {
     const { userID } = req.params;
-    const orders = await Order.find({ userID }).select('orderDetails.items.productId dateOrdered status orderDetails shippingAddress1 shippingAddress2 city zip country phone');
+    const orders = await Order.find({ userID }).select('orderDetails.items.productId dateOrdered status');
 
     if (!orders.length) {
       return res.status(404).json({ message: 'No orders found for this user' });
     }
 
-    res.status(200).json({ orders });
+    // Transform the orders data to contain only one productId, date of order, and status per order
+    const simplifiedOrders = orders.map(order => ({
+      productId: order.orderDetails.items[0].productId,
+      dateOrdered: order.dateOrdered,
+      status: order.status,
+    }));
+
+    res.status(200).json({ orders: simplifiedOrders });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 
 
