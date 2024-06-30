@@ -13,10 +13,7 @@ const OrderView = () => {
 
   useEffect(() => {
     if (!isLoading && data) {
-      const uniqueOrders = data.orders.filter(
-        (order, index, self) => index === self.findIndex((o) => o._id === order._id)
-      );
-      setOrders(uniqueOrders);
+      setOrders(data.orders);
       setLoading(false);
     }
   }, [isLoading, data]);
@@ -40,6 +37,7 @@ const OrderView = () => {
           <Typography>Country: {selectedOrder.country}</Typography>
           <Typography>Phone: {selectedOrder.phone}</Typography>
           <Typography>Name: {selectedOrder.orderDetails.name}</Typography>
+          {/* Display additional order details as needed */}
           <Button onClick={() => setSelectedOrder(null)}>Close</Button>
         </Box>
       )}
@@ -56,8 +54,8 @@ const OrderView = () => {
             </tr>
           </thead>
           <tbody>
-            {[...new Map(orders.flatMap(order => order.orderDetails.items.map(item => [item.productId, order]))).values()].map((order) => (
-              <tr key={order._id}>
+            {orders.map((order, index) => (
+              <tr key={index}>
                 <td>{order.orderDetails.items[0].productId}</td>
                 <td>{new Date(order.dateOrdered).toLocaleDateString()}</td>
                 <td>{order.status}</td>
