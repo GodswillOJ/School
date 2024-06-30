@@ -51,21 +51,23 @@ const OrderView = () => {
             <tr>
               <th>Product ID</th>
               <th>Date of Order</th>
-              <th>Status</th>
+              <th>Status</th>hj
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => 
-              order.orderDetails.items.map((item) => (
-                <tr key={item.productId}>
-                  <td>{item.productId}</td>
+            {[...new Set(orders.flatMap(order => order.orderDetails.items.map(item => item.productId)))].map((productId, index) => {
+              const order = orders.find(order => order.orderDetails.items.some(item => item.productId === productId));
+              const item = order.orderDetails.items.find(item => item.productId === productId);
+              return (
+                <tr key={productId}>
+                  <td>{productId}</td>
                   <td>{new Date(order.dateOrdered).toLocaleDateString()}</td>
                   <td>{order.status}</td>
                   <td><Button onClick={() => handleSeeMore(order)}>See More</Button></td>
                 </tr>
-              ))
-            )}
+              );
+            })}
           </tbody>
         </table>
       ) : (
