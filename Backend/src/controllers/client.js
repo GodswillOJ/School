@@ -139,6 +139,11 @@ import Transaction from '../models/transactions.js';
 export const placeOrder = async (req, res) => {
   const { userID, orderDetails, shippingAddress1, shippingAddress2, city, zip, country, phone } = req.body;
 
+  console.log('Received request body:', req.body); // Log the entire request body
+  if (!orderDetails || !orderDetails.productId || !orderDetails.quantity) {
+    return res.status(400).send({ message: 'Order details, productId, and quantity are required.' });
+  }
+
   try {
     const user = await User.findById(userID);
     if (!user) {
