@@ -176,6 +176,7 @@ export const placeOrder = async (req, res) => {
     });
 
     await transaction.save();
+    console.log(transaction)
 
     res.status(201).send(savedOrder);
   } catch (error) {
