@@ -134,7 +134,7 @@ export const clearCart = async (req, res) => {
   }
 };
 
-import Transaction from '../models/transaction.js';
+import Transaction from '../models/transactions.js';
 
 export const placeOrder = async (req, res) => {
   const { userID, orderDetails, shippingAddress1, shippingAddress2, city, zip, country, phone } = req.body;
