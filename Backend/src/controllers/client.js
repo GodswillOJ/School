@@ -140,8 +140,8 @@ export const placeOrder = async (req, res) => {
   const { userID, orderDetails, shippingAddress1, shippingAddress2, city, zip, country, phone } = req.body;
 
   console.log('Received request body:', req.body); // Log the entire request body
-  if (!orderDetails || !orderDetails.productId || !orderDetails.quantity) {
-    return res.status(400).send({ message: 'Order details, productId, and quantity are required.' });
+  if (!orderDetails || !orderDetails.items || orderDetails.items.length === 0) {
+    return res.status(400).send({ message: 'Order details, items, productId, and quantity are required.' });
   }
 
   try {
@@ -168,9 +168,9 @@ export const placeOrder = async (req, res) => {
     // Create a transaction for the admin/seller
     const transaction = new Transaction({
       userID: user._id,
-      productId: orderDetails.productId,
+      productId: orderDetails.items.map(item => item.productId),
       clientUsername: user.username,
-      quantity: orderDetails.quantity,
+      quantity: orderDetails.items.map(item => item.quantity).reduce((a, b) => a + b, 0),
       amount: orderDetails.totalPrice,
       dateOrdered: savedOrder.dateOrdered,
     });
