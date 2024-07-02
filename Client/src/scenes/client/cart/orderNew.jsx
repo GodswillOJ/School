@@ -44,7 +44,8 @@ const OrderNew = () => {
       items,
     };
 
-    console.log(totalPrice);
+    console.log('Order Details:', orderDetails);
+    console.log('Form Data:', formData);
 
     try {
       const response = await axios.post('https://gotech-ecommerce.onrender.com/api/user/order_new', { userID, orderDetails, ...formData });
