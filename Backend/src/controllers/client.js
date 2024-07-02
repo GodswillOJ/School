@@ -168,7 +168,7 @@ export const placeOrder = async (req, res) => {
     // Create a transaction for the admin/seller
     const transaction = new Transaction({
       userID: user._id,
-      productId: orderDetails.items.map(item => item.productId),
+      productId: orderDetails.items.map(item => item.productId),  // Ensure this is an array of strings
       clientUsername: user.username,
       quantity: orderDetails.items.map(item => item.quantity).reduce((a, b) => a + b, 0),
       amount: orderDetails.totalPrice,
