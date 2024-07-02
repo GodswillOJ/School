@@ -37,7 +37,7 @@ const OrderView = () => {
           <Typography>Country: {selectedOrder.country}</Typography>
           <Typography>Phone: {selectedOrder.phone}</Typography>
           <Typography>Name: {selectedOrder.orderDetails.name}</Typography>
-          <Button onClick={() => setSelectedOrder(null)}>Close</Button>
+          <Button onClick={() => setSelectedOrder(null)} sx={{color:'#b5382d'}}>Close</Button>
         </Box>
       )}
       {loading ? (
@@ -58,7 +58,7 @@ const OrderView = () => {
                 <td>{order._id}</td>
                 <td>{new Date(order.dateOrdered).toLocaleDateString()}</td>
                 <td>{order.status}</td>
-                <td><Button onClick={() => handleSeeMore(order)}>See More</Button></td>
+                <td><Button onClick={() => handleSeeMore(order)} sx={{color:'#2b67b5'}}>See More</Button></td>
               </tr>
             ))}
           </tbody>

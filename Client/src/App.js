@@ -16,6 +16,7 @@ import OrderNew from "./scenes/client/cart/orderNew";
 import OrderView from "./scenes/client/orders/orderView";
 import UserProfile from "./scenes/client/dashboard/profile";
 import Home from "./scenes/home/index";
+import Transactions from "./scenes/transactions/index";
 import AdminHome from "./scenes/home/admin_home";
 import VerifyMail from "./scenes/home/verifyMail";
 import { Register, Login, UserVerify } from "./scenes/home/userAuth";
@@ -36,6 +37,8 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
+            
+            {/* Home_Layouts */}
             <Route element={<HomeLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
@@ -50,6 +53,8 @@ function App() {
               } />
               <Route path="/clientVerifyMail/:id" element={<VerifyClient />} />
             </Route>
+
+              {/* Admin Layouts */}
             <Route element={<Layout />}>
               <Route path="/dashboard" element={
                 <PrivateRoute>
@@ -71,7 +76,14 @@ function App() {
                   <Customers />
                 </PrivateRoute>
               } />
+              <Route path="/user/view_transactions" element={
+                <PrivateRoute>
+                  <Transactions />
+                </PrivateRoute>
+              } />
             </Route>
+
+              {/* Client Layouts */}
             <Route element={<ClientLayout />}>
               <Route path="/clientDashboard" element={
                 <PrivateRoute>

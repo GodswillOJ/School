@@ -134,12 +134,13 @@ export const clearCart = async (req, res) => {
   }
 };
 
+import Transaction from '../models/transaction.js';
+
 export const placeOrder = async (req, res) => {
   const { userID, orderDetails, shippingAddress1, shippingAddress2, city, zip, country, phone } = req.body;
 
   try {
     const user = await User.findById(userID);
-
     if (!user) {
       return res.status(404).send({ message: 'User not found' });
     }
@@ -156,9 +157,20 @@ export const placeOrder = async (req, res) => {
     });
 
     const savedOrder = await order.save();
-
     user.orders.push(savedOrder._id);
     await user.save();
+
+    // Create a transaction for the admin/seller
+    const transaction = new Transaction({
+      userID: user._id,
+      productId: orderDetails.productId,
+      clientUsername: user.username,
+      quantity: orderDetails.quantity,
+      amount: orderDetails.totalPrice,
+      dateOrdered: savedOrder.dateOrdered,
+    });
+
+    await transaction.save();
 
     res.status(201).send(savedOrder);
   } catch (error) {
@@ -166,6 +178,7 @@ export const placeOrder = async (req, res) => {
     res.status(500).send({ message: 'Failed to create order', error });
   }
 };
+
 
 export const fetchOrders = async (req, res) => {
   try {
@@ -181,6 +194,17 @@ export const fetchOrders = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// server-side code (e.g., in controllers/client.js)
+export const fetchAllTransactions = async (req, res) => {
+  try {
+    const transactions = await Transaction.find().populate('userID', 'username');
+    res.status(200).json({ transactions });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 
 
 

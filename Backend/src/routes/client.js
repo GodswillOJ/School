@@ -7,7 +7,8 @@ import {
   removeFromCart,
   clearCart,
   placeOrder,
-  fetchOrders
+  fetchOrders,
+  fetchAllTransactions
 } from '../controllers/client.js';
 
 const router = express.Router();
@@ -23,5 +24,8 @@ router.post('/user/removeFromCart', removeFromCart);
 router.post('/user/clearCart', clearCart);
 router.post('/user/order_new', placeOrder);
 router.get('/user/view_order/:userID', fetchOrders); // Change to GET method
+// server-side code (e.g., in routes/client.js)
+router.get('/user/view_transactions', fetchAllTransactions);
+
 
 export default router;
