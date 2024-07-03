@@ -9,7 +9,7 @@ import {
   placeOrder,
   fetchOrders,
   fetchAllTransactions,
-  getGeography
+  getGeography,
 } from '../controllers/client.js';
 
 const router = express.Router();
@@ -25,7 +25,6 @@ router.post('/user/removeFromCart', removeFromCart);
 router.post('/user/clearCart', clearCart);
 router.post('/user/order_new', placeOrder);
 router.get('/user/view_order/:userID', fetchOrders); // Change to GET method
-// server-side code (e.g., in routes/client.js)
 router.get('/user/view_transactions', fetchAllTransactions);
 router.get('/user/geography', getGeography);
 

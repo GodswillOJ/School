@@ -61,7 +61,7 @@ export const api = createApi({
     }),
 
     getGeography: build.query({
-      query: () => `/user/geography`,
+      query: () => '/user/geography',
       providesTags: ['Geography'],
     }),
 
