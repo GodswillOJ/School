@@ -40,7 +40,7 @@ const navItems = [
     { text: "Products", icon: <ShoppingCartOutlined />, path: "/user/products" },
     { text: "Customers", icon: <Groups2Outlined />, path: "/user/customers" },
     { text: "Transactions", icon: <ReceiptLongOutlined />, path: "/user/view_transactions" },
-    { text: "Geography", icon: <PublicOutlined />, path: "/geography" },
+    { text: "Geography", icon: <PublicOutlined />, path: "user/geography" },
     { text: "Sales", icon: null },
     { text: "Overview", icon: <PointOfSaleOutlined />, path: "/overview" },
     { text: "Daily", icon: <TodayOutlined />, path: "/daily" },

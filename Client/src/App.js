@@ -17,6 +17,7 @@ import OrderView from "./scenes/client/orders/orderView";
 import UserProfile from "./scenes/client/dashboard/profile";
 import Home from "./scenes/home/index";
 import Transactions from "./scenes/transactions/index";
+import Geography from "./scenes/geography/index";
 import AdminHome from "./scenes/home/admin_home";
 import VerifyMail from "./scenes/home/verifyMail";
 import { Register, Login, UserVerify } from "./scenes/home/userAuth";
@@ -79,6 +80,11 @@ function App() {
               <Route path="/user/view_transactions" element={
                 <PrivateRoute>
                   <Transactions />
+                </PrivateRoute>
+              } />
+              <Route path="/user/geography" element={
+                <PrivateRoute>
+                  <Geography />
                 </PrivateRoute>
               } />
             </Route>

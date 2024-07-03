@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true, min: 5 },
   city: String,
   state: String,
-  country: String,
+  country: { type: String, required: true },
   occupation: String,
   phoneNumber: String,
   image: { type: String, required: true },

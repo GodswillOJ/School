@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
+import getCountryIso3 from 'country-iso-2-to-3'
 
 dotenv.config();
 
@@ -204,13 +205,46 @@ export const fetchOrders = async (req, res) => {
 // server-side code (e.g., in controllers/client.js)
 export const fetchAllTransactions = async (req, res) => {
   try {
-    const transactions = await Transaction.find().populate('userID', 'username');
-    res.status(200).json({ transactions });
+    const { page = 1, limit = 10, sortField = 'dateOrdered', sortOrder = 'desc' } = req.query;
+
+    const transactions = await Transaction.find()
+      .sort({ [sortField]: sortOrder === 'asc' ? 1 : -1 })
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit));
+
+    const total = await Transaction.countDocuments();
+
+    res.json({ transactions, total });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
+export const getGeography = async (req, res) => {
+  try {
+    const users = await User.find();
+    
+    const mappedLocations = users.reduce((acc, { country }) => {
+      const countryISO3 = getCountryIso3(country);
+      if (!acc[countryISO3]){
+        acc[countryISO3] = 0;
+      }
+
+      acc[countryISO3]++;
+      return acc;
+    }, {});
+
+    const formattedLocations = Object.isExtensible(mappedLocations).map(
+      ([country, count]) => {
+        return { id: country, value: count }
+      }
+    );
+
+    res.status(200).json(formattedLocations)
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
 
 
 
