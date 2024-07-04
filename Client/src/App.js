@@ -57,7 +57,7 @@ function App() {
 
               {/* Admin Layouts */}
             <Route element={<Layout />}>
-              <Route path="/dashboard" element={
+              <Route path="user/dashboard" element={
                 <PrivateRoute>
                   <Dashboard />
                 </PrivateRoute>
@@ -91,7 +91,7 @@ function App() {
 
               {/* Client Layouts */}
             <Route element={<ClientLayout />}>
-              <Route path="/clientDashboard" element={
+              <Route path="user/clientDashboard" element={
                 <PrivateRoute>
                   <ClientDashboard />
                 </PrivateRoute>
