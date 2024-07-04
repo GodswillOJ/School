@@ -7,7 +7,6 @@ import { countries } from 'state/geoData';
 const Geography = () => {
   const theme = useTheme();
   const { data, error, isLoading } = useGetGeographyQuery();
-  console.log('geoData: ',)
 
   if (isLoading) {
     return <div>Loading...</div>;
