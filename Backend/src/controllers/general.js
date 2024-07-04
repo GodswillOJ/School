@@ -11,13 +11,12 @@ dotenv.config();
 const JWT_Phrase = process.env.JWT;
 
 export const insertUser = async (req, res) => {
-  const { username, email, password, country } = req.body;
+  const { username, email, password, country, city, state, phone } = req.body;
 
   // Validate input fields
-  if (!username || !email || !password || !country) {
-    return res.status(400).json({ error: 'Username, email, and password are required' });
+  if (!username || !email || !password || !country, !city || !state || !phone) {
+    return res.status(400).json({ error: 'Username, email, and others are required' });
   }
-
   const user = await User.findOne({ username });
   console.log(req.file)
 
@@ -29,7 +28,7 @@ export const insertUser = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const image = req.file.filename
 
-  const newUser = new User({ username, email, image: image, password: hashedPassword, country: country, role: 'user' });
+  const newUser = new User({ username, email, image: image, password: hashedPassword, country: country, city: city, phoneNumber: phone, state: state, role: 'user' });
 
   try {
     const savedUser = await newUser.save();
@@ -50,11 +49,11 @@ export const insertUser = async (req, res) => {
 
 // inserting Admin
 export const insertAdmin = async (req, res) => {
-  const { username, email, password, country } = req.body;
+  const { username, email, password, country, city, state, phone } = req.body;
 
   // Validate input fields
-  if (!username || !email || !password || !country) {
-    return res.status(400).json({ error: 'Username, email, and password are required' });
+  if (!username || !email || !password || !country, !city || !state || !phone) {
+    return res.status(400).json({ error: 'Username, email, and others are required' });
   }
 
   const user = await User.findOne({ username });
@@ -68,7 +67,7 @@ export const insertAdmin = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const image = req.file.filename
 
-  const newUser = new User({ username, email, image: image, password: hashedPassword, country: country, role: 'admin' });
+  const newUser = new User({ username, email, image: image, password: hashedPassword, country: country, city: city, phoneNumber: phone, state: state, role: 'admin' });
 
   try {
     const savedUser = await newUser.save();

@@ -10,6 +10,9 @@ export const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [country, setCountry] = useState('');
+  const [state, setState] = useState('');
+  const [city, setCity] = useState('');
+  const [phone, setPhone] = useState('');
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -22,6 +25,9 @@ export const Register = () => {
     formData.append('email', email);
     formData.append('password', password);
     formData.append('country', country);
+    formData.append('state', state);
+    formData.append('phone', phone);
+    formData.append('city', city);
     formData.append('file', file);
 
     try {
@@ -34,6 +40,9 @@ export const Register = () => {
       setEmail('');
       setPassword('');
       setCountry('');
+      setState('');
+      setCity('');
+      setPhone('');
       setFile(null);
       alert('User added successfully. Proceed to login!');
     } catch (error) {
@@ -73,6 +82,12 @@ export const Register = () => {
         setPassword={setPassword}
         country={country}
         setCountry={setCountry}
+        state={state}
+        setState={setState}
+        city={city}
+        setCity={setCity}
+        phone={phone}
+        setPhone={setPhone}
         file={file}
         setFile={setFile}
         label="Register"
@@ -109,7 +124,7 @@ const Footer = () => (
   </Box>
 );
 
-const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setPassword, country, setCountry, file, setFile, label, loading, error, countries }) => {
+const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setPassword, country, setCountry, city, setCity, state, setState, phone, setPhone, file, setFile, label, loading, error, countries }) => {
   return (
     <div className="Register">
       <div className="CounterCont RegCont">
@@ -132,16 +147,30 @@ const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setP
             <label>Password:</label>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
-          <div>
-            <label>Select Country:</label>
-            <select value={country} onChange={(e) => setCountry(e.target.value)}>
-              <option value="">Select country</option>
-              {countries.map((country, index) => (
-                <option key={index} value={country}>
-                  {country}
-                </option>
-              ))}
-            </select>
+          <div className='country_detail'>
+              <div>
+                <label>State:</label>
+                <input type="state" value={state} onChange={(e) => setState(e.target.value)} />
+              </div>
+              <div>
+                <label>City:</label>
+                <input type="city" value={city} onChange={(e) => setCity(e.target.value)} />
+              </div>
+              <div>
+                <label>Phone:</label>
+                <input type="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+              </div>
+              <div>
+                <label>Select Country:</label>
+                <select value={country} onChange={(e) => setCountry(e.target.value)}>
+                  <option value="">Select country</option>
+                  {countries.map((country, index) => (
+                    <option key={index} value={country}>
+                      {country}
+                    </option>
+                  ))}
+                </select>
+              </div>
           </div>
           <div id="verify_btn">
             <button type="submit" disabled={loading}>

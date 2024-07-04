@@ -29,11 +29,11 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true, min: 2, max: 100 },
   email: { type: String, required: true, min: 50, unique: true },
   password: { type: String, required: true, min: 5 },
-  city: String,
-  state: String,
+  city: { type: String, required: true },
+  state: { type: String, required: true },
   country: { type: String, required: true },
   occupation: String,
-  phoneNumber: String,
+  phoneNumber: { type: String, required: true },
   image: { type: String, required: true },
   product: {
     posts: [{

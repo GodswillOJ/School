@@ -154,9 +154,11 @@ form div input{
 #verify_btn button{
     border: 1px solid #cac7c7;
     padding: 5px;
-    color: #fff;
-    background: blue;
+    color: #000;
+    font-weight: bold;
+    background: #dfd7d7;
     border-radius: 2px;
+    border: 2px solid #000;
 }
 
 /* userVerifyMail */
