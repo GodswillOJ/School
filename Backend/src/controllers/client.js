@@ -241,7 +241,7 @@ export const getGeography = async (req, res) => {
         id: country,
         value: count
       })
-    );
+    );    
 
     res.status(200).json(formattedLocations);
   } catch (error) {

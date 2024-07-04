@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, useTheme } from '@mui/material';
 import { ResponsiveChoropleth } from '@nivo/geo';
 import { useGetGeographyQuery } from 'state/api'; // Adjust the path as per your file structure
-import {countries} from 'state/geoData';
+import { countries } from 'state/geoData';
 
 const Geography = () => {
   const theme = useTheme();
@@ -22,17 +22,25 @@ const Geography = () => {
     return <div>No geography data available.</div>;
   }
 
-  console.log('Geography data:', data);
+  // Ensure all entries have both id and value properties
+  const filteredData = data.filter(entry => entry.id && entry.value !== undefined);
+
+  if (filteredData.length === 0) {
+    console.warn('No valid geography data found:', filteredData);
+    return <div>No valid geography data available.</div>;
+  }
+
+  console.log('Geography data:', filteredData);
 
   return (
     <Box height={600}>
       <h2>Geography</h2>
       <ResponsiveChoropleth
-        data={data}
+        data={filteredData}
         features={countries.features}
         margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
         colors="nivo"
-        domain={[0, Math.max(...data.map(item => item.value))]}
+        domain={[0, Math.max(...filteredData.map(item => item.value))]}
         unknownColor="#666666"
         label="properties.name"
         valueFormat=".2s"
