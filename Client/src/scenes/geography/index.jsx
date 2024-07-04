@@ -23,7 +23,14 @@ const Geography = () => {
   }
 
   // Ensure all entries have both id and value properties
-  const filteredData = data.filter(entry => entry.id && entry.value !== undefined);
+  const filteredData = data.filter(entry => {
+    if (entry.id && entry.value !== undefined) {
+      return true;
+    } else {
+      console.warn('Invalid data entry:', entry);
+      return false;
+    }
+  });
 
   if (filteredData.length === 0) {
     console.warn('No valid geography data found:', filteredData);
