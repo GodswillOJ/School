@@ -229,12 +229,6 @@ export const getGeography = async (req, res) => {
 
     const mappedLocations = users.reduce((acc, { country }) => {
       const countryISO3 = getCountryIso3(country);
-
-      if (!countryISO3) {
-        console.warn(`Could not find ISO3 code for country: ${country}`);
-        return acc; // Skip countries that don't have an ISO3 code
-      }
-
       if (!acc[countryISO3]) {
         acc[countryISO3] = 0;
       }
@@ -255,7 +249,6 @@ export const getGeography = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
-
 
 
 
