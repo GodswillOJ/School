@@ -222,8 +222,10 @@ export const fetchAllTransactions = async (req, res) => {
 
 export const getGeography = async (req, res) => {
   try {
-    const id = req.params._id;
-    const users = await User.find({ _id: id });
+    const users = await User.find({}); // Fetch all users
+    if (!users || users.length === 0) {
+      return res.status(200).json([]); // Return an empty array if no users found
+    }
 
     const mappedLocations = users.reduce((acc, { country }) => {
       const countryISO3 = getCountryIso3(country);
@@ -243,6 +245,7 @@ export const getGeography = async (req, res) => {
 
     res.status(200).json(formattedLocations);
   } catch (error) {
+    console.error('Error fetching geography data:', error);
     res.status(404).json({ message: error.message });
   }
 };

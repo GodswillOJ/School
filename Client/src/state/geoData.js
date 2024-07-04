@@ -1,4 +1,4 @@
-export const geoData = {
+export const countries = {
     "type": "FeatureCollection",
     "features": [
       {
