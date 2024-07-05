@@ -227,7 +227,7 @@ export const LoginClient = () => {
       localStorage.setItem('access_token', response.data.access_token);
       localStorage.setItem('userID', response.data.userID); // Ensure userID is stored here
   
-      navigate('user/clientDashboard');
+      navigate('/user/clientDashboard');
       window.location.reload();
        // Reload the page after navigation
     } catch (error) {

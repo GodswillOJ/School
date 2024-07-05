@@ -42,7 +42,7 @@ const navItems = [
     { text: "Transactions", icon: <ReceiptLongOutlined />, path: "/user/view_transactions" },
     { text: "Geography", icon: <PublicOutlined />, path: "user/geography" },
     { text: "Sales", icon: null },
-    { text: "Overview", icon: <PointOfSaleOutlined />, path: "/overview" },
+    { text: "Overview", icon: <PointOfSaleOutlined />, path: "/overall_stats" },
     { text: "Daily", icon: <TodayOutlined />, path: "/daily" },
     { text: "Monthly", icon: <CalendarMonthOutlined />, path: "/monthly" },
     { text: "Breakdown", icon: <PieChartOutlined />, path: "/breakdown" },

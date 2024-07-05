@@ -1,0 +1,57 @@
+import React from 'react';
+import { useGetOverallStatsQuery, useAddOverallStatMutation } from 'state/api';
+import { Box, Typography, Button } from '@mui/material';
+
+const OverallStat = () => {
+  const { data, error, isLoading } = useGetOverallStatsQuery();
+  const [addOverallStat] = useAddOverallStatMutation();
+
+  const handleAddStat = async () => {
+    const newStat = {
+      totalCustomers: 100,
+      yearlySalesTotal: 10000,
+      yearlyTotalSoldUnits: 500,
+      year: new Date().getFullYear(),
+      monthlyData: [
+        { month: 'January', totalSales: 1000, totalUnits: 50 },
+        // Add other months...
+      ],
+      dailyData: [
+        { date: '2023-07-01', totalSales: 100, totalUnits: 5 },
+        // Add other dates...
+      ],
+      salesByCategory: {
+        Electronics: 5000,
+        Clothing: 3000,
+        // Add other categories...
+      },
+    };
+
+    try {
+      await addOverallStat(newStat).unwrap();
+    } catch (error) {
+      console.error('Failed to add stat:', error);
+    }
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  return (
+    <Box>
+      <Typography variant="h4">Overall Statistics</Typography>
+      {data && data.map((stat) => (
+        <Box key={stat._id} mb={2}>
+          <Typography>Total Customers: {stat.totalCustomers}</Typography>
+          <Typography>Yearly Sales Total: {stat.yearlySalesTotal}</Typography>
+          <Typography>Yearly Total Sold Units: {stat.yearlyTotalSoldUnits}</Typography>
+          <Typography>Year: {stat.year}</Typography>
+          {/* Render other fields as needed */}
+        </Box>
+      ))}
+      <Button variant="contained" color="primary" onClick={handleAddStat}>Add Stat</Button>
+    </Box>
+  );
+};
+
+export default OverallStat;

@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://gotech-ecommerce.onrender.com/api' }),
   reducerPath: 'api',
-  tagTypes: ['User', 'Products', 'Customers', 'Cart', 'Profile', 'OrderNew', 'OrderView', 'Transactions', 'Geography', 'Dashboard', "ClientDashboard"],
+  tagTypes: ['User', 'Products', 'Customers', 'Cart', 'Profile', 'OrderNew', 'OrderView', 'Transactions', 'Geography', 'Dashboard', 'ClientDashboard', 'OverallStats'],
   endpoints: (build) => ({
     // getting user API
     getUser: build.query({
@@ -71,10 +71,23 @@ export const api = createApi({
     }),
 
     getClientDashboard: build.query({
-      query: () => "user/clientDashboard",
+      query: () => '/user/clientDashboard',
       providesTags: ['ClientDashboard'],
     }),
 
+    getOverallStats: build.query({
+      query: () => '/overall_stats',
+      providesTags: ['OverallStats'],
+    }),
+
+    addOverallStat: build.mutation({
+      query: (newStat) => ({
+        url: '/add_stat',
+        method: 'POST',
+        body: newStat,
+      }),
+      invalidatesTags: ['OverallStats'],
+    }),
   }),
 });
 
@@ -90,4 +103,6 @@ export const {
   useGetGeographyQuery,
   useGetDashboardQuery,
   useGetClientDashboardQuery,
+  useGetOverallStatsQuery,
+  useAddOverallStatMutation,
 } = api;

@@ -205,7 +205,7 @@ export const Login = () => {
       const response = await axios.post('https://gotech-ecommerce.onrender.com/api/login', { username, password });
       localStorage.setItem('access_token', response.data.access_token);
       localStorage.setItem('userID', response.data.userID);
-      navigate('user/dashboard');
+      navigate('/user/dashboard');
       window.location.reload();
     } catch (error) {
       setError(error.response && error.response.status === 401 ? 'Invalid username or password' : 'Error logging in. Please try again.');

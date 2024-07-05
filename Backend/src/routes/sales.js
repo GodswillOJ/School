@@ -1,12 +1,9 @@
-// Import necessary modules and controllers
 import express from 'express';
-// import * as userController from '../controllers/userController.js';
-// import { isAuthenticated } from '../middleware/authenticateToken.js';
+import { getOverallStats, addOverallStat } from '../controllers/sales.js';
 
 const router = express.Router();
 
-// Middleware for parsing URL-encoded and JSON request bodies
-router.use(express.urlencoded({ extended: true }));
-router.use(express.json());
+router.get('/overall_stats', getOverallStats);
+router.post('/add_stat', addOverallStat);
 
 export default router;
