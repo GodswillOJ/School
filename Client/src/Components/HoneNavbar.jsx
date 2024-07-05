@@ -65,7 +65,7 @@ const HomeNavbar = () => {
               onClose={handleMenuClose}
             >
               <MenuItem onClick={handleMenuClose}>
-                <Link href={data?.role !== 'admin' ? '/ClientDashboard' : '/dashboard'} sx={{ textDecoration: 'none', color: 'inherit' }}>
+                <Link href={data?.role !== 'admin' ? 'user/ClientDashboard' : 'user/dashboard'} sx={{ textDecoration: 'none', color: 'inherit' }}>
                   Dashboard
                 </Link>
               </MenuItem>

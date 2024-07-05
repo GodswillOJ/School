@@ -51,6 +51,8 @@ router.post('/registerClient', upload.single('file'), insertUser);
 router.post('/login', LoginVerifyUser);
 router.post('/loginUser', LoginVerify);
 router.get('/user/:id', fetchUserData);
+router.get('/user/dashboard', fetchUserData);
+router.get('/user/clientDashboard', fetchUserData);
 router.get('/userVerifyMail/:id', userVerify_Mail);
 router.get('/clientVerifyMail/:id', clientVerify_Mail);
 
