@@ -10,15 +10,15 @@ const OverallStat = () => {
   const handleAddStat = async () => {
     const newStat = {
       totalCustomers: 100,
-      yearlySalesTotal: 10000,
-      yearlyTotalSoldUnits: 500,
+      yearlySalesTotal: 15000,
+      yearlyTotalSoldUnits: 800,
       year: new Date().getFullYear(),
       monthlyData: [
         { month: 'January', totalSales: 1000, totalUnits: 50 },
         // Add other months...
       ],
       dailyData: [
-        { date: '2023-07-01', totalSales: 100, totalUnits: 5 },
+        { date: '2022-07-01', totalSales: 100, totalUnits: 5 },
         // Add other dates...
       ],
       salesByCategory: {
