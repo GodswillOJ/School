@@ -42,3 +42,30 @@ body{
   margin-bottom: 2rem;
   background-color: #f9f9f9;
 }
+
+
+/* OverallStat */
+
+/* styles.css */
+.container {
+  padding: 16px;
+  background-color: none;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.statBox {
+  padding: 16px;
+  background-color: #7a7878;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(4, 36, 84, 0.1);
+  margin-bottom: 10px;
+}
+
+.title {
+  margin-bottom: 16px;
+}
+
+.button {
+  margin-top: 16px;
+}

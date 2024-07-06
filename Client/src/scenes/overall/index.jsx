@@ -1,6 +1,7 @@
 import React from 'react';
 import { useGetOverallStatsQuery, useAddOverallStatMutation } from 'state/api';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, Grid } from '@mui/material';
+import 'App.css';
 
 const OverallStat = () => {
   const { data, error, isLoading } = useGetOverallStatsQuery();
@@ -38,18 +39,29 @@ const OverallStat = () => {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <Box>
-      <Typography variant="h4">Overall Statistics</Typography>
-      {data && data.map((stat) => (
-        <Box key={stat._id} mb={2}>
-          <Typography>Total Customers: {stat.totalCustomers}</Typography>
-          <Typography>Yearly Sales Total: {stat.yearlySalesTotal}</Typography>
-          <Typography>Yearly Total Sold Units: {stat.yearlyTotalSoldUnits}</Typography>
-          <Typography>Year: {stat.year}</Typography>
-          {/* Render other fields as needed */}
-        </Box>
-      ))}
-      <Button variant="contained" color="primary" onClick={handleAddStat}>Add Stat</Button>
+    <Box className="container">
+      <Typography variant="h4" className="title">Overall Statistics</Typography>
+      <Grid container spacing={2}>
+        {data && data.map((stat) => (
+          <Grid item xs={12} sm={6} md={4} key={stat._id}>
+            <Box className="statBox">
+              <Typography>Total Customers: {stat.totalCustomers}</Typography>
+              <Typography>Yearly Sales Total: {stat.yearlySalesTotal}</Typography>
+              <Typography>Yearly Total Sold Units: {stat.yearlyTotalSoldUnits}</Typography>
+              <Typography>Year: {stat.year}</Typography>
+              {/* Render other fields as needed */}
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+      <Button 
+        variant="contained" 
+        color="primary" 
+        onClick={handleAddStat} 
+        className="button"
+      >
+        Add Stat
+      </Button>
     </Box>
   );
 };
