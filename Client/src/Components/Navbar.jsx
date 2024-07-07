@@ -19,7 +19,8 @@ import {
   MenuItem,
   Menu,
   Box,
-  Typography
+  Typography,
+  useMediaQuery
 } from "@mui/material";
 import FlexBetween from "./flexBetween";
 import { useLocation, useNavigate, Link } from 'react-router-dom';
@@ -33,6 +34,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const [active, setActive] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
   const isOpen = Boolean(anchorEl);
+  const isMobile = useMediaQuery('(max-width:760px)');
 
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -49,23 +51,28 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
     navigate('/loginUser');
   };
 
-  const userMenuItems = user.role === 'user'
-    ? [
-        <MenuItem key="home" onClick={handleClose}>
-          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>Home</Link>
-        </MenuItem>,
-        <MenuItem key="logout" onClick={() => { handleClose(); handleLogout(); }}>
-          Log Out
-        </MenuItem>
-      ]
-    : [
-        <MenuItem key="add_product" onClick={handleClose}>
-          <Link to="/add_product" style={{ textDecoration: 'none', color: 'inherit' }}>Add Product</Link>
-        </MenuItem>,
-        <MenuItem key="logout" onClick={() => { handleClose(); handleLogout(); }}>
-          Log Out
-        </MenuItem>
-      ];
+  const userMenuItems = [
+    <MenuItem key="logout" onClick={() => { handleClose(); handleLogout(); }}>
+      Log Out
+    </MenuItem>
+  ];
+
+  if (isMobile) {
+    userMenuItems.push(
+      <MenuItem key="settings" onClick={handleClose}>
+        <IconButton onClick={() => dispatch(setMode())}>
+          {theme.palette.mode === "dark" ? (
+            <DarkModeOutlined sx={{ fontSize: "25px" }} />
+          ) : (
+            <LightModeOutlined sx={{ fontSize: "25px" }} />
+          )}
+        </IconButton>
+        <IconButton>
+          <SettingsOutlined sx={{ fontSize: "25px" }} />
+        </IconButton>
+      </MenuItem>
+    );
+  }
 
   return (
     <AppBar
@@ -96,16 +103,20 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
 
         {/* Right Side */}
         <FlexBetween gap="1.5rem">
-          <IconButton onClick={() => dispatch(setMode())}>
-            {theme.palette.mode === "dark" ? (
-              <DarkModeOutlined sx={{ fontSize: "25px" }} />
-            ) : (
-              <LightModeOutlined sx={{ fontSize: "25px" }} />
-            )}
-          </IconButton>
-          <IconButton>
-            <SettingsOutlined sx={{ fontSize: "25px" }} />
-          </IconButton>
+          {!isMobile && (
+            <>
+              <IconButton onClick={() => dispatch(setMode())}>
+                {theme.palette.mode === "dark" ? (
+                  <DarkModeOutlined sx={{ fontSize: "25px" }} />
+                ) : (
+                  <LightModeOutlined sx={{ fontSize: "25px" }} />
+                )}
+              </IconButton>
+              <IconButton>
+                <SettingsOutlined sx={{ fontSize: "25px" }} />
+              </IconButton>
+            </>
+          )}
           <FlexBetween>
             <Button
               onClick={handleClick}
