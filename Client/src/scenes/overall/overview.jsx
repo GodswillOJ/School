@@ -26,7 +26,7 @@ const Overview = () => {
           View overall data
         </Link>
       </Box>
-      <Box height='75vh'>
+      <Box > 
         <FormControl sx={{ mt:'1rem' }}>
           <InputLabel>View</InputLabel>
           <Select value={view} label='View' onChange={(e) => setView(e.target.value)}>

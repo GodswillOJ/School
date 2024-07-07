@@ -20,6 +20,7 @@ import Transactions from "./scenes/transactions/index";
 import Geography from "./scenes/geography/index";
 import OverallStat from "./scenes/overall/index";
 import Overview from "./scenes/overall/overview";
+import Daily from "./scenes/dailySales/index";
 import AdminHome from "./scenes/home/admin_home";
 import VerifyMail from "./scenes/home/verifyMail";
 import { Register, Login, UserVerify } from "./scenes/home/userAuth";
@@ -97,6 +98,11 @@ function App() {
               <Route path="/overview" element={
                 <PrivateRoute>
                   <Overview />
+                </PrivateRoute>
+              } />
+              <Route path="/daily" element={
+                <PrivateRoute>
+                  <Daily />
                 </PrivateRoute>
               } />
             </Route>
