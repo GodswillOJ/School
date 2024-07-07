@@ -12,10 +12,18 @@ const Daily = () => {
   const { data } = useGetDailyQuery();
   const theme = useTheme();
 
-  const [formattedData] = useMemo(() => {
-    if (!data) return [];
+  const defaultData = [
+    { date: "2021-02-01", totalSales: 100, totalUnits: 20 },
+    { date: "2021-02-02", totalSales: 120, totalUnits: 25 },
+    { date: "2021-02-03", totalSales: 150, totalUnits: 30 },
+    { date: "2021-02-04", totalSales: 130, totalUnits: 22 },
+    { date: "2021-02-05", totalSales: 170, totalUnits: 28 },
+    // Add more default data as needed
+  ];
 
-    const { dailyData } = data;
+  const [formattedData] = useMemo(() => {
+    const dailyData = data?.dailyData || defaultData;
+
     const totalSalesLine = {
       id: "totalSales",
       color: theme.palette.secondary.main,
@@ -27,25 +35,19 @@ const Daily = () => {
       data: [],
     };
 
-    Object.values(dailyData).forEach(({ date, totalSales, totalUnits }) => {
+    dailyData.forEach(({ date, totalSales, totalUnits }) => {
       const dateFormatted = new Date(date);
       if (dateFormatted >= startDate && dateFormatted <= endDate) {
         const splitDate = date.substring(date.indexOf("-") + 1);
 
-        totalSalesLine.data = [
-          ...totalSalesLine.data,
-          { x: splitDate, y: totalSales },
-        ];
-        totalUnitsLine.data = [
-          ...totalUnitsLine.data,
-          { x: splitDate, y: totalUnits },
-        ];
+        totalSalesLine.data.push({ x: splitDate, y: totalSales });
+        totalUnitsLine.data.push({ x: splitDate, y: totalUnits });
       }
     });
 
     const formattedData = [totalSalesLine, totalUnitsLine];
     return [formattedData];
-  }, [data, startDate, endDate]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [data, startDate, endDate, theme.palette.secondary.main, theme.palette.secondary[600]]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Box m="1.5rem 2.5rem">
@@ -73,7 +75,7 @@ const Daily = () => {
           </Box>
         </Box>
 
-        {data ? (
+        {formattedData.length > 0 ? (
           <ResponsiveLine
             data={formattedData}
             theme={{
