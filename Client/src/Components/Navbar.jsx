@@ -82,23 +82,13 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
         boxShadow: "none",
       }}
     >
-      <Toolbar sx={{ justifyContent: "space-between" }}>
-        {/* Left Side */}
-        <FlexBetween>
+    <Toolbar sx={{ justifyContent: "space-between", display: 'block' }}>
+      <Box sx={{ display:'flex', justifyContent: "space-between" }}>
+          {/* Left Side */}
+          <FlexBetween>
           <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
             <MenuIcon />
           </IconButton>
-          <FlexBetween
-            backgroundColor={theme.palette.background.alt}
-            borderRadius="9px"
-            gap="3rem"
-            p="0.1rem 1.5rem"
-          >
-            <InputBase placeholder='Search...' />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </FlexBetween>
         </FlexBetween>
 
         {/* Right Side */}
@@ -160,7 +150,24 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
             </Menu>
           </FlexBetween>
         </FlexBetween>
-      </Toolbar>
+
+      </Box>
+
+      <Box>
+        <FlexBetween
+              backgroundColor={theme.palette.background.alt}
+              borderRadius="9px"
+              gap="3rem"
+              p="0.1rem 1.5rem"
+            >
+              <InputBase placeholder='Search...' />
+              <IconButton>
+                <Search />
+              </IconButton>
+            </FlexBetween>
+      </Box>
+      
+    </Toolbar>
     </AppBar>
   );
 };
