@@ -3,7 +3,24 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://gotech-ecommerce.onrender.com/api' }),
   reducerPath: 'api',
-  tagTypes: ['User', 'Products', 'Customers', 'Cart', 'Profile', 'OrderNew', 'OrderView', 'Transactions', 'Geography', 'Dashboard', 'ClientDashboard', 'OverallStats', 'Overview', 'Daily', 'Monthly'],
+  tagTypes: [
+    'User',
+    'Products',
+    'Customers', 
+    'Cart', 
+    'Profile', 
+    'OrderNew', 
+    'OrderView', 
+    'Transactions', 
+    'Geography', 
+    'Dashboard', 
+    'ClientDashboard', 
+    'OverallStats', 
+    'Overview', 
+    'Daily', 
+    'Monthly',
+    'Breakdown',
+  ],
   endpoints: (build) => ({
     // getting user API
     getUser: build.query({
@@ -95,6 +112,11 @@ export const api = createApi({
       providesTags: ['Monthly'],
     }),
 
+    getBreakdown: build.query({
+      query: () => '/breakdown',
+      providesTags: ['Breakdown'],
+    }),
+
 
     addOverallStat: build.mutation({
       query: (newStat) => ({
@@ -124,4 +146,5 @@ export const {
   useGetOverviewQuery,
   useGetDailyQuery,
   useGetMonthlyQuery,
+  useGetBreakdownQuery,
 } = api;

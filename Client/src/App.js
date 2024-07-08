@@ -22,6 +22,7 @@ import OverallStat from "./scenes/sales/overall/index";
 import Overview from "./scenes/sales/overall/overview";
 import Daily from "./scenes/sales/dailySales/index";
 import Monthly from "./scenes/sales/monthly/index";
+import Breakdown from "./scenes/sales/distribution/index";
 import AdminHome from "./scenes/home/admin_home";
 import VerifyMail from "./scenes/home/verifyMail";
 import { Register, Login, UserVerify } from "./scenes/home/userAuth";
@@ -109,6 +110,11 @@ function App() {
               <Route path="/monthly" element={
                 <PrivateRoute>
                   <Monthly />
+                </PrivateRoute>
+              } />
+              <Route path="/breakdown" element={
+                <PrivateRoute>
+                  <Breakdown />
                 </PrivateRoute>
               } />
             </Route>
