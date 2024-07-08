@@ -24,6 +24,7 @@ import StatBox from "Components/StatBox";
 const Dashboard = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
+  const isSmallScreen = useMediaQuery("(max-width: 600px)");
   const { data, isLoading } = useGetDashboardQuery();
 
   const columns = [
@@ -85,7 +86,10 @@ const Dashboard = () => {
         gridAutoRows="160px"
         gap="20px"
         sx={{
-          "& > div": { gridColumn: isNonMediumScreens ? undefined : "span 12" },
+          "& > div": {
+            gridColumn: isNonMediumScreens ? undefined : "span 12",
+            minWidth: isSmallScreen ? "100%" : "unset",
+          },
         }}
       >
         {/* ROW 1 */}
