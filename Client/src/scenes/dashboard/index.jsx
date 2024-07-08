@@ -25,7 +25,9 @@ const Dashboard = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
+  const isBelow760px = useMediaQuery("(max-width: 760px)");
   const { data, isLoading } = useGetDashboardQuery();
+  console.log('dash: ', data)
 
   const columns = [
     {
@@ -60,10 +62,16 @@ const Dashboard = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <FlexBetween>
-        <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+      <FlexBetween
+        sx={{
+          display: isBelow760px ? 'block' : 'flex'
+        }}
+      >
+        <Box sx={{ width:'100%', margin:'1rem' }}>
+          <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+        </Box>
 
-        <Box>
+        <Box sx={{ textAlign: isBelow760px ? 'center' : 'right', marginTop: isBelow760px ? '1rem' : '0' }}>
           <Button
             sx={{
               backgroundColor: theme.palette.secondary.light,

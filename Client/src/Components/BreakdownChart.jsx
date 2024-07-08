@@ -1,153 +1,231 @@
 import React from "react";
-import { ResponsivePie } from "@nivo/pie";
-import { Box, Typography, useTheme } from "@mui/material";
-import { useGetOverallStatsQuery } from "state/api";
+import FlexBetween from "Components/flexBetween";
+import Header from "Components/Header";
+import {
+  DownloadOutlined,
+  Email,
+  PointOfSale,
+  PersonAdd,
+  Traffic,
+} from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Typography,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import BreakdownChart from "Components/BreakdownChart";
+import OverviewChart from "Components/overview_chart";
+import { useGetDashboardQuery } from "state/api";
+import StatBox from "Components/StatBox";
 
-const BreakdownChart = ({ isDashboard = false }) => {
-  const { data, isLoading } = useGetOverallStatsQuery();
+const Dashboard = () => {
   const theme = useTheme();
+  const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
+  const isSmallScreen = useMediaQuery("(max-width: 600px)");
+  const isBelow760px = useMediaQuery("(max-width: 760px)");
+  const { data, isLoading } = useGetDashboardQuery();
+  console.log('dash: ', data)
 
-  const defaultData = {
-    salesByCategory: {
-      Electronics: 1000,
-      Apparel: 1500,
-      Home: 2000,
-      Beauty: 500,
+  const columns = [
+    {
+      field: "_id",
+      headerName: "ID",
+      flex: 1,
     },
-    yearlySalesTotal: 5000,
-  };
-
-  const effectiveData = data && data.salesByCategory ? data : defaultData;
-
-  if (isLoading) return "Loading...";
-
-  const colors = [
-    theme.palette.secondary[500],
-    theme.palette.secondary[300],
-    theme.palette.secondary[300],
-    theme.palette.secondary[500],
+    {
+      field: "userId",
+      headerName: "User ID",
+      flex: 1,
+    },
+    {
+      field: "createdAt",
+      headerName: "CreatedAt",
+      flex: 1,
+    },
+    {
+      field: "products",
+      headerName: "# of Products",
+      flex: 0.5,
+      sortable: false,
+      renderCell: (params) => params.value.length,
+    },
+    {
+      field: "cost",
+      headerName: "Cost",
+      flex: 1,
+      renderCell: (params) => `$${Number(params.value).toFixed(2)}`,
+    },
   ];
 
-  const formattedData = Object.entries(effectiveData.salesByCategory).map(
-    ([category, sales], i) => ({
-      id: category,
-      label: category,
-      value: sales,
-      color: colors[i % colors.length],
-    })
-  );
-
   return (
-    <Box
-      height={isDashboard ? "400px" : "100%"}
-      width={undefined}
-      minHeight={isDashboard ? "325px" : undefined}
-      minWidth={isDashboard ? "325px" : undefined}
-      position="relative"
-    >
-      <ResponsivePie
-        data={formattedData}
-        theme={{
-          axis: {
-            domain: {
-              line: {
-                stroke: theme.palette.secondary[200],
-              },
-            },
-            legend: {
-              text: {
-                fill: theme.palette.secondary[200],
-              },
-            },
-            ticks: {
-              line: {
-                stroke: theme.palette.secondary[200],
-                strokeWidth: 1,
-              },
-              text: {
-                fill: theme.palette.secondary[200],
-              },
-            },
-          },
-          legends: {
-            text: {
-              fill: theme.palette.secondary[200],
-            },
-          },
-          tooltip: {
-            container: {
-              color: theme.palette.primary.main,
-            },
-          },
-        }}
-        colors={{ datum: "data.color" }}
-        margin={
-          isDashboard
-            ? { top: 40, right: 80, bottom: 100, left: 50 }
-            : { top: 40, right: 80, bottom: 80, left: 80 }
-        }
-        sortByValue={true}
-        innerRadius={0.45}
-        activeOuterRadiusOffset={8}
-        borderWidth={1}
-        borderColor={{
-          from: "color",
-          modifiers: [["darker", 0.2]],
-        }}
-        enableArcLinkLabels={!isDashboard}
-        arcLinkLabelsTextColor={theme.palette.secondary[200]}
-        arcLinkLabelsThickness={2}
-        arcLinkLabelsColor={{ from: "color" }}
-        arcLabelsSkipAngle={10}
-        arcLabelsTextColor={{
-          from: "color",
-          modifiers: [["darker", 2]],
-        }}
-        legends={[
-          {
-            anchor: "bottom",
-            direction: "row",
-            justify: false,
-            translateX: isDashboard ? 20 : 0,
-            translateY: isDashboard ? 50 : 56,
-            itemsSpacing: 0,
-            itemWidth: 85,
-            itemHeight: 18,
-            itemTextColor: "#999",
-            itemDirection: "left-to-right",
-            itemOpacity: 1,
-            symbolSize: 18,
-            symbolShape: "circle",
-            effects: [
-              {
-                on: "hover",
-                style: {
-                  itemTextColor: theme.palette.primary[500],
-                },
-              },
-            ],
-          },
-        ]}
-      />
-      <Box
-        position="absolute"
-        top="50%"
-        left="50%"
-        color={theme.palette.secondary[400]}
-        textAlign="center"
-        pointerEvents="none"
+    <Box m="1.5rem 2.5rem">
+      <FlexBetween
         sx={{
-          transform: isDashboard
-            ? "translate(-75%, -170%)"
-            : "translate(-50%, -100%)",
+          display: isBelow760px ? 'block' : 'flex'
         }}
       >
-        <Typography variant="h6">
-          {!isDashboard && "Total:"} ${effectiveData.yearlySalesTotal}
-        </Typography>
+        <Box sx={{ width:'100%', margin:'1rem' }}>
+          <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+        </Box>
+
+        <Box sx={{ textAlign: isBelow760px ? 'center' : 'right', marginTop: isBelow760px ? '1rem' : '0' }}>
+          <Button
+            sx={{
+              backgroundColor: theme.palette.secondary.light,
+              color: theme.palette.background.alt,
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+            }}
+          >
+            <DownloadOutlined sx={{ mr: "10px" }} />
+            Download Reports
+          </Button>
+        </Box>
+      </FlexBetween>
+
+      <Box
+        mt="20px"
+        display="grid"
+        gridTemplateColumns="repeat(12, 1fr)"
+        gridAutoRows="160px"
+        gap="20px"
+        sx={{
+          "& > div": {
+            gridColumn: isNonMediumScreens ? undefined : "span 12",
+            minWidth: isSmallScreen ? "100%" : "unset",
+          },
+        }}
+      >
+        {/* ROW 1 */}
+        <StatBox
+          title="Total Customers"
+          value={data && data.totalCustomers}
+          increase="+14%"
+          description="Since last month"
+          icon={
+            <Email
+              sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
+            />
+          }
+        />
+        <StatBox
+          title="Sales Today"
+          value={data && data.todayStats.totalSales}
+          increase="+21%"
+          description="Since last month"
+          icon={
+            <PointOfSale
+              sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
+            />
+          }
+        />
+        <Box
+          gridColumn="span 8"
+          gridRow="span 2"
+          backgroundColor={theme.palette.background.alt}
+          p="1rem"
+          borderRadius="0.55rem"
+        >
+          <OverviewChart view="sales" isDashboard={true} />
+        </Box>
+        <StatBox
+          title="Monthly Sales"
+          value={data && data.thisMonthStats.totalSales}
+          increase="+5%"
+          description="Since last month"
+          icon={
+            <PersonAdd
+              sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
+            />
+          }
+        />
+        <StatBox
+          title="Yearly Sales"
+          value={data && data.yearlySalesTotal}
+          increase="+43%"
+          description="Since last month"
+          icon={
+            <Traffic
+              sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
+            />
+          }
+        />
+
+        {/* ROW 2 */}
+        <Box
+          gridColumn="span 8"
+          gridRow="span 3"
+          sx={{
+            "& .MuiDataGrid-root": {
+              border: "none",
+              borderRadius: "5rem",
+            },
+            "& .MuiDataGrid-cell": {
+              borderBottom: "none",
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              borderBottom: "none",
+            },
+            "& .MuiDataGrid-virtualScroller": {
+              backgroundColor: theme.palette.background.alt,
+            },
+            "& .MuiDataGrid-footerContainer": {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              borderTop: "none",
+            },
+            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+              color: `${theme.palette.secondary[200]} !important`,
+            },
+          }}
+        >
+          <DataGrid
+            loading={isLoading || !data}
+            getRowId={(row) => row._id}
+            rows={(data && data.transactions) || []}
+            columns={columns}
+          />
+        </Box>
+        <Box
+          gridColumn="span 4"
+          gridRow="span 3"
+          backgroundColor={theme.palette.background.alt}
+          p="1.5rem"
+          borderRadius="0.55rem"
+          display="flex"
+          justifyContent={isBelow760px ? "center" : "flex-start"}
+          alignItems="center"
+        >
+          <Typography variant="h6" sx={{ color: theme.palette.secondary[100] }}>
+            Sales By Category
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: isBelow760px ? "center" : "flex-start",
+            }}
+          >
+            <BreakdownChart isDashboard={true} />
+            <Typography
+              p="0 0.6rem"
+              fontSize="0.8rem"
+              sx={{ color: theme.palette.secondary[200] }}
+            >
+              Breakdown of real states and information via category for revenue
+              made for this year and total sales.
+            </Typography>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
 };
 
-export default BreakdownChart;
+export default Dashboard;
