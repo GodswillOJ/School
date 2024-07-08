@@ -1,29 +1,28 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Box, useTheme } from "@mui/material";
 import Header from "Components/Header";
 import { ResponsiveLine } from "@nivo/line";
-import { useGetDailyQuery } from "state/api";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { useGetOverallStatsQuery } from "state/api";
 
-const Daily = () => {
-  const [startDate, setStartDate] = useState(new Date("2021-02-01"));
-  const [endDate, setEndDate] = useState(new Date("2021-03-01"));
-  const { data } = useGetDailyQuery();
+const Monthly = () => {
+  const { data } = useGetOverallStatsQuery();
   const theme = useTheme();
 
-  const defaultData = [
-    { date: "2021-02-01", totalSales: 100, totalUnits: 20 },
-    { date: "2021-02-02", totalSales: 120, totalUnits: 25 },
-    { date: "2021-02-03", totalSales: 150, totalUnits: 30 },
-    { date: "2021-02-04", totalSales: 130, totalUnits: 22 },
-    { date: "2021-02-05", totalSales: 170, totalUnits: 28 },
-    // Add more default data as needed
-  ];
+  // Default data in case the API data is null
+  const defaultData = {
+    monthlyData: {
+      January: { month: "January", totalSales: 50, totalUnits: 120 },
+      February: { month: "February", totalSales: 80, totalUnits: 180 },
+      March: { month: "March", totalSales: 20, totalUnits: 90 },
+      April: { month: "April", totalSales: 400, totalUnits: 100 },
+      May: { month: "May", totalSales: 70, totalUnits: 80 },
+      June: { month: "June", totalSales: 160, totalUnits: 200 },
+      July: { month: "July", totalSales: 130, totalUnits: 90 },
+    },
+  };
 
   const [formattedData] = useMemo(() => {
-    const dailyData = data?.dailyData || defaultData;
-
+    const monthlyData = data?.monthlyData || defaultData.monthlyData;
     const totalSalesLine = {
       id: "totalSales",
       color: theme.palette.secondary.main,
@@ -35,47 +34,26 @@ const Daily = () => {
       data: [],
     };
 
-    dailyData.forEach(({ date, totalSales, totalUnits }) => {
-      const dateFormatted = new Date(date);
-      if (dateFormatted >= startDate && dateFormatted <= endDate) {
-        const splitDate = date.substring(date.indexOf("-") + 1);
-
-        totalSalesLine.data.push({ x: splitDate, y: totalSales });
-        totalUnitsLine.data.push({ x: splitDate, y: totalUnits });
-      }
+    Object.values(monthlyData).forEach(({ month, totalSales, totalUnits }) => {
+      totalSalesLine.data = [
+        ...totalSalesLine.data,
+        { x: month, y: totalSales },
+      ];
+      totalUnitsLine.data = [
+        ...totalUnitsLine.data,
+        { x: month, y: totalUnits },
+      ];
     });
 
     const formattedData = [totalSalesLine, totalUnitsLine];
     return [formattedData];
-  }, [data, startDate, endDate, theme.palette.secondary.main, theme.palette.secondary[600]]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [data, theme.palette.secondary.main, theme.palette.secondary[600]]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="DAILY SALES" subtitle="Chart of daily sales" />
+      <Header title="MONTHLY SALES" subtitle="Chart of monthly sales" />
       <Box height="75vh">
-        <Box display="flex" justifyContent="flex-end">
-          <Box>
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              selectsStart
-              startDate={startDate}
-              endDate={endDate}
-            />
-          </Box>
-          <Box>
-            <DatePicker
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              selectsEnd
-              startDate={startDate}
-              endDate={endDate}
-              minDate={startDate}
-            />
-          </Box>
-        </Box>
-
-        {formattedData.length > 0 ? (
+        {data || defaultData ? (
           <ResponsiveLine
             data={formattedData}
             theme={{
@@ -122,7 +100,7 @@ const Daily = () => {
               reverse: false,
             }}
             yFormat=" >-.2f"
-            curve="catmullRom"
+            // curve="catmullRom"
             axisTop={null}
             axisRight={null}
             axisBottom={{
@@ -186,4 +164,4 @@ const Daily = () => {
   );
 };
 
-export default Daily;
+export default Monthly;
