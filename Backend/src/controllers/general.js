@@ -1,6 +1,7 @@
 import { Post, User } from '../models/User.js';
 import OverallStat from '../models/OverallStat.js';
 import { Product } from '../models/productSchema.js';
+import Transaction from '../models/transactions.js';
 import { Category, Message, MessageModel } from '../models/category.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -708,7 +709,7 @@ export const fetchDashboard = async (req, res) => {
     // hardcoded values
     const currentMonth = "November";
     const currentYear = 2021;
-    const currentDay = "2021-11-15";
+    const currentDay = "2021-02-01";
 
     /* Recent Transactions */
     const transactions = await Transaction.find()
