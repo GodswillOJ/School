@@ -12,6 +12,7 @@ import {
   userVerify_Mail,
   clientVerify_Mail,
   NewProduct,
+  fetchDashboard,
 } from '../controllers/general.js';
 import {
   Products,
@@ -51,6 +52,7 @@ router.post('/registerClient', upload.single('file'), insertUser);
 router.post('/login', LoginVerifyUser);
 router.post('/loginUser', LoginVerify);
 router.get('/user/:id', fetchUserData);
+router.get('/user/dashboard', fetchDashboard);
 router.get('/userVerifyMail/:id', userVerify_Mail);
 router.get('/clientVerifyMail/:id', clientVerify_Mail);
 
