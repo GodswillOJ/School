@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box,
     Divider,
@@ -29,7 +29,6 @@ import {
     PieChartOutlined,
     PointOfSaleOutlined
 } from "@mui/icons-material";
-import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import FlexBetween from './flexBetween';
 import profile from '../assets/profile.jpg';
@@ -97,11 +96,9 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
                                                 </Typography>
                                             </Link>
                                         </Box>
-                                        {!isNonMobile && (
-                                            <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-                                                <ChevronLeft />
-                                            </IconButton>
-                                        )}
+                                        <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+                                            <ChevronLeft />
+                                        </IconButton>
                                     </FlexBetween>
                                 </Box>
                             </FlexBetween>
