@@ -228,6 +228,7 @@ export const LoginClient = () => {
       localStorage.setItem('userID', response.data.userID); // Ensure userID is stored here
   
       navigate('/user/clientDashboard');
+      window.location.reload();
        // Reload the page after navigation
     } catch (error) {
       console.error('Error in verifying user:', error.message);

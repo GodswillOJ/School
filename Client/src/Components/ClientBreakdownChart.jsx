@@ -14,7 +14,21 @@ const BreakdownChart = ({ isDashboard = false }) => {
       Groceries: 7000,
       Beauty: 2000,
     },
+    ordersByCategory: {
+      Electronics: 200,
+      Apparel: 150,
+      Groceries: 300,
+      Beauty: 100,
+    },
+    cartByCategory: {
+      Electronics: 50,
+      Apparel: 40,
+      Groceries: 60,
+      Beauty: 30,
+    },
     yearlySalesTotal: 17000,
+    totalOrders: 750,
+    totalCart: 180,
   };
 
   const chartData = data && !isLoading ? data : defaultData;
@@ -26,14 +40,17 @@ const BreakdownChart = ({ isDashboard = false }) => {
     theme.palette.secondary[500],
   ];
 
-  const formattedData = Object.entries(chartData.salesByCategory).map(
-    ([category, sales], i) => ({
+  const formatData = (dataObject) => 
+    Object.entries(dataObject).map(([category, value], i) => ({
       id: category,
       label: category,
-      value: sales,
-      color: colors[i],
-    })
-  );
+      value,
+      color: colors[i % colors.length],
+    }));
+
+  const salesData = formatData(chartData.salesByCategory);
+  const ordersData = formatData(chartData.ordersByCategory);
+  const cartData = formatData(chartData.cartByCategory);
 
   return (
     <Box
@@ -44,7 +61,7 @@ const BreakdownChart = ({ isDashboard = false }) => {
       position="relative"
     >
       <ResponsivePie
-        data={formattedData}
+        data={salesData}
         theme={{
           axis: {
             domain: {
@@ -141,7 +158,13 @@ const BreakdownChart = ({ isDashboard = false }) => {
         }}
       >
         <Typography variant="h6">
-          {!isDashboard && "Total:"} ${chartData.yearlySalesTotal}
+          {!isDashboard && "Total Sales:"} ${chartData.yearlySalesTotal}
+        </Typography>
+        <Typography variant="h6">
+          {!isDashboard && "Total Orders:"} {chartData.totalOrders}
+        </Typography>
+        <Typography variant="h6">
+          {!isDashboard && "Total Cart Items:"} {chartData.totalCart}
         </Typography>
       </Box>
     </Box>

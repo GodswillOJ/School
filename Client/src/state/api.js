@@ -19,7 +19,12 @@ export const api = createApi({
     'Overview', 
     'Daily', 
     'Monthly',
+    'ClientMonthly',
+    'ClientDaily',
+    'ClientBreakdown',
     'Breakdown',
+    'GeographyClient',
+    'ClientBreakdown',
   ],
   endpoints: (build) => ({
     // getting user API
@@ -82,6 +87,11 @@ export const api = createApi({
       providesTags: ['Geography'],
     }),
 
+    getGeographyClient: build.query({
+      query: () => '/user/geography_c"',
+      providesTags: ['GeographyClient'],
+    }),
+
     getDashboard: build.query({
       query: () => '/user/dashboard',
       providesTags: ['Dashboard'],
@@ -107,14 +117,29 @@ export const api = createApi({
       providesTags: ['Daily'],
     }),
 
+    getClientDaily: build.query({
+      query: () => '/user/daily',
+      providesTags: ['ClientDaily'],
+    }),
+
     getMonthly: build.query({
       query: () => '/monthly',
       providesTags: ['Monthly'],
     }),
 
+    getClientMonthly: build.query({
+      query: () => '/user/monthly',
+      providesTags: ['ClientMonthly'],
+    }),
+
     getBreakdown: build.query({
       query: () => '/breakdown',
       providesTags: ['Breakdown'],
+    }),
+
+    getClientBreakdown: build.query({
+      query: () => '/user/breakdown',
+      providesTags: ['ClientBreakdown'],
     }),
 
 
@@ -145,6 +170,10 @@ export const {
   useAddOverallStatMutation,
   useGetOverviewQuery,
   useGetDailyQuery,
+  useGetClientDailyQuery,
   useGetMonthlyQuery,
+  useGetClientMonthlyQuery,
   useGetBreakdownQuery,
+  useGetClientBreakdownQuery,
+  useGetGeographyClientQuery,
 } = api;
