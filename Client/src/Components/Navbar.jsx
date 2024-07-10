@@ -23,7 +23,7 @@ import {
   useMediaQuery
 } from "@mui/material";
 import FlexBetween from "./flexBetween";
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import defaultProfile from '../assets/profile.jpg'; // Import the default profile image
 
 const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
@@ -36,14 +36,20 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const isOpen = Boolean(anchorEl);
   const isMobile = useMediaQuery('(max-width:760px)');
 
-  const handleClick = (event) => setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
-
-  const userImageUrl = `https://gotech-ecommerce.onrender.com/public/${user.image}`;
-
   useEffect(() => {
     setActive(pathname.substring(1));
   }, [pathname]);
+
+  useEffect(() => {
+    if (user) {
+      // Any additional logic when user data changes
+    }
+  }, [user]);
+
+  const handleClick = (event) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
+
+  const userImageUrl = `https://gotech-ecommerce.onrender.com/public/${user?.image}`;
 
   const handleLogout = () => {
     localStorage.removeItem('access_token');
@@ -82,92 +88,90 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
         boxShadow: "none",
       }}
     >
-    <Toolbar sx={{ justifyContent: "space-between", display: 'block' }}>
-      <Box sx={{ display:'flex', justifyContent: "space-between" }}>
+      <Toolbar sx={{ justifyContent: "space-between", display: 'block' }}>
+        <Box sx={{ display: 'flex', justifyContent: "space-between" }}>
           {/* Left Side */}
           <FlexBetween>
-          <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-            <MenuIcon />
-          </IconButton>
-        </FlexBetween>
-
-        {/* Right Side */}
-        <FlexBetween gap="1.5rem">
-          {!isMobile && (
-            <>
-              <IconButton onClick={() => dispatch(setMode())}>
-                {theme.palette.mode === "dark" ? (
-                  <DarkModeOutlined sx={{ fontSize: "25px" }} />
-                ) : (
-                  <LightModeOutlined sx={{ fontSize: "25px" }} />
-                )}
-              </IconButton>
-              <IconButton>
-                <SettingsOutlined sx={{ fontSize: "25px" }} />
-              </IconButton>
-            </>
-          )}
-          <FlexBetween>
-            <Button
-              onClick={handleClick}
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: "center",
-                textTransform: 'none',
-                gap: '1rem',
-              }}
-            >
-              <Box
-                component="img"
-                alt="profile"
-                src={userImageUrl}
-                onError={(e) => e.target.src = defaultProfile}
-                height="32px"
-                width="32px"
-                borderRadius="50%"
-                sx={{ objectFit: "cover" }}
-              />
-              <Box textAlign="left">
-                <Typography fontWeight="bold" fontSize="0.85rem" sx={{ color: theme.palette.secondary[100] }}>
-                  {user.username}
-                </Typography>
-                <Typography fontSize="0.75rem" sx={{ color: theme.palette.secondary[300] }}>
-                  Username
-                </Typography>
-              </Box>
-              <ArrowDropDownOutlined
-                sx={{ color: theme.palette.secondary[300], fontSize: '25px' }}
-              />
-            </Button>
-            <Menu
-              anchorEl={anchorEl}
-              open={isOpen}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            >
-              {userMenuItems}
-            </Menu>
+            <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+              <MenuIcon />
+            </IconButton>
           </FlexBetween>
-        </FlexBetween>
 
-      </Box>
-
-      <Box>
-        <FlexBetween
-              backgroundColor={theme.palette.background.alt}
-              borderRadius="9px"
-              gap="3rem"
-              p="0.1rem 1.5rem"
-            >
-              <InputBase placeholder='Search...' />
-              <IconButton>
-                <Search />
-              </IconButton>
+          {/* Right Side */}
+          <FlexBetween gap="1.5rem">
+            {!isMobile && (
+              <>
+                <IconButton onClick={() => dispatch(setMode())}>
+                  {theme.palette.mode === "dark" ? (
+                    <DarkModeOutlined sx={{ fontSize: "25px" }} />
+                  ) : (
+                    <LightModeOutlined sx={{ fontSize: "25px" }} />
+                  )}
+                </IconButton>
+                <IconButton>
+                  <SettingsOutlined sx={{ fontSize: "25px" }} />
+                </IconButton>
+              </>
+            )}
+            <FlexBetween>
+              <Button
+                onClick={handleClick}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: "center",
+                  textTransform: 'none',
+                  gap: '1rem',
+                }}
+              >
+                <Box
+                  component="img"
+                  alt="profile"
+                  src={userImageUrl}
+                  onError={(e) => e.target.src = defaultProfile}
+                  height="32px"
+                  width="32px"
+                  borderRadius="50%"
+                  sx={{ objectFit: "cover" }}
+                />
+                <Box textAlign="left">
+                  <Typography fontWeight="bold" fontSize="0.85rem" sx={{ color: theme.palette.secondary[100] }}>
+                    {user?.username}
+                  </Typography>
+                  <Typography fontSize="0.75rem" sx={{ color: theme.palette.secondary[300] }}>
+                    Username
+                  </Typography>
+                </Box>
+                <ArrowDropDownOutlined
+                  sx={{ color: theme.palette.secondary[300], fontSize: '25px' }}
+                />
+              </Button>
+              <Menu
+                anchorEl={anchorEl}
+                open={isOpen}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+              >
+                {userMenuItems}
+              </Menu>
             </FlexBetween>
-      </Box>
-      
-    </Toolbar>
+          </FlexBetween>
+        </Box>
+
+        <Box>
+          <FlexBetween
+            backgroundColor={theme.palette.background.alt}
+            borderRadius="9px"
+            gap="3rem"
+            p="0.1rem 1.5rem"
+          >
+            <InputBase placeholder='Search...' />
+            <IconButton>
+              <Search />
+            </IconButton>
+          </FlexBetween>
+        </Box>
+      </Toolbar>
     </AppBar>
   );
 };
