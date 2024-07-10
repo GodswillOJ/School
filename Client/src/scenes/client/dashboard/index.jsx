@@ -46,10 +46,15 @@ const ClientDashboard = () => {
   };
 
   return (
-    <Box m="1.5rem 2.5rem">
+    <Box
+      sx={{
+        margin: isBelow760px ? '1rem' : '1.5rem 2.5rem',
+        display: isBelow760px ? 'block' : 'flex',
+      }}
+    >
       <FlexBetween
         sx={{
-          display: isBelow760px ? 'block' : 'flex'
+          display: isBelow760px ? 'block' : 'flex',
         }}
       >
         <Box sx={{ width:'100%', margin:'1rem' }}>
