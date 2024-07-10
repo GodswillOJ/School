@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import FlexBetween from "Components/flexBetween";
 import Header from "Components/Header";
 import {
@@ -15,50 +16,34 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import BreakdownChart from "Components/BreakdownChart";
+import { useGetDashboardQuery, useGetOrderViewQuery } from "state/api";
+import ClientBreakdown from "Components/ClientBreakdownChart";
 import OverviewChart from "Components/overview_chart";
-import { useGetDashboardQuery } from "state/api";
 import StatBox from "Components/StatBox";
+import 'App.css';
 
 const ClientDashboard = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const isSmallScreen = useMediaQuery("(max-width: 600px)");
   const isBelow760px = useMediaQuery("(max-width: 760px)");
-  const { data, isLoading } = useGetDashboardQuery();
-  console.log('dash: ', data)
+  const { data } = useGetDashboardQuery();
+  const { userID } = useSelector((state) => state.global.user);
+  const { data: ordersData, isLoading } = useGetOrderViewQuery(userID);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
-  const columns = [
-    {
-      field: "_id",
-      headerName: "ID",
-      flex: 1,
-    },
-    {
-      field: "userId",
-      headerName: "User ID",
-      flex: 1,
-    },
-    {
-      field: "createdAt",
-      headerName: "CreatedAt",
-      flex: 1,
-    },
-    {
-      field: "products",
-      headerName: "# of Products",
-      flex: 0.5,
-      sortable: false,
-      renderCell: (params) => params.value.length,
-    },
-    {
-      field: "cost",
-      headerName: "Cost",
-      flex: 1,
-      renderCell: (params) => `$${Number(params.value).toFixed(2)}`,
-    },
-  ];
+  useEffect(() => {
+    if (!isLoading && ordersData) {
+      setOrders(ordersData.orders);
+      setLoading(false);
+    }
+  }, [isLoading, ordersData]);
+
+  const handleSeeMore = (order) => {
+    setSelectedOrder(order);
+  };
 
   return (
     <Box m="1.5rem 2.5rem">
@@ -160,37 +145,53 @@ const ClientDashboard = () => {
           gridColumn="span 8"
           gridRow="span 3"
           sx={{
-            "& .MuiDataGrid-root": {
-              border: "none",
-              borderRadius: "5rem",
-            },
-            "& .MuiDataGrid-cell": {
-              borderBottom: "none",
-            },
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: theme.palette.background.alt,
-              color: theme.palette.secondary[100],
-              borderBottom: "none",
-            },
-            "& .MuiDataGrid-virtualScroller": {
-              backgroundColor: theme.palette.background.alt,
-            },
-            "& .MuiDataGrid-footerContainer": {
-              backgroundColor: theme.palette.background.alt,
-              color: theme.palette.secondary[100],
-              borderTop: "none",
-            },
-            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-              color: `${theme.palette.secondary[200]} !important`,
-            },
+            backgroundColor: theme.palette.background.alt,
+            borderRadius: "0.55rem",
+            p: "1rem",
           }}
         >
-          <DataGrid
-            loading={isLoading || !data}
-            getRowId={(row) => row._id}
-            rows={(data && data.transactions) || []}
-            columns={columns}
-          />
+          <Typography variant="h6">My Orders</Typography>
+          {selectedOrder && (
+            <Box className="order-details">
+              <Typography variant="h6">Order Details</Typography>
+              <Typography>Order ID: {selectedOrder._id}</Typography>
+              <Typography>Total Price: {selectedOrder.orderDetails.totalPrice}</Typography>
+              <Typography>Shipping Address 1: {selectedOrder.shippingAddress1}</Typography>
+              <Typography>Shipping Address 2: {selectedOrder.shippingAddress2}</Typography>
+              <Typography>City: {selectedOrder.city}</Typography>
+              <Typography>ZIP Code: {selectedOrder.zip}</Typography>
+              <Typography>Country: {selectedOrder.country}</Typography>
+              <Typography>Phone: {selectedOrder.phone}</Typography>
+              <Typography>Name: {selectedOrder.orderDetails.name}</Typography>
+              <Button onClick={() => setSelectedOrder(null)} sx={{color:'#b5382d'}}>Close</Button>
+            </Box>
+          )}
+          {loading ? (
+            <Typography>Loading...</Typography>
+          ) : orders.length > 0 ? (
+            <table>
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Date of Order</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr key={order._id}>
+                    <td>{order._id}</td>
+                    <td>{new Date(order.dateOrdered).toLocaleDateString()}</td>
+                    <td>{order.status}</td>
+                    <td><Button onClick={() => handleSeeMore(order)} sx={{color:'#2b67b5'}}>See More</Button></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <Typography>No orders found.</Typography>
+          )}
         </Box>
         <Box
           gridColumn="span 4"
@@ -202,7 +203,7 @@ const ClientDashboard = () => {
           <Typography variant="h6" sx={{ color: theme.palette.secondary[100] }}>
             Sales By Category
           </Typography>
-          <BreakdownChart isDashboard={true} />
+          <ClientBreakdown isDashboard={true} />
           <Typography
             p="0 0.6rem"
             fontSize="0.8rem"
