@@ -17,7 +17,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { useGetDashboardQuery, useGetOrderViewQuery } from "state/api";
-import ClientBreakdown from "Components/ClientBreakdownChart";
+import ClientBreakdown from "../orderCharts/distribution/index";
 import OverviewChart from "Components/overview_chart";
 import StatBox from "Components/StatBox";
 import 'App.css';
@@ -87,7 +87,7 @@ const ClientDashboard = () => {
       >
         {/* ROW 1 */}
         <StatBox
-          title="Total Customers"
+          title="Total likes"
           value={data && data.totalCustomers}
           increase="+14%"
           description="Since last month"
@@ -98,7 +98,7 @@ const ClientDashboard = () => {
           }
         />
         <StatBox
-          title="Sales Today"
+          title="Orders Today"
           value={data && data.todayStats.totalSales}
           increase="+21%"
           description="Since last month"
@@ -115,10 +115,10 @@ const ClientDashboard = () => {
           p="1rem"
           borderRadius="0.55rem"
         >
-          <OverviewChart view="sales" isDashboard={true} />
+          <OverviewChart view="orders" isDashboard={true} />
         </Box>
         <StatBox
-          title="Monthly Sales"
+          title="Monthly Orders"
           value={data && data.thisMonthStats.totalSales}
           increase="+5%"
           description="Since last month"
@@ -129,7 +129,7 @@ const ClientDashboard = () => {
           }
         />
         <StatBox
-          title="Yearly Sales"
+          title="Yearly Orders"
           value={data && data.yearlySalesTotal}
           increase="+43%"
           description="Since last month"
@@ -142,12 +142,13 @@ const ClientDashboard = () => {
 
         {/* ROW 2 */}
         <Box
-          gridColumn="span 8"
+          gridColumn="span 7"
           gridRow="span 3"
           sx={{
             backgroundColor: theme.palette.background.alt,
             borderRadius: "0.55rem",
             p: "1rem",
+            overflowX: 'auto'
           }}
         >
           <Typography variant="h6">My Orders</Typography>
@@ -169,22 +170,24 @@ const ClientDashboard = () => {
           {loading ? (
             <Typography>Loading...</Typography>
           ) : orders.length > 0 ? (
-            <table>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>
-                  <th>Order ID</th>
-                  <th>Date of Order</th>
-                  <th>Status</th>
-                  <th></th>
+                  <th style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>Order ID</th>
+                  <th style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>Date of Order</th>
+                  <th style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>Status</th>
+                  <th style={{ padding: '8px', borderBottom: '1px solid #ddd' }}></th>
                 </tr>
               </thead>
               <tbody>
                 {orders.map((order) => (
                   <tr key={order._id}>
-                    <td>{order._id}</td>
-                    <td>{new Date(order.dateOrdered).toLocaleDateString()}</td>
-                    <td>{order.status}</td>
-                    <td><Button onClick={() => handleSeeMore(order)} sx={{color:'#2b67b5'}}>See More</Button></td>
+                    <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{order._id}</td>
+                    <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{new Date(order.dateOrdered).toLocaleDateString()}</td>
+                    <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{order.status}</td>
+                    <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>
+                      <Button onClick={() => handleSeeMore(order)} sx={{color:'#2b67b5'}}>See More</Button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -194,14 +197,14 @@ const ClientDashboard = () => {
           )}
         </Box>
         <Box
-          gridColumn="span 4"
+          gridColumn="span 5"
           gridRow="span 3"
           backgroundColor={theme.palette.background.alt}
-          p="1.5rem"
+          p="0.2rem"
           borderRadius="0.55rem"
         >
           <Typography variant="h6" sx={{ color: theme.palette.secondary[100] }}>
-            Sales By Category
+            Order By Category
           </Typography>
           <ClientBreakdown isDashboard={true} />
           <Typography
@@ -209,8 +212,7 @@ const ClientDashboard = () => {
             fontSize="0.8rem"
             sx={{ color: theme.palette.secondary[200] }}
           >
-            Breakdown of real states and information via category for revenue
-            made for this year and total sales.
+            Breakdown of user activities
           </Typography>
         </Box>
       </Box>
