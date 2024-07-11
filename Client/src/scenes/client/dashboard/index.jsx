@@ -49,7 +49,6 @@ const ClientDashboard = () => {
     <Box
       sx={{
         margin: isBelow760px ? '1rem' : '1.5rem 2.5rem',
-        display: isBelow760px ? 'block' : 'flex',
       }}
     >
       <FlexBetween
