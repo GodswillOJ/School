@@ -23,7 +23,7 @@ import {
   useMediaQuery
 } from "@mui/material";
 import FlexBetween from "./flexBetween";
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import defaultProfile from '../assets/profile.jpg'; // Import the default profile image
 
 const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
@@ -155,8 +155,15 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
             borderRadius="9px"
             gap="3rem"
             p="0.1rem 1.5rem"
+            sx={{ width: '100%' }}
           >
-            <InputBase placeholder='Search...' />
+            <InputBase
+              placeholder='Search...'
+              sx={{
+                color: theme.palette.mode === 'dark' ? 'white' : 'inherit',
+                flexGrow:1
+              }}
+            />
             <IconButton>
               <Search />
             </IconButton>
