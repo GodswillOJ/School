@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Typography, useMediaQuery } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import { Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
 
@@ -125,6 +125,8 @@ const Footer = () => (
 );
 
 const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setPassword, country, setCountry, city, setCity, state, setState, phone, setPhone, file, setFile, label, loading, error, countries }) => {
+  const isSmallScreen = useMediaQuery('(max-width:800px)');
+  
   return (
     <div className="Register">
       <div className="CounterCont RegCont">
@@ -147,8 +149,16 @@ const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setP
             <label>Password:</label>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
-          <div className='country_detail'>
-              <div>
+
+          <div style={{
+            position: 'relative',
+            display: isSmallScreen ? 'block' : 'flex',
+            gridTemplateColumns: isSmallScreen ? '1fr' : '2fr',
+            gap: '20px',
+            flexDirection: isSmallScreen ? 'column' : 'row'
+          }}>
+            <Box sx={{width: '100%'}}>
+            <div>
                 <label>State:</label>
                 <input type="state" value={state} onChange={(e) => setState(e.target.value)} />
               </div>
@@ -156,7 +166,10 @@ const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setP
                 <label>City:</label>
                 <input type="city" value={city} onChange={(e) => setCity(e.target.value)} />
               </div>
-              <div>
+            </Box>
+
+            <Box sx={{width: '100%'}}>
+            <div>
                 <label>Phone:</label>
                 <input type="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
               </div>
@@ -171,7 +184,9 @@ const Form = ({ onSubmit, username, setUsername, email, setEmail, password, setP
                   ))}
                 </select>
               </div>
+            </Box>
           </div>
+
           <div id="verify_btn">
             <button type="submit" disabled={loading}>
               {loading ? 'Creating User...' : label}
