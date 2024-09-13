@@ -149,7 +149,7 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
                     </Box>
 
                     {/* User image */}
-                    <Box position="absolute" bottom="-6rem" width='222px'>
+                    <Box position="relative" bottom="0" width='222px'>
                         <Divider />
                         <FlexBetween textTransform="none" gap="1rem" m="1rem 2rem 0 3rem">
                             <Box
