@@ -11,7 +11,8 @@ import {
     ListItemText,
     Typography,
     useTheme,
-    Link
+    Link,
+    useMediaQuery
 } from "@mui/material";
 import {
     SettingsOutlined,
@@ -55,6 +56,7 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
     const [active, setActive] = useState("");
     const navigate = useNavigate();
     const theme = useTheme();
+    const isSmallScreen = useMediaQuery('(max-width:760px)')
 
     const userImageUrl = `https://gotech-ecommerce.onrender.com/public/${user.image}`;
 
@@ -151,7 +153,7 @@ const Sidebar = ({ user, drawerWidth, isSidebarOpen, setIsSidebarOpen, isNonMobi
                     {/* User image */}
                     <Box position="relative" bottom="0" width='222px'>
                         <Divider />
-                        <FlexBetween textTransform="none" gap="1rem" m="1rem 2rem 0 3rem">
+                        <FlexBetween textTransform="none" gap="1rem" m="1rem 2rem 1rem 3rem">
                             <Box
                                 component="img"
                                 alt="profile"

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
+import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
 import axios from 'axios';
 import { useGetUserQuery } from 'state/api';
 
 const OrderNew = () => {
   const { userID } = useSelector((state) => state.global.user);
-  const { data, error, isLoading, refetch } = useGetUserQuery(userID);
-  console.log(data);
+  const { data, error, isLoading } = useGetUserQuery(userID);
 
   const [formData, setFormData] = useState({
     shippingAddress1: '',
@@ -22,42 +22,74 @@ const OrderNew = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const totalPrice = data?.cart?.items?.reduce((total, item) => total + item.price * item.quantity, 0) || 0;
 
-    if (!data || !data.cart || !data.cart.items) {
-      console.error('No cart data available');
-      return;
-    }
+  const flutterwaveConfig = {
+    public_key: process.env.FLUTTER_KEY, // Replace with your actual public key
+    tx_ref: Date.now(),
+    amount: totalPrice,
+    currency: 'USD', // Change this to your preferred currency
+    payment_options: 'card, mobilemoney, ussd',
+    customer: {
+      email: data?.email, // User's email fetched from state
+      phonenumber: formData.phone,
+      name: data?.name,
+    },
+    customizations: {
+      title: 'Your Shop Name',
+      description: 'Payment for items in cart',
+      logo: 'https://gotech_shop', // Add your shop logo
+    },
+  };
 
-    const items = data.cart.items.map(product => ({
-      name: product.name,
-      productId: product._id,
-      quantity: product.quantity,
-      price: product.price,
-    }));
-
-    const totalPrice = items.reduce((total, item) => total + item.price * item.quantity, 0);
-
-    const orderDetails = {
-      totalPrice,
-      items,
-    };
-
-    console.log(totalPrice, userID, orderDetails);
-
-    try {
-      const response = await axios.post('https://gotech-ecommerce.onrender.com/api/user/order_new', { userID, orderDetails, ...formData });
-      console.log('Order placed:', response.data);
-    } catch (error) {
-      console.error('Error placing order:', error);
+  const handleFlutterwavePayment = async (response) => {
+    if (response.status === 'successful') {
+      try {
+        // Prepare order data to send to your backend
+        const items = data.cart.items.map(product => ({
+          name: product.name,
+          productId: product._id,
+          quantity: product.quantity,
+          price: product.price,
+        }));
+  
+        const orderDetails = {
+          totalPrice,
+          items,
+        };
+  
+        const res = await axios.post(process.env.REACT_APP_BASE_URL, {
+          userID,
+          orderDetails,
+          shippingAddress1: formData.shippingAddress1,
+          shippingAddress2: formData.shippingAddress2,
+          city: formData.city,
+          zip: formData.zip,
+          country: formData.country,
+          phone: formData.phone,
+          transactionId: response.transaction_id,  // Pass the transaction ID to the backend
+        });
+  
+        console.log('Order placed successfully:', res.data);
+        closePaymentModal(); // Close Flutterwave modal programmatically
+        // Optionally, show success message or redirect to a success page
+      } catch (error) {
+        console.error('Error placing order:', error);
+        // Optionally, show an error message to the user
+      }
+    } else {
+      console.error('Payment failed:', response);
+      // Optionally, show an error message to the user
     }
   };
+
+  if (isLoading) return <Typography>Loading...</Typography>;
+  if (error) return <Typography>Error fetching user data.</Typography>;
 
   return (
     <Box margin={'2rem'}>
       <Typography variant="h6" sx={{ textAlign: 'center' }}>Place Order</Typography>
-      <form onSubmit={handleSubmit}>
+      <form>
         <TextField
           label="Shipping Address 1"
           name="shippingAddress1"
@@ -74,7 +106,6 @@ const OrderNew = () => {
           onChange={handleChange}
           fullWidth
           margin="normal"
-          required
         />
         <TextField
           label="City"
@@ -112,9 +143,15 @@ const OrderNew = () => {
           margin="normal"
           required
         />
-        <Box display={'flex'} justifyContent={'space-between'} marginTop={'1rem'}>
-          <Button variant="contained" color="primary" type="submit">Place Order</Button>
-        </Box>
+
+        {/* Flutterwave Payment Button */}
+        <FlutterWaveButton
+          className="flutterwave-button"
+          {...flutterwaveConfig}
+          text="Place Order & Pay"
+          callback={handleFlutterwavePayment}
+          onClose={() => console.log('Payment modal closed')}
+        />
       </form>
     </Box>
   );

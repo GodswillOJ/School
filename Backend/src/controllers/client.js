@@ -6,7 +6,8 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
-import getCountryIso3 from 'country-iso-2-to-3'
+import getCountryIso3 from 'country-iso-2-to-3';
+import Flutterwave from 'flutterwave-node-v3';
 
 dotenv.config();
 
@@ -135,22 +136,49 @@ export const clearCart = async (req, res) => {
   }
 };
 
+
 import Transaction from '../models/transactions.js';
 
-export const placeOrder = async (req, res) => {
-  const { userID, orderDetails, shippingAddress1, shippingAddress2, city, zip, country, phone } = req.body;
+const flw = new Flutterwave(process.env.FLW_PUBLIC_KEY, process.env.FLW_SECRET_KEY);
 
-  console.log('Received request body:', req.body); // Log the entire request body
+export const placeOrder = async (req, res) => {
+  const {
+    userID,
+    orderDetails,
+    shippingAddress1,
+    shippingAddress2,
+    city,
+    zip,
+    country,
+    phone,
+    transactionId,
+  } = req.body;
+
+  console.log('Received request body:', req.body);
+
+  // Ensure order details are present
   if (!orderDetails || !orderDetails.items || orderDetails.items.length === 0) {
     return res.status(400).send({ message: 'Order details, items, productId, and quantity are required.' });
   }
 
   try {
+    // Step 1: Verify payment using Flutterwave's API
+    const paymentVerification = await flw.Transaction.verify({ id: transactionId });
+
+    // Check payment status and match the amount and currency
+    if (paymentVerification.status !== 'successful' || 
+        paymentVerification.data.amount !== orderDetails.totalPrice || 
+        paymentVerification.data.currency !== 'USD') {
+      return res.status(400).send({ message: 'Payment verification failed or payment mismatch.' });
+    }
+
+    // Step 2: Proceed with order creation once payment is verified
     const user = await User.findById(userID);
     if (!user) {
       return res.status(404).send({ message: 'User not found' });
     }
 
+    // Create the order
     const order = new Order({
       userID: user._id,
       orderDetails,
@@ -159,33 +187,35 @@ export const placeOrder = async (req, res) => {
       city,
       zip,
       country,
-      phone
+      phone,
     });
 
+    // Save the order
     const savedOrder = await order.save();
-    user.orders.push(savedOrder._id);
+    user.orders.push(savedOrder._id); // Associate order with user
     await user.save();
 
-    // Create a transaction for the admin/seller
+    // Step 3: Create a transaction record
     const transaction = new Transaction({
       userID: user._id,
-      productId: orderDetails.items.map(item => item.productId),  // Ensure this is an array of strings
+      productId: orderDetails.items.map(item => item.productId), // Array of product IDs
       clientUsername: user.username,
-      quantity: orderDetails.items.map(item => item.quantity).reduce((a, b) => a + b, 0),
+      quantity: orderDetails.items.reduce((total, item) => total + item.quantity, 0), // Total quantity
       amount: orderDetails.totalPrice,
-      dateOrdered: savedOrder.dateOrdered,
+      dateOrdered: new Date(), // Set current date as order date
     });
 
+    // Save the transaction
     await transaction.save();
-    console.log(transaction)
+    console.log('Transaction saved:', transaction);
 
-    res.status(201).send(savedOrder);
+    // Step 4: Return success response
+    res.status(201).send({ order: savedOrder, transaction });
   } catch (error) {
     console.error('Error creating order:', error);
     res.status(500).send({ message: 'Failed to create order', error });
   }
 };
-
 
 export const fetchOrders = async (req, res) => {
   try {
@@ -249,6 +279,10 @@ export const getGeography = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+
+// Payments
+
 
 
 
