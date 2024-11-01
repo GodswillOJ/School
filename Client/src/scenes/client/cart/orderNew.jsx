@@ -25,7 +25,7 @@ const OrderNew = () => {
   const totalPrice = data?.cart?.items?.reduce((total, item) => total + item.price * item.quantity, 0) || 0;
 
   const flutterwaveConfig = {
-    public_key: process.env.FLUTTER_KEY, // Replace with your actual public key
+    public_key: process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY, // Replace with your actual public key
     tx_ref: Date.now(),
     amount: totalPrice,
     currency: 'USD', // Change this to your preferred currency
@@ -41,6 +41,7 @@ const OrderNew = () => {
       logo: 'https://gotech_shop', // Add your shop logo
     },
   };
+  console.log('flutter_key',(process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY))
 
   const handleFlutterwavePayment = async (response) => {
     if (response.status === 'successful') {
