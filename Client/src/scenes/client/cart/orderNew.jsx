@@ -35,7 +35,7 @@ const OrderNew = () => {
     public_key: 'FLWPUBK_TEST-4c18f5b57fe710c59e5b4f7566f5a597-X', // Reference the key here
     tx_ref: Date.now(),
     amount: totalPrice,
-    currency: 'USD', // Change this if you support multiple currencies
+    currency: 'NGN', // Change this if you support multiple currencies
     payment_options: 'card, mobilemoney, ussd',
     customer: {
       email: data?.email,
@@ -43,11 +43,29 @@ const OrderNew = () => {
       name: data?.name,
     },
     customizations: {
-      title: 'Your Shop Name',
+      title: 'Fee Payment',
       description: 'Payment for items in cart',
       logo: 'https://gotech_shop', // Ensure this is a valid URL
     },
   };
+
+  
+  const fwConfig = {
+    ...flutterwaveConfig,
+    text: 'Pay with Flutterwave!',
+    callback: (response) => {
+      if (response.status !== "completed") {
+        console.log("failed transaction");
+      } else {
+        console.log("success")
+      }
+      closePaymentModal() // this will close the modal programmatically
+    },
+    onClose: () => {
+      console.log("Payment closed by user")
+    },
+  };
+
 
   const handleFlutterwavePayment = async (response) => {
     if (response.status === 'successful') {
@@ -154,13 +172,7 @@ const OrderNew = () => {
         />
 
         {/* Flutterwave Payment Button */}
-        <FlutterWaveButton
-          className="flutterwave-button"
-          {...flutterwaveConfig}
-          text="Place Order & Pay"
-          callback={handleFlutterwavePayment}
-          onClose={() => console.log('Payment modal closed')}
-        />
+        <FlutterWaveButton {...fwConfig} />
       </form>
       
       {/* Snackbar for notifications */}
