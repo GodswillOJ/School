@@ -21,21 +21,20 @@ const OrderNew = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
-  // Log Flutterwave public key
   const flutterKey = process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY;
-  console.log('Flutter Key:', flutterKey); // Ensure this logs the correct value
+  console.log('Flutter Key:', flutterKey);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const totalPrice = data?.cart?.items?.reduce((total, item) => total + item.price * item.quantity, 0) || 0;
-
+console.log(totalPrice)
   const flutterwaveConfig = {
-    public_key: 'FLWPUBK_TEST-4c18f5b57fe710c59e5b4f7566f5a597-X', // Reference the key here
+    public_key: flutterKey,
     tx_ref: Date.now(),
     amount: totalPrice,
-    currency: 'NGN', // Change this if you support multiple currencies
+    currency: 'NGN',
     payment_options: 'card, mobilemoney, ussd',
     customer: {
       email: data?.email,
@@ -45,27 +44,26 @@ const OrderNew = () => {
     customizations: {
       title: 'Fee Payment',
       description: 'Payment for items in cart',
-      logo: 'https://gotech_shop', // Ensure this is a valid URL
+      logo: 'https://gotech_shop', 
     },
   };
 
-  
   const fwConfig = {
     ...flutterwaveConfig,
     text: 'Pay with Flutterwave!',
-    callback: (response) => {
-      if (response.status !== "completed") {
-        console.log("failed transaction");
+    callback: async (response) => {
+      if (response.status !== "successful") {
+        console.log("Failed transaction");
+        setSnackbarMessage('Payment failed, please try again.');
       } else {
-        console.log("success")
+        await handleFlutterwavePayment(response);
       }
-      closePaymentModal() // this will close the modal programmatically
+      closePaymentModal();
     },
     onClose: () => {
-      console.log("Payment closed by user")
+      console.log("Payment closed by user");
     },
   };
-
 
   const handleFlutterwavePayment = async (response) => {
     if (response.status === 'successful') {
@@ -82,27 +80,20 @@ const OrderNew = () => {
           items,
         };
 
-        const res = await axios.post(process.env.REACT_APP_BASE_URL, {
+        const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/order_new`, {
           userID,
           orderDetails,
-          shippingAddress1: formData.shippingAddress1,
-          shippingAddress2: formData.shippingAddress2,
-          city: formData.city,
-          zip: formData.zip,
-          country: formData.country,
-          phone: formData.phone,
+          ...formData,
           transactionId: response.transaction_id,
         });
 
         console.log('Order placed successfully:', res.data);
-        closePaymentModal();
         setSnackbarMessage('Order placed successfully!');
-        setOpenSnackbar(true);
       } catch (error) {
         console.error('Error placing order:', error);
         setSnackbarMessage('Error placing order, please try again.');
-        setOpenSnackbar(true);
       }
+      setOpenSnackbar(true);
     } else {
       console.error('Payment failed:', response);
       setSnackbarMessage('Payment failed, please try again.');
@@ -117,65 +108,21 @@ const OrderNew = () => {
     <Box margin={'2rem'}>
       <Typography variant="h6" sx={{ textAlign: 'center' }}>Place Order</Typography>
       <form>
-        <TextField
-          label="Shipping Address 1"
-          name="shippingAddress1"
-          value={formData.shippingAddress1}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-          required
-        />
-        <TextField
-          label="Shipping Address 2"
-          name="shippingAddress2"
-          value={formData.shippingAddress2}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="City"
-          name="city"
-          value={formData.city}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-          required
-        />
-        <TextField
-          label="Zip"
-          name="zip"
-          value={formData.zip}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-          required
-        />
-        <TextField
-          label="Country"
-          name="country"
-          value={formData.country}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-          required
-        />
-        <TextField
-          label="Phone"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-          required
-        />
-
-        {/* Flutterwave Payment Button */}
+        {['shippingAddress1', 'shippingAddress2', 'city', 'zip', 'country', 'phone'].map((field) => (
+          <TextField
+            key={field}
+            label={field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())} // Convert camelCase to human readable
+            name={field}
+            value={formData[field]}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required={['shippingAddress1', 'city', 'zip', 'country', 'phone'].includes(field)} // Make some fields required
+          />
+        ))}
         <FlutterWaveButton {...fwConfig} />
       </form>
       
-      {/* Snackbar for notifications */}
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
