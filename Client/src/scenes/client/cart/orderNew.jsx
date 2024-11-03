@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography, Snackbar } from '@mui/material';
 import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
 import axios from 'axios';
 import { useGetUserQuery } from 'state/api';
@@ -8,7 +8,7 @@ import { useGetUserQuery } from 'state/api';
 const OrderNew = () => {
   const { userID } = useSelector((state) => state.global.user);
   const { data, error, isLoading } = useGetUserQuery(userID);
-
+  
   const [formData, setFormData] = useState({
     shippingAddress1: '',
     shippingAddress2: '',
@@ -17,6 +17,13 @@ const OrderNew = () => {
     country: '',
     phone: '',
   });
+  
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+
+  // Log Flutterwave public key
+  const flutterKey = process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY;
+  console.log('Flutter Key:', flutterKey); // Ensure this logs the correct value
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,40 +32,38 @@ const OrderNew = () => {
   const totalPrice = data?.cart?.items?.reduce((total, item) => total + item.price * item.quantity, 0) || 0;
 
   const flutterwaveConfig = {
-    public_key: process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY, // Replace with your actual public key
+    public_key: 'FLWPUBK_TEST-4c18f5b57fe710c59e5b4f7566f5a597-X', // Reference the key here
     tx_ref: Date.now(),
     amount: totalPrice,
-    currency: 'USD', // Change this to your preferred currency
+    currency: 'USD', // Change this if you support multiple currencies
     payment_options: 'card, mobilemoney, ussd',
     customer: {
-      email: data?.email, // User's email fetched from state
+      email: data?.email,
       phonenumber: formData.phone,
       name: data?.name,
     },
     customizations: {
       title: 'Your Shop Name',
       description: 'Payment for items in cart',
-      logo: 'https://gotech_shop', // Add your shop logo
+      logo: 'https://gotech_shop', // Ensure this is a valid URL
     },
   };
-  console.log('flutter_key',(process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY))
 
   const handleFlutterwavePayment = async (response) => {
     if (response.status === 'successful') {
       try {
-        // Prepare order data to send to your backend
         const items = data.cart.items.map(product => ({
           name: product.name,
           productId: product._id,
           quantity: product.quantity,
           price: product.price,
         }));
-  
+
         const orderDetails = {
           totalPrice,
           items,
         };
-  
+
         const res = await axios.post(process.env.REACT_APP_BASE_URL, {
           userID,
           orderDetails,
@@ -68,19 +73,22 @@ const OrderNew = () => {
           zip: formData.zip,
           country: formData.country,
           phone: formData.phone,
-          transactionId: response.transaction_id,  // Pass the transaction ID to the backend
+          transactionId: response.transaction_id,
         });
-  
+
         console.log('Order placed successfully:', res.data);
-        closePaymentModal(); // Close Flutterwave modal programmatically
-        // Optionally, show success message or redirect to a success page
+        closePaymentModal();
+        setSnackbarMessage('Order placed successfully!');
+        setOpenSnackbar(true);
       } catch (error) {
         console.error('Error placing order:', error);
-        // Optionally, show an error message to the user
+        setSnackbarMessage('Error placing order, please try again.');
+        setOpenSnackbar(true);
       }
     } else {
       console.error('Payment failed:', response);
-      // Optionally, show an error message to the user
+      setSnackbarMessage('Payment failed, please try again.');
+      setOpenSnackbar(true);
     }
   };
 
@@ -154,6 +162,14 @@ const OrderNew = () => {
           onClose={() => console.log('Payment modal closed')}
         />
       </form>
+      
+      {/* Snackbar for notifications */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+        message={snackbarMessage}
+      />
     </Box>
   );
 };
